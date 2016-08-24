@@ -1,0 +1,36 @@
+{
+  "name": "mindsmine-js",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "description": "mindsmine-js",
+  "authors": [
+    "Mohammed Shaik Hussain Ali"
+  ],
+  "homepage": "http://mindsmine.shaiksphere.com/js",
+  "bugs": "https://github.com/mindsmine/mindsmine-js/issues",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mindsmine/mindsmine-js.git"
+  },
+  "engine-strict": true,
+  "engines": {
+    "node": ">= 6.4.0"
+  },
+  "scripts": {
+    "clean": "gulp clean",
+    "documentation": "gulp documentation",
+    "package": "gulp package"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "del": "2.2.2",
+    "gulp": "3.9.1",
+    "gulp-concat": "2.6.0",
+    "gulp-replace": "0.5.4",
+    "gulp-rename": "1.2.2",
+    "gulp-uglify": "2.0.0",
+    "jsduck": "1.1.2",
+    "run-sequence": "1.2.2"
+  }
+}
