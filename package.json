@@ -20,6 +20,7 @@
   "scripts": {
     "clean": "gulp clean",
     "test": "gulp package",
+    "docs": "gulp documentation",
     "package": "gulp package"
   },
   "devDependencies": {

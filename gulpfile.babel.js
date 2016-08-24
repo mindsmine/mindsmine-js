@@ -167,5 +167,5 @@ gulp.task("documentation", ["update-files"], () => {
 });
 
 gulp.task("package", () => {
-    runSequence(["uglify", "documentation"], "clean-unwanted");
+    runSequence("uglify", "clean-unwanted");
 });
