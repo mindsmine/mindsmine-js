@@ -19,7 +19,7 @@
   },
   "scripts": {
     "clean": "gulp clean",
-    "documentation": "gulp documentation",
+    "test": "gulp package",
     "package": "gulp package"
   },
   "devDependencies": {
