@@ -26,31 +26,21 @@ import rename from "gulp-rename";
 import uglify from "gulp-uglify";
 import runSequence from "run-sequence";
 
-import mindsmineConfig, {getPackageJSON, handleError} from "./mindsmine.config";
+import buildProperties, {handleError} from "./build.properties";
 
-const PACKAGE_JSON = getPackageJSON(),
-    NOW = new Date(),
-    TIMESTAMP = NOW.toISOString().replace(/[-:]/g, "").replace(/T/g, ".").replace(/.[0-9]+Z/g, ""),
-    PATHS = {
-    SRC: "src",
-    TEST: "test",
-    BUILD: "build",
-    DIST: "dist",
-    DOCS: "docs"
-},
-    BUILD = {
+const BUILD = {
     SOURCE: {
-        CODE: `${PATHS.BUILD}/source/code`,
-        COMPILED: `${PATHS.BUILD}/source/compiled`
+        CODE: `${buildProperties.folder.BUILD}/source/code`,
+        COMPILED: `${buildProperties.folder.BUILD}/source/compiled`
     },
     TEST: {
-        CODE: `${PATHS.BUILD}/test/code`,
-        COMPILED: `${PATHS.BUILD}/test/compiled`
+        CODE: `${buildProperties.folder.BUILD}/test/code`,
+        COMPILED: `${buildProperties.folder.BUILD}/test/compiled`
     }
 };
 
 gulp.task("clean-unwanted", () => {
-    let _paths = del.sync([PATHS.BUILD]);
+    let _paths = del.sync([buildProperties.folder.BUILD]);
 
     console.info("Deleting unwanted files\n", _paths.join("\n"));
 
@@ -60,8 +50,8 @@ gulp.task("clean-unwanted", () => {
 gulp.task("clean", ["clean-unwanted"], () => {
     let _paths = [];
 
-    _paths.push(del.sync([PATHS.DIST]));
-    _paths.push(del.sync([PATHS.DOCS]));
+    _paths.push(del.sync([buildProperties.folder.DIST]));
+    _paths.push(del.sync([buildProperties.folder.DOCS]));
 
     console.info("Cleaning\n", _paths.join("\n"));
 
@@ -69,26 +59,20 @@ gulp.task("clean", ["clean-unwanted"], () => {
 });
 
 gulp.task("generate-sources", ["clean"], () => {
-    return gulp.src(
+    let _task = gulp.src(
         [
-            `${PATHS.SRC}/**/*`
+            `${buildProperties.folder.SRC}/**/*`
         ],
         {
-            base: PATHS.SRC
+            base: buildProperties.folder.SRC
         }
-    )
-        .pipe(replace("@BUILD_TIMESTAMP@", TIMESTAMP))
-        .pipe(replace("@BUILD_YEAR@", NOW.getFullYear()))
-        .pipe(replace("@COMPANY_LINK@", PACKAGE_JSON.homepage))
-        .pipe(replace("@PRODUCT_NAME@", PACKAGE_JSON.name))
-        .pipe(replace("@PRODUCT_VERSION@", PACKAGE_JSON.version))
-        .pipe(replace(mindsmineConfig.replaceMap.ARRAY.token, mindsmineConfig.replaceMap.ARRAY.value))
-        .pipe(replace(mindsmineConfig.replaceMap.BOOLEAN.token, mindsmineConfig.replaceMap.BOOLEAN.value))
-        .pipe(replace(mindsmineConfig.replaceMap.FUNCTION.token, mindsmineConfig.replaceMap.FUNCTION.value))
-        .pipe(replace(mindsmineConfig.replaceMap.NUMBER.token, mindsmineConfig.replaceMap.NUMBER.value))
-        .pipe(replace(mindsmineConfig.replaceMap.OBJECT.token, mindsmineConfig.replaceMap.OBJECT.value))
-        .pipe(replace(mindsmineConfig.replaceMap.STRING.token, mindsmineConfig.replaceMap.STRING.value))
-        .pipe(gulp.dest(BUILD.SOURCE.CODE));
+    ).on("error", handleError("generate-sources", "gulp.src"));
+
+    buildProperties.replaceArray.forEach((arr) => {
+        _task = _task.pipe(replace(arr[0], arr[1])).on("error", handleError("generate-sources", "replace"));
+    });
+
+    return _task.pipe(gulp.dest(BUILD.SOURCE.CODE)).on("error", handleError("generate-sources", "gulp.dest"));
 });
 
 gulp.task("concat-files", ["generate-sources"], () => {
@@ -100,11 +84,11 @@ gulp.task("concat-files", ["generate-sources"], () => {
             base: BUILD.SOURCE.CODE
         }
     )
-        .on("error", handleError("concat-files:gulp.src"))
+        .on("error", handleError("concat-files", "gulp.src"))
         .pipe(concat("helper.js"))
-        .on("error", handleError("concat-files:concat"))
+        .on("error", handleError("concat-files", "concat"))
         .pipe(gulp.dest(BUILD.SOURCE.COMPILED))
-        .on("error", handleError("concat-files:gulp.dest"));
+        .on("error", handleError("concat-files", "gulp.dest"));
 });
 
 gulp.task("update-files", ["concat-files"], () => {
@@ -118,8 +102,11 @@ gulp.task("update-files", ["concat-files"], () => {
             base: BUILD.SOURCE.CODE
         }
     )
+        .on("error", handleError("update-files", "gulp.src"))
         .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
-        .pipe(gulp.dest(BUILD.SOURCE.COMPILED));
+        .on("error", handleError("update-files", "replace"))
+        .pipe(gulp.dest(BUILD.SOURCE.COMPILED))
+        .on("error", handleError("update-files", "gulp.dest"));
 });
 
 gulp.task("uglify", ["update-files"], () => {
@@ -131,35 +118,23 @@ gulp.task("uglify", ["update-files"], () => {
             base: BUILD.SOURCE.COMPILED
         }
     )
-        .pipe(rename(`${PACKAGE_JSON.name}-${PACKAGE_JSON.version}.min.js`))
+        .on("error", handleError("uglify", "gulp.src"))
+        .pipe(rename(buildProperties.properties.outputFile))
+        .on("error", handleError("uglify", "rename"))
         .pipe(uglify({
             preserveComments: function (_node, _comment) {
                 return (_comment.value.indexOf("! ") !== -1);
             }
         }))
-        .pipe(gulp.dest(PATHS.DIST));
+        .on("error", handleError("uglify", "uglify"))
+        .pipe(gulp.dest(buildProperties.folder.DIST))
+        .on("error", handleError("uglify", "gulp.dest"));
 });
 
 gulp.task("documentation", ["update-files"], () => {
 
     let _jsDuck = new JSDuck(
-        [
-            "--title",
-            `${PACKAGE_JSON.name} - API Documentation`,
-            "--footer",
-            `Generated on {DATE} by {JSDUCK} {VERSION}. Copyright &#169; ${NOW.getFullYear()} ${PACKAGE_JSON.homepage}. All Rights Reserved.`,
-            "--no-source",
-            true,
-            "--builtin-classes", true,
-            "--warnings",
-            [
-                "-sing_static"
-            ],
-            "--categories",
-            "./jsduck.categories.json",
-            "--output",
-            PATHS.DOCS
-        ],
+        buildProperties.jsDuckProps,
         "./3rdparty/jsduck-5.3.4.exe"
     );
 
