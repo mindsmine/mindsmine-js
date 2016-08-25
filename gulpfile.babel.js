@@ -119,7 +119,7 @@ gulp.task("uglify", ["update-files"], () => {
         }
     )
         .on("error", handleError("uglify", "gulp.src"))
-        .pipe(rename(buildProperties.properties.outputFile))
+        .pipe(rename(buildProperties.outputFile))
         .on("error", handleError("uglify", "rename"))
         .pipe(uglify({
             preserveComments: function (_node, _comment) {
