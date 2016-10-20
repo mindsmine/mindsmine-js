@@ -15,7 +15,7 @@
   },
   "engine-strict": true,
   "engines": {
-    "node": ">= 6.4.0"
+    "node": ">= 6.9.1"
   },
   "scripts": {
     "clean": "gulp clean",
@@ -24,7 +24,7 @@
     "package": "gulp package"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-es2015": "^6.16.0",
     "del": "2.2.2",
     "gulp": "3.9.1",
     "gulp-concat": "2.6.0",
