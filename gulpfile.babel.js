@@ -20,7 +20,6 @@ import del from "del";
 import fs from "fs";
 import gulp from "gulp";
 import concat from "gulp-concat";
-import JSDuck from "jsduck";
 import replace from "gulp-replace";
 import rename from "gulp-rename";
 import uglify from "gulp-uglify";
@@ -133,12 +132,8 @@ gulp.task("uglify", ["update-files"], () => {
 
 gulp.task("documentation", ["update-files"], () => {
 
-    let _jsDuck = new JSDuck(
-        buildProperties.jsDuckProps,
-        "./3rdparty/jsduck-5.3.4.exe"
-    );
+    // Do nothing for now
 
-    _jsDuck.doc([`${BUILD.SOURCE.COMPILED}/index.js`]);
 });
 
 gulp.task("package", () => {

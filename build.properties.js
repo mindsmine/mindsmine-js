@@ -96,22 +96,5 @@ export default {
             "@ERROR_PERMITTED_STRING@",
             "Only non-empty string(s) are allowed as arguments."
         ]
-    ],
-    jsDuckProps: [
-        "--title",
-        `${PACKAGE_JSON.name} - API Documentation`,
-        "--footer",
-        `Generated on {DATE} by {JSDUCK} {VERSION}. Copyright &#169; ${NOW.getFullYear()} ${PACKAGE_JSON.homepage}. All Rights Reserved.`,
-        "--no-source",
-        true,
-        "--builtin-classes", true,
-        "--warnings",
-        [
-            "-sing_static"
-        ],
-        "--categories",
-        "./jsduck.categories.json",
-        "--output",
-        FOLDER.DOCS
     ]
 }
