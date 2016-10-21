@@ -17,44 +17,39 @@
 /**
  * A collection of useful static methods to deal with JavaScript numbers.
  *
- * @singleton
- *
- * @since 1.0
+ * @since 1.0.0
  *
  */
-mindsmine.Number = (function () {
-
-    return {
-        /**
-         * Returns a non-null number, even if the object being passed is a null number.
-         *
-         * If the passed-in object is a non-null number, then it is returned as-is.
-         *
-         * Example usage:
-         *
-         *      var num1 = 10;
-         *      var num2 = null;
-         *
-         *      var num3 = mindsmine.Number.getNullSafe(num1);
-         *
-         *      var num4 = mindsmine.Number.getNullSafe(num2);
-         *
-         *      // num3 now contains the number: 10
-         *      // num4 now contains the number: -Infinity
-         *
-         * @param {Number} num The number to safeguard against <code>null</code>.
-         *
-         * @returns {Number} If num is <code>null</code> then {@link Number#NEGATIVE_INFINITY}.
-         *
-         * @since 1.0
-         *
-         */
-        getNullSafe: function (num) {
-            if (num != null && typeof num === "number") {
-                return num;
-            }
-
-            return Number.NEGATIVE_INFINITY;
+mindsmine.Number = class {
+    /**
+     * Returns a non-null number, even if the object being passed is a null number.
+     *
+     * If the passed-in object is a non-null number, then it is returned as-is.
+     *
+     * Example usage:
+     *
+     *      var num1 = 10;
+     *      var num2 = null;
+     *
+     *      var num3 = mindsmine.Number.getNullSafe(num1);
+     *
+     *      var num4 = mindsmine.Number.getNullSafe(num2);
+     *
+     *      // num3 now contains the number: 10
+     *      // num4 now contains the number: -Infinity
+     *
+     * @param {Number} num The number to safeguard against <code>null</code>.
+     *
+     * @returns {Number} If num is <code>null</code> then {@link Number#NEGATIVE_INFINITY}.
+     *
+     * @since 1.0.0
+     *
+     */
+    static getNullSafe(num) {
+        if (num != null && typeof num === "number") {
+            return num;
         }
-    };
-})();
+
+        return Number.NEGATIVE_INFINITY;
+    }
+};
