@@ -22,8 +22,9 @@ import gulp from "gulp";
 import concat from "gulp-concat";
 import replace from "gulp-replace";
 import rename from "gulp-rename";
-import uglify from "gulp-uglify";
 import runSequence from "run-sequence";
+import uglifyJS from "uglify-js";
+import minifier from "gulp-uglify/minifier";
 
 import buildProperties, {handleError} from "./build.properties";
 
@@ -124,12 +125,15 @@ gulp.task("uglify", ["test"], () => {
         .on("error", handleError("uglify", "gulp.src"))
         .pipe(rename(buildProperties.outputFile))
         .on("error", handleError("uglify", "rename"))
-        .pipe(uglify({
-            preserveComments: function (_node, _comment) {
-                return (_comment.value.indexOf("! ") !== -1);
-            }
-        }))
-        .on("error", handleError("uglify", "uglify"))
+        .pipe(minifier(
+            {
+                preserveComments: function (_node, _comment) {
+                    return (_comment.value.indexOf("! ") !== -1);
+                }
+            },
+            uglifyJS
+        ))
+        .on("error", handleError("uglify", "minifier"))
         .pipe(gulp.dest(buildProperties.folder.DIST))
         .on("error", handleError("uglify", "gulp.dest"));
 });
