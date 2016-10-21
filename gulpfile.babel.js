@@ -108,7 +108,11 @@ gulp.task("update-files", ["concat-files"], () => {
         .on("error", handleError("update-files", "gulp.dest"));
 });
 
-gulp.task("uglify", ["update-files"], () => {
+gulp.task("test", ["update-files"], () => {
+    console.info("[ INFO ] Tests are not yet implemented. This is a placeholder.");
+});
+
+gulp.task("uglify", ["test"], () => {
     return gulp.src(
         [
             `${BUILD.SOURCE.COMPILED}/index.js`
