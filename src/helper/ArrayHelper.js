@@ -17,40 +17,35 @@
 /**
  * A collection of useful static methods to deal with JavaScript arrays.
  *
- * @singleton
- *
- * @since 1.0
+ * @since 1.0.0
  *
  */
-mindsmine.Array = (function () {
-
-    return {
-        /**
-         * Returns a non-null array, even if the object being passed is a null array.
-         *
-         * If the passed-in object is a non-null array, then it is returned as-is.
-         *
-         * Example usage:
-         *
-         *      var arr1 = [1, 2, 3, 4];
-         *      var arr2 = null;
-         *
-         *      var arr3 = mindsmine.Array.getNullSafe(arr1);
-         *
-         *      var arr4 = mindsmine.Array.getNullSafe(arr2);
-         *
-         *      // arr3 now contains the array: [1, 2, 3, 4]
-         *      // arr4 now contains the array: []
-         *
-         * @param {Array} arr The array to safeguard against <code>null</code>.
-         *
-         * @returns {Array} If arr is <code>null</code> then <code>[]</code> (empty array).
-         *
-         * @since 1.0
-         *
-         */
-        getNullSafe: function (arr) {
-            return (Array.isArray(arr)) ? arr : [];
-        }
-    };
-})();
+mindsmine.Array = class {
+    /**
+     * Returns a non-null array, even if the object being passed is a null array.
+     *
+     * If the passed-in object is a non-null array, then it is returned as-is.
+     *
+     * Example usage:
+     *
+     *      var arr1 = [1, 2, 3, 4];
+     *      var arr2 = null;
+     *
+     *      var arr3 = mindsmine.Array.getNullSafe(arr1);
+     *
+     *      var arr4 = mindsmine.Array.getNullSafe(arr2);
+     *
+     *      // arr3 now contains the array: [1, 2, 3, 4]
+     *      // arr4 now contains the array: []
+     *
+     * @param {Array} arr The array to safeguard against <code>null</code>.
+     *
+     * @returns {Array} If arr is <code>null</code> then <code>[]</code> (empty array).
+     *
+     * @since 1.0.0
+     *
+     */
+    static getNullSafe(arr) {
+        return (Array.isArray(arr)) ? arr : [];
+    }
+};
