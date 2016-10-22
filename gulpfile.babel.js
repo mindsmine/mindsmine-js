@@ -31,10 +31,12 @@ import buildProperties, {handleError} from "./build.properties";
 const BUILD = {
     SOURCE: {
         CODE: `${buildProperties.folder.BUILD}/source/code`,
+        CONCATENATED: `${buildProperties.folder.BUILD}/source/concatenated`,
         COMPILED: `${buildProperties.folder.BUILD}/source/compiled`
     },
     TEST: {
         CODE: `${buildProperties.folder.BUILD}/test/code`,
+        CONCATENATED: `${buildProperties.folder.BUILD}/test/concatenated`,
         COMPILED: `${buildProperties.folder.BUILD}/test/compiled`
     }
 };
@@ -87,12 +89,12 @@ gulp.task("concat-files", ["generate-sources"], () => {
         .on("error", handleError("concat-files", "gulp.src"))
         .pipe(concat("helper.js"))
         .on("error", handleError("concat-files", "concat"))
-        .pipe(gulp.dest(BUILD.SOURCE.COMPILED))
+        .pipe(gulp.dest(BUILD.SOURCE.CONCATENATED))
         .on("error", handleError("concat-files", "gulp.dest"));
 });
 
 gulp.task("update-files", ["concat-files"], () => {
-    let _helperCode = fs.readFileSync(`${BUILD.SOURCE.COMPILED}/helper.js`);
+    let _helperCode = fs.readFileSync(`${BUILD.SOURCE.CONCATENATED}/helper.js`);
 
     return gulp.src(
         [
@@ -105,7 +107,7 @@ gulp.task("update-files", ["concat-files"], () => {
         .on("error", handleError("update-files", "gulp.src"))
         .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
         .on("error", handleError("update-files", "replace"))
-        .pipe(gulp.dest(BUILD.SOURCE.COMPILED))
+        .pipe(gulp.dest(BUILD.SOURCE.CONCATENATED))
         .on("error", handleError("update-files", "gulp.dest"));
 });
 
