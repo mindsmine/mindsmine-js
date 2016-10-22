@@ -21,6 +21,7 @@
     "clean": "gulp clean",
     "test": "gulp package",
     "docs": "gulp documentation",
+    "dev-build": "gulp uglify",
     "package": "gulp package"
   },
   "devDependencies": {
