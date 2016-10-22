@@ -33,6 +33,8 @@
 
 /*! Copyright 2008-present Shaiksphere, Inc.  All rights reserved. @PRODUCT_NAME@ @PRODUCT_VERSION@ @BUILD_TIMESTAMP@ */
 
+"use strict";
+
 /*
  * In case it doesn't exist already.
  *
@@ -54,56 +56,53 @@ if (!String.prototype.trim) {
 }
 
 /**
- * @class mindsmine
- *
  * The mindsmine namespace (global object) encapsulates classes, singletons, and utility methods provided
  * by @PRODUCT_NAME@ library.
  *
  * Common utility functions (such as extensions to native JavaScript objects) are provided as direct properties of the
  * mindsmine namespace.
  *
- * @singleton
- *
  * @since 1.0
  *
  */
-var mindsmine = mindsmine || {};
+class mindsmine {
+    /**
+     * Name of the product.
+     *
+     * @returns {String} Name of the product.
+     *
+     * @since 1.0.0
+     *
+     */
+    static get productName() {
+        return "@PRODUCT_NAME@";
+    }
 
-/**
- * Name of the product.
- *
- * @property
- *
- * @readonly
- *
- * @since 1.0
- *
- */
-mindsmine.productName = "@PRODUCT_NAME@";
+    /**
+     * Version of the product.
+     *
+     * @returns {String} Version of the product.
+     *
+     * @since 1.0.0
+     *
+     */
+    static get productVersion() {
+        return "@PRODUCT_VERSION@";
+    }
 
-/**
- * Version of the product.
- *
- * @property
- *
- * @readonly
- *
- * @since 1.0
- *
- */
-mindsmine.productVersion = "@PRODUCT_VERSION@";
+    /**
+     * Build timestamp of the product.
+     *
+     * @returns {String} Build timestamp of the product.
+     *
+     * @since 1.0.0
+     *
+     */
+    static get productBuild() {
+        return "@BUILD_TIMESTAMP@";
+    }
 
-/**
- * Build timestamp of the product.
- *
- * @property
- *
- * @readonly
- *
- * @since 1.0
- *
- */
-mindsmine.productBuild = "@BUILD_TIMESTAMP@";
+}
 
 //_CONCATENATED_HELPER_CODE
 
