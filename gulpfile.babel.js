@@ -32,12 +32,12 @@ const BUILD = {
     SOURCE: {
         CODE: `${buildProperties.folder.BUILD}/source/code`,
         CONCATENATED: `${buildProperties.folder.BUILD}/source/concatenated`,
-        COMPILED: `${buildProperties.folder.BUILD}/source/compiled`
+        TRANSPILED: `${buildProperties.folder.BUILD}/source/transpiled`
     },
     TEST: {
         CODE: `${buildProperties.folder.BUILD}/test/code`,
         CONCATENATED: `${buildProperties.folder.BUILD}/test/concatenated`,
-        COMPILED: `${buildProperties.folder.BUILD}/test/compiled`
+        TRANSPILED: `${buildProperties.folder.BUILD}/test/transpiled`
     }
 };
 
@@ -127,17 +127,17 @@ gulp.task("transpile", ["update-files"], () => {
             ]
         }))
         .on("error", handleError("transpile", "babel"))
-        .pipe(gulp.dest(BUILD.SOURCE.COMPILED))
+        .pipe(gulp.dest(BUILD.SOURCE.TRANSPILED))
         .on("error", handleError("transpile", "gulp.dest"));
 });
 
 gulp.task("uglify", ["transpile"], () => {
     return gulp.src(
         [
-            `${BUILD.SOURCE.COMPILED}/index.js`
+            `${BUILD.SOURCE.TRANSPILED}/index.js`
         ],
         {
-            base: BUILD.SOURCE.COMPILED
+            base: BUILD.SOURCE.TRANSPILED
         }
     )
         .on("error", handleError("uglify", "gulp.src"))
