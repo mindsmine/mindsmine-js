@@ -44,7 +44,7 @@ const NOW = new Date(),
 
 export function handleError(sourceTask, sourceStep) {
     return function (err) {
-        console.error(`Error during the '${sourceStep}' step under the '${sourceTask} task'.`, err.toString());
+        console.error(`Error during the '${sourceStep}' step under the '${sourceTask}' task.`, err.toString());
     }
 }
 
