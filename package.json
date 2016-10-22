@@ -28,6 +28,7 @@
     "babel-preset-es2015-node6": "0.3.0",
     "del": "2.2.2",
     "gulp": "3.9.1",
+    "gulp-babel": "6.1.2",
     "gulp-concat": "2.6.0",
     "gulp-replace": "0.5.4",
     "gulp-rename": "1.2.2",
