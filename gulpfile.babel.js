@@ -19,12 +19,12 @@
 import del from "del";
 import fs from "fs";
 import gulp from "gulp";
+import babel from "gulp-babel";
 import concat from "gulp-concat";
 import replace from "gulp-replace";
 import rename from "gulp-rename";
+import uglify from "gulp-uglify";
 import runSequence from "run-sequence";
-import uglifyJS from "uglify-js";
-import minifier from "gulp-uglify/minifier";
 
 import buildProperties, {handleError} from "./build.properties";
 
@@ -111,7 +111,27 @@ gulp.task("update-files", ["concat-files"], () => {
         .on("error", handleError("update-files", "gulp.dest"));
 });
 
-gulp.task("test", ["update-files"], () => {
+gulp.task("transpile", ["update-files"], () => {
+    return gulp.src(
+        [
+            `${BUILD.SOURCE.CONCATENATED}/index.js`
+        ],
+        {
+            base: BUILD.SOURCE.CONCATENATED
+        }
+    )
+        .on("error", handleError("transpile", "gulp.src"))
+        .pipe(babel({
+            presets: [
+                "es2015"
+            ]
+        }))
+        .on("error", handleError("transpile", "babel"))
+        .pipe(gulp.dest(BUILD.SOURCE.COMPILED))
+        .on("error", handleError("transpile", "gulp.dest"));
+});
+
+gulp.task("test", ["transpile"], () => {
     console.info("[ INFO ] Tests are not yet implemented. This is a placeholder.");
 });
 
@@ -127,15 +147,12 @@ gulp.task("uglify", ["test"], () => {
         .on("error", handleError("uglify", "gulp.src"))
         .pipe(rename(buildProperties.outputFile))
         .on("error", handleError("uglify", "rename"))
-        .pipe(minifier(
-            {
-                preserveComments: function (_node, _comment) {
-                    return (_comment.value.indexOf("! ") !== -1);
-                }
-            },
-            uglifyJS
-        ))
-        .on("error", handleError("uglify", "minifier"))
+        .pipe(uglify({
+            preserveComments: function (_node, _comment) {
+                return (_comment.value.indexOf("! ") !== -1);
+            }
+        }))
+        .on("error", handleError("uglify", "uglify"))
         .pipe(gulp.dest(buildProperties.folder.DIST))
         .on("error", handleError("uglify", "gulp.dest"));
 });
