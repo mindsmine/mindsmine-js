@@ -19,7 +19,7 @@
   },
   "scripts": {
     "clean": "gulp clean",
-    "test": "gulp test",
+    "test": "gulp package",
     "docs": "gulp documentation",
     "package": "gulp package"
   },

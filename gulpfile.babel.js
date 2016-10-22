@@ -131,11 +131,7 @@ gulp.task("transpile", ["update-files"], () => {
         .on("error", handleError("transpile", "gulp.dest"));
 });
 
-gulp.task("test", ["transpile"], () => {
-    console.info("[ INFO ] Tests are not yet implemented. This is a placeholder.");
-});
-
-gulp.task("uglify", ["test"], () => {
+gulp.task("uglify", ["transpile"], () => {
     return gulp.src(
         [
             `${BUILD.SOURCE.COMPILED}/index.js`
