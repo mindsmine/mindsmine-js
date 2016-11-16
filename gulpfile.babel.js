@@ -41,124 +41,161 @@ const BUILD = {
     }
 };
 
-gulp.task("clean-unwanted", () => {
-    let _paths = del.sync([buildProperties.folder.BUILD]);
+gulp.task(
+    "clean-unwanted",
+    () => {
+        let _paths = del.sync([buildProperties.folder.BUILD]);
 
-    console.info("Deleting unwanted files\n", _paths.join("\n"));
+        console.info("Deleting unwanted files\n", _paths.join("\n"));
+        return _paths;
+    }
+);
 
-    return _paths;
-});
+gulp.task(
+    "clean",
+    ["clean-unwanted"],
+    () => {
+        let _paths = [];
 
-gulp.task("clean", ["clean-unwanted"], () => {
-    let _paths = [];
+        _paths.push(del.sync([buildProperties.folder.DIST]));
+        _paths.push(del.sync([buildProperties.folder.DOCS]));
 
-    _paths.push(del.sync([buildProperties.folder.DIST]));
-    _paths.push(del.sync([buildProperties.folder.DOCS]));
+        console.info("Cleaning\n", _paths.join("\n"));
 
-    console.info("Cleaning\n", _paths.join("\n"));
+        return _paths;
+    }
+);
 
-    return _paths;
-});
-
-gulp.task("generate-sources", ["clean"], () => {
-    let _task = gulp.src(
-        [
-            `${buildProperties.folder.SRC}/**/*`
-        ],
-        {
-            base: buildProperties.folder.SRC
-        }
-    ).on("error", handleError("generate-sources", "gulp.src"));
-
-    buildProperties.replaceArray.forEach((arr) => {
-        _task = _task.pipe(replace(arr[0], arr[1])).on("error", handleError("generate-sources", "replace"));
-    });
-
-    return _task.pipe(gulp.dest(BUILD.SOURCE.CODE)).on("error", handleError("generate-sources", "gulp.dest"));
-});
-
-gulp.task("concat-files", ["generate-sources"], () => {
-    return gulp.src(
-        [
-            `${BUILD.SOURCE.CODE}/helper/**/*`
-        ],
-        {
-            base: BUILD.SOURCE.CODE
-        }
-    )
-        .on("error", handleError("concat-files", "gulp.src"))
-        .pipe(concat("helper.js"))
-        .on("error", handleError("concat-files", "concat"))
-        .pipe(gulp.dest(BUILD.SOURCE.CONCATENATED))
-        .on("error", handleError("concat-files", "gulp.dest"));
-});
-
-gulp.task("update-files", ["concat-files"], () => {
-    let _helperCode = fs.readFileSync(`${BUILD.SOURCE.CONCATENATED}/helper.js`);
-
-    return gulp.src(
-        [
-            `${BUILD.SOURCE.CODE}/index.js`
-        ],
-        {
-            base: BUILD.SOURCE.CODE
-        }
-    )
-        .on("error", handleError("update-files", "gulp.src"))
-        .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
-        .on("error", handleError("update-files", "replace"))
-        .pipe(gulp.dest(BUILD.SOURCE.CONCATENATED))
-        .on("error", handleError("update-files", "gulp.dest"));
-});
-
-gulp.task("transpile", ["update-files"], () => {
-    return gulp.src(
-        [
-            `${BUILD.SOURCE.CONCATENATED}/index.js`
-        ],
-        {
-            base: BUILD.SOURCE.CONCATENATED
-        }
-    )
-        .on("error", handleError("transpile", "gulp.src"))
-        .pipe(babel({
-            presets: [
-                "es2015"
-            ]
-        }))
-        .on("error", handleError("transpile", "babel"))
-        .pipe(gulp.dest(BUILD.SOURCE.TRANSPILED))
-        .on("error", handleError("transpile", "gulp.dest"));
-});
-
-gulp.task("uglify", ["transpile"], () => {
-    return gulp.src(
-        [
-            `${BUILD.SOURCE.TRANSPILED}/index.js`
-        ],
-        {
-            base: BUILD.SOURCE.TRANSPILED
-        }
-    )
-        .on("error", handleError("uglify", "gulp.src"))
-        .pipe(rename(buildProperties.outputFile))
-        .on("error", handleError("uglify", "rename"))
-        .pipe(uglify({
-            preserveComments: function (_node, _comment) {
-                return (_comment.value.indexOf("! ") !== -1);
+gulp.task(
+    "generate-sources",
+    ["clean"],
+    () => {
+        let _task = gulp.src(
+            [
+                `${buildProperties.folder.SRC}/**/*`
+            ],
+            {
+                base: buildProperties.folder.SRC
             }
-        }))
-        .on("error", handleError("uglify", "uglify"))
-        .pipe(gulp.dest(buildProperties.folder.DIST))
-        .on("error", handleError("uglify", "gulp.dest"));
-});
+            ).on("error", handleError("generate-sources", "gulp.src"));
 
-gulp.task("documentation", ["update-files"], () => {
+        buildProperties.replaceArray.forEach((arr) => {
+            _task = _task.pipe(replace(arr[0], arr[1])).on("error", handleError("generate-sources", "replace"));
+        });
 
-    // Do nothing for now
+        return _task.pipe(gulp.dest(BUILD.SOURCE.CODE)).on("error", handleError("generate-sources", "gulp.dest"));
+    }
+);
 
-});
+gulp.task(
+    "concat-files",
+    ["generate-sources"],
+    () => {
+        return gulp.src(
+            [
+                `${BUILD.SOURCE.CODE}/helper/**/*`
+            ],
+            {
+                base: BUILD.SOURCE.CODE
+            }
+            )
+            .on("error", handleError("concat-files", "gulp.src"))
+            .pipe(concat("helper.js"))
+            .on("error", handleError("concat-files", "concat"))
+            .pipe(gulp.dest(BUILD.SOURCE.CONCATENATED))
+            .on("error", handleError("concat-files", "gulp.dest"));
+    }
+);
 
-gulp.task("package", () => {
-    runSequence("uglify", "clean-unwanted");
-});
+gulp.task(
+    "update-files",
+    ["concat-files"],
+    () => {
+        let _helperCode = fs.readFileSync(`${BUILD.SOURCE.CONCATENATED}/helper.js`);
+
+        return gulp.src(
+            [
+                `${BUILD.SOURCE.CODE}/index.js`
+            ],
+            {
+                base: BUILD.SOURCE.CODE
+            }
+            )
+            .on("error", handleError("update-files", "gulp.src"))
+            .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
+            .on("error", handleError("update-files", "replace"))
+            .pipe(gulp.dest(BUILD.SOURCE.CONCATENATED))
+            .on("error", handleError("update-files", "gulp.dest"));
+    }
+);
+
+gulp.task(
+    "transpile",
+    [
+        "update-files"
+    ],
+    () => {
+        return gulp.src(
+            [
+                `${BUILD.SOURCE.CONCATENATED}/index.js`
+            ],
+            {
+                base: BUILD.SOURCE.CONCATENATED
+            }
+            )
+            .on("error", handleError("transpile", "gulp.src"))
+            .pipe(babel({
+                presets: [
+                    "es2015"
+                ]
+            }))
+            .on("error", handleError("transpile", "babel"))
+            .pipe(gulp.dest(BUILD.SOURCE.TRANSPILED))
+            .on("error", handleError("transpile", "gulp.dest"));
+    }
+);
+
+gulp.task(
+    "uglify",
+    [
+        "transpile"
+    ],
+    () => {
+        return gulp.src(
+            [
+                `${BUILD.SOURCE.TRANSPILED}/index.js`
+            ],
+            {
+                base: BUILD.SOURCE.TRANSPILED
+            }
+            )
+            .on("error", handleError("uglify", "gulp.src"))
+            .pipe(rename(buildProperties.outputFile))
+            .on("error", handleError("uglify", "rename"))
+            .pipe(uglify({
+                preserveComments: function (_node, _comment) {
+                    return (_comment.value.indexOf("! ") !== -1);
+                }
+            }))
+            .on("error", handleError("uglify", "uglify"))
+            .pipe(gulp.dest(buildProperties.folder.DIST))
+            .on("error", handleError("uglify", "gulp.dest"));
+    }
+);
+
+gulp.task(
+    "documentation",
+    [
+        "update-files"
+    ],
+    () => {
+        // Do nothing for now
+    }
+);
+
+gulp.task(
+    "package",
+    () => {
+        runSequence("uglify", "clean-unwanted");
+    }
+);
