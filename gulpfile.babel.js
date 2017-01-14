@@ -22,6 +22,7 @@ import gulp from "gulp";
 import babel from "gulp-babel";
 import concat from "gulp-concat";
 import jest from "gulp-jest";
+import jsdoc3 from "gulp-jsdoc3";
 import replace from "gulp-replace";
 import rename from "gulp-rename";
 import uglify from "gulp-uglify";
@@ -37,8 +38,7 @@ const BUILD = {
     },
     TEST: {
         CODE: `${buildProperties.folder.BUILD}/test/code`,
-        CONCATENATED: `${buildProperties.folder.BUILD}/test/concatenated`,
-        TRANSPILED: `${buildProperties.folder.BUILD}/test/transpiled`
+        CONCATENATED: `${buildProperties.folder.BUILD}/test/concatenated`
     }
 };
 
@@ -71,14 +71,8 @@ gulp.task(
     "generate-source-files",
     ["clean"],
     () => {
-        let _task = gulp.src(
-            [
-                `${buildProperties.folder.SRC}/**/*`
-            ],
-            {
-                base: buildProperties.folder.SRC
-            }
-            ).on("error", handleError("generate-source-files", "gulp.src"));
+        let _task = gulp.src(`${buildProperties.folder.SRC}/**/*`)
+            .on("error", handleError("generate-source-files", "gulp.src"));
 
         buildProperties.replaceArray.forEach((arr) => {
             _task = _task.pipe(replace(arr[0], arr[1])).on("error", handleError("generate-source-files", "replace"));
@@ -92,14 +86,7 @@ gulp.task(
     "concat-source-files",
     ["generate-source-files"],
     () => {
-        return gulp.src(
-            [
-                `${BUILD.SOURCE.CODE}/helper/**/*`
-            ],
-            {
-                base: BUILD.SOURCE.CODE
-            }
-            )
+        return gulp.src(`${BUILD.SOURCE.CODE}/helper/**/*`)
             .on("error", handleError("concat-source-files", "gulp.src"))
             .pipe(concat("helper.js"))
             .on("error", handleError("concat-source-files", "concat"))
@@ -114,14 +101,7 @@ gulp.task(
     () => {
         let _helperCode = fs.readFileSync(`${BUILD.SOURCE.CONCATENATED}/helper.js`);
 
-        return gulp.src(
-            [
-                `${BUILD.SOURCE.CODE}/index.js`
-            ],
-            {
-                base: BUILD.SOURCE.CODE
-            }
-            )
+        return gulp.src(`${BUILD.SOURCE.CODE}/index.js`)
             .on("error", handleError("update-source-files", "gulp.src"))
             .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
             .on("error", handleError("update-source-files", "replace"))
@@ -134,14 +114,7 @@ gulp.task(
     "transpile-source-files",
     ["update-source-files"],
     () => {
-        return gulp.src(
-            [
-                `${BUILD.SOURCE.CONCATENATED}/index.js`
-            ],
-            {
-                base: BUILD.SOURCE.CONCATENATED
-            }
-            )
+        return gulp.src(`${BUILD.SOURCE.CONCATENATED}/index.js`)
             .on("error", handleError("transpile-source-files", "gulp.src"))
             .pipe(babel({
                 presets: [
@@ -158,14 +131,7 @@ gulp.task(
     "uglify",
     ["transpile-source-files"],
     () => {
-        return gulp.src(
-            [
-                `${BUILD.SOURCE.TRANSPILED}/index.js`
-            ],
-            {
-                base: BUILD.SOURCE.TRANSPILED
-            }
-            )
+        return gulp.src(`${BUILD.SOURCE.TRANSPILED}/index.js`)
             .on("error", handleError("uglify", "gulp.src"))
             .pipe(rename(buildProperties.outputFile))
             .on("error", handleError("uglify", "rename"))
@@ -184,14 +150,8 @@ gulp.task(
     "generate-test-files",
     ["uglify"],
     () => {
-        let _task = gulp.src(
-            [
-                `${buildProperties.folder.TEST}/**/*`
-            ],
-            {
-                base: buildProperties.folder.TEST
-            }
-        ).on("error", handleError("generate-test-files", "gulp.src"));
+        let _task = gulp.src(`${buildProperties.folder.TEST}/**/*`)
+            .on("error", handleError("generate-test-files", "gulp.src"));
 
         buildProperties.replaceArray.forEach((arr) => {
             _task = _task.pipe(replace(arr[0], arr[1])).on("error", handleError("generate-test-files", "replace"));
@@ -205,14 +165,7 @@ gulp.task(
     "concat-test-files",
     ["generate-test-files"],
     () => {
-        return gulp.src(
-            [
-                `${BUILD.TEST.CODE}/helper/**/*`
-            ],
-            {
-                base: BUILD.TEST.CODE
-            }
-        )
+        return gulp.src(`${BUILD.TEST.CODE}/helper/**/*`)
             .on("error", handleError("concat-test-files", "gulp.src"))
             .pipe(concat("helper.js"))
             .on("error", handleError("concat-test-files", "concat"))
@@ -227,14 +180,7 @@ gulp.task(
     () => {
         let _helperCode = fs.readFileSync(`${BUILD.TEST.CONCATENATED}/helper.js`);
 
-        return gulp.src(
-            [
-                `${BUILD.TEST.CODE}/index.test.js`
-            ],
-            {
-                base: BUILD.TEST.CODE
-            }
-        )
+        return gulp.src(`${BUILD.TEST.CODE}/index.test.js`)
             .on("error", handleError("update-test-files", "gulp.src"))
             .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
             .on("error", handleError("update-test-files", "replace"))
@@ -256,15 +202,45 @@ gulp.task(
 
 gulp.task(
     "documentation",
-    ["update-files"],
+    ["test"],
     () => {
-        // Do nothing for now
+        return gulp.src(
+            [
+                "README.md",
+                `${BUILD.SOURCE.CONCATENATED}/index.js`
+            ]
+        )
+            .on("error", handleError("documentation", "gulp.src"))
+            .pipe(jsdoc3({
+                opts: {
+                    destination: `${buildProperties.folder.DOCS}/mindsmine/js/${buildProperties.packageJSON.version}`
+                },
+                plugins: [
+                    "plugins/markdown"
+                ],
+                templates: {
+                    navType: "inline",
+                    includeDate: false,
+                    collapseSymbols: true,
+                    theme: "flatly",
+                    outputSourceFiles: false,
+                    syntaxTheme: "dark",
+                    systemName: `${buildProperties.packageJSON.name}`,
+                    copyright:
+                        `<div style="text-align: center;">
+                            Copyright &#169; 2008, ${(new Date()).getFullYear()},
+                            <strong><a target="_blank" href="http://www.shaiksphere.com">Shaiksphere Inc</a></strong>.
+                            All rights reserved.
+                        </div>`
+                }
+            }))
+            .on("error", handleError("documentation", "jsdoc3"));
     }
 );
 
 gulp.task(
     "package",
     () => {
-        runSequence("test", "clean-unwanted");
+        runSequence("documentation", "clean-unwanted");
     }
 );

@@ -50,6 +50,7 @@ export function handleError(sourceTask, sourceStep) {
 }
 
 export default {
+    packageJSON: PACKAGE_JSON,
     outputFile: OUTPUT_FILE,
     folder: FOLDER,
     replaceArray: [
