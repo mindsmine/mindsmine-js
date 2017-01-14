@@ -129,24 +129,6 @@ gulp.task(
     }
 );
 
-// gulp.task(
-//     "generate-test-sources",
-//     ["generate-sources"],
-//     () => {
-//         let _task = gulp.src(
-//             [
-//                 `${buildProperties.folder.TEST}/**/*`
-//             ],
-//             {
-//                 base: buildProperties.folder.TEST
-//             }
-//         ).on("error", handleError("generate-test-sources", "gulp.src"));
-//
-//         return _task.pipe(gulp.dest(BUILD.TEST.CODE)).on("error", handleError("generate-test-sources", "gulp.dest"));
-//     }
-// );
-
-
 gulp.task(
     "transpile-source-files",
     ["update-source-files"],
@@ -168,6 +150,23 @@ gulp.task(
             .on("error", handleError("transpile-source-files", "babel"))
             .pipe(gulp.dest(BUILD.SOURCE.TRANSPILED))
             .on("error", handleError("transpile-source-files", "gulp.dest"));
+    }
+);
+
+gulp.task(
+    "generate-test-sources",
+    ["transpile-source-files"],
+    () => {
+        let _task = gulp.src(
+            [
+                `${buildProperties.folder.TEST}/**/*`
+            ],
+            {
+                base: buildProperties.folder.TEST
+            }
+        ).on("error", handleError("generate-test-sources", "gulp.src"));
+
+        return _task.pipe(gulp.dest(BUILD.TEST.CODE)).on("error", handleError("generate-test-sources", "gulp.dest"));
     }
 );
 
