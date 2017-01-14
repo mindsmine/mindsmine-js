@@ -67,7 +67,7 @@ gulp.task(
 );
 
 gulp.task(
-    "generate-sources",
+    "generate-source-files",
     ["clean"],
     () => {
         let _task = gulp.src(
@@ -77,19 +77,19 @@ gulp.task(
             {
                 base: buildProperties.folder.SRC
             }
-            ).on("error", handleError("generate-sources", "gulp.src"));
+            ).on("error", handleError("generate-source-files", "gulp.src"));
 
         buildProperties.replaceArray.forEach((arr) => {
-            _task = _task.pipe(replace(arr[0], arr[1])).on("error", handleError("generate-sources", "replace"));
+            _task = _task.pipe(replace(arr[0], arr[1])).on("error", handleError("generate-source-files", "replace"));
         });
 
-        return _task.pipe(gulp.dest(BUILD.SOURCE.CODE)).on("error", handleError("generate-sources", "gulp.dest"));
+        return _task.pipe(gulp.dest(BUILD.SOURCE.CODE)).on("error", handleError("generate-source-files", "gulp.dest"));
     }
 );
 
 gulp.task(
-    "concat-files",
-    ["generate-sources"],
+    "concat-source-files",
+    ["generate-source-files"],
     () => {
         return gulp.src(
             [
@@ -99,17 +99,17 @@ gulp.task(
                 base: BUILD.SOURCE.CODE
             }
             )
-            .on("error", handleError("concat-files", "gulp.src"))
+            .on("error", handleError("concat-source-files", "gulp.src"))
             .pipe(concat("helper.js"))
-            .on("error", handleError("concat-files", "concat"))
+            .on("error", handleError("concat-source-files", "concat"))
             .pipe(gulp.dest(BUILD.SOURCE.CONCATENATED))
-            .on("error", handleError("concat-files", "gulp.dest"));
+            .on("error", handleError("concat-source-files", "gulp.dest"));
     }
 );
 
 gulp.task(
-    "update-files",
-    ["concat-files"],
+    "update-source-files",
+    ["concat-source-files"],
     () => {
         let _helperCode = fs.readFileSync(`${BUILD.SOURCE.CONCATENATED}/helper.js`);
 
@@ -121,17 +121,35 @@ gulp.task(
                 base: BUILD.SOURCE.CODE
             }
             )
-            .on("error", handleError("update-files", "gulp.src"))
+            .on("error", handleError("update-source-files", "gulp.src"))
             .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
-            .on("error", handleError("update-files", "replace"))
+            .on("error", handleError("update-source-files", "replace"))
             .pipe(gulp.dest(BUILD.SOURCE.CONCATENATED))
-            .on("error", handleError("update-files", "gulp.dest"));
+            .on("error", handleError("update-source-files", "gulp.dest"));
     }
 );
 
+// gulp.task(
+//     "generate-test-sources",
+//     ["generate-sources"],
+//     () => {
+//         let _task = gulp.src(
+//             [
+//                 `${buildProperties.folder.TEST}/**/*`
+//             ],
+//             {
+//                 base: buildProperties.folder.TEST
+//             }
+//         ).on("error", handleError("generate-test-sources", "gulp.src"));
+//
+//         return _task.pipe(gulp.dest(BUILD.TEST.CODE)).on("error", handleError("generate-test-sources", "gulp.dest"));
+//     }
+// );
+
+
 gulp.task(
-    "transpile",
-    ["update-files"],
+    "transpile-source-files",
+    ["update-source-files"],
     () => {
         return gulp.src(
             [
@@ -141,21 +159,21 @@ gulp.task(
                 base: BUILD.SOURCE.CONCATENATED
             }
             )
-            .on("error", handleError("transpile", "gulp.src"))
+            .on("error", handleError("transpile-source-files", "gulp.src"))
             .pipe(babel({
                 presets: [
                     "es2015"
                 ]
             }))
-            .on("error", handleError("transpile", "babel"))
+            .on("error", handleError("transpile-source-files", "babel"))
             .pipe(gulp.dest(BUILD.SOURCE.TRANSPILED))
-            .on("error", handleError("transpile", "gulp.dest"));
+            .on("error", handleError("transpile-source-files", "gulp.dest"));
     }
 );
 
 gulp.task(
     "uglify",
-    ["transpile"],
+    ["transpile-source-files"],
     () => {
         return gulp.src(
             [
