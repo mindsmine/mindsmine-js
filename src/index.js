@@ -69,6 +69,8 @@ class mindsmine {
     /**
      * Name of the product.
      *
+     * @constant
+     *
      * @return {String} Name of the product.
      *
      * @since 1.0.0
@@ -80,6 +82,8 @@ class mindsmine {
 
     /**
      * Version of the product.
+     *
+     * @constant
      *
      * @return {String} Version of the product.
      *
@@ -93,6 +97,8 @@ class mindsmine {
     /**
      * Build timestamp of the product.
      *
+     * @constant
+     *
      * @return {String} Build timestamp of the product.
      *
      * @since 1.0.0
@@ -101,7 +107,6 @@ class mindsmine {
     static get productBuild() {
         return "@BUILD_TIMESTAMP@";
     }
-
 }
 
 //_CONCATENATED_HELPER_CODE
