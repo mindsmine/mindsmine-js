@@ -21,6 +21,7 @@ import fs from "fs";
 import gulp from "gulp";
 import babel from "gulp-babel";
 import concat from "gulp-concat";
+import jest from "gulp-jest";
 import replace from "gulp-replace";
 import rename from "gulp-rename";
 import uglify from "gulp-uglify";
@@ -154,23 +155,6 @@ gulp.task(
 );
 
 gulp.task(
-    "generate-test-sources",
-    ["transpile-source-files"],
-    () => {
-        let _task = gulp.src(
-            [
-                `${buildProperties.folder.TEST}/**/*`
-            ],
-            {
-                base: buildProperties.folder.TEST
-            }
-        ).on("error", handleError("generate-test-sources", "gulp.src"));
-
-        return _task.pipe(gulp.dest(BUILD.TEST.CODE)).on("error", handleError("generate-test-sources", "gulp.dest"));
-    }
-);
-
-gulp.task(
     "uglify",
     ["transpile-source-files"],
     () => {
@@ -197,6 +181,80 @@ gulp.task(
 );
 
 gulp.task(
+    "generate-test-files",
+    ["uglify"],
+    () => {
+        let _task = gulp.src(
+            [
+                `${buildProperties.folder.TEST}/**/*`
+            ],
+            {
+                base: buildProperties.folder.TEST
+            }
+        ).on("error", handleError("generate-test-files", "gulp.src"));
+
+        buildProperties.replaceArray.forEach((arr) => {
+            _task = _task.pipe(replace(arr[0], arr[1])).on("error", handleError("generate-test-files", "replace"));
+        });
+
+        return _task.pipe(gulp.dest(BUILD.TEST.CODE)).on("error", handleError("generate-test-files", "gulp.dest"));
+    }
+);
+
+gulp.task(
+    "concat-test-files",
+    ["generate-test-files"],
+    () => {
+        return gulp.src(
+            [
+                `${BUILD.TEST.CODE}/helper/**/*`
+            ],
+            {
+                base: BUILD.TEST.CODE
+            }
+        )
+            .on("error", handleError("concat-test-files", "gulp.src"))
+            .pipe(concat("helper.js"))
+            .on("error", handleError("concat-test-files", "concat"))
+            .pipe(gulp.dest(BUILD.TEST.CONCATENATED))
+            .on("error", handleError("concat-test-files", "gulp.dest"));
+    }
+);
+
+gulp.task(
+    "update-test-files",
+    ["concat-test-files"],
+    () => {
+        let _helperCode = fs.readFileSync(`${BUILD.TEST.CONCATENATED}/helper.js`);
+
+        return gulp.src(
+            [
+                `${BUILD.TEST.CODE}/index.test.js`
+            ],
+            {
+                base: BUILD.TEST.CODE
+            }
+        )
+            .on("error", handleError("update-test-files", "gulp.src"))
+            .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
+            .on("error", handleError("update-test-files", "replace"))
+            .pipe(gulp.dest(BUILD.TEST.CONCATENATED))
+            .on("error", handleError("update-test-files", "gulp.dest"));
+    }
+);
+
+gulp.task(
+    "test",
+    ["update-test-files"],
+    () => {
+        return gulp.src(`${BUILD.TEST.CONCATENATED}`)
+            .on("error", handleError("test", "gulp.src"))
+            .pipe(jest())
+            .on("error", handleError("test", "jest"));
+    }
+);
+
+gulp.task(
     "documentation",
     ["update-files"],
     () => {
@@ -207,6 +265,6 @@ gulp.task(
 gulp.task(
     "package",
     () => {
-        runSequence("uglify", "clean-unwanted");
+        runSequence("test", "clean-unwanted");
     }
 );

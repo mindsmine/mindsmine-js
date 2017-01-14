@@ -40,7 +40,8 @@ const NOW = new Date(),
         });
 
         return _packageJSON;
-    })();
+    })(),
+    OUTPUT_FILE = `${PACKAGE_JSON.name}-${PACKAGE_JSON.version}.min.js`;
 
 export function handleError(sourceTask, sourceStep) {
     return function (err) {
@@ -49,9 +50,13 @@ export function handleError(sourceTask, sourceStep) {
 }
 
 export default {
-    outputFile: `${PACKAGE_JSON.name}-${PACKAGE_JSON.version}.min.js`,
+    outputFile: OUTPUT_FILE,
     folder: FOLDER,
     replaceArray: [
+        [
+            "@REQUIRE_FILE@",
+            OUTPUT_FILE
+        ],
         [
             "@BUILD_TIMESTAMP@",
             TIMESTAMP

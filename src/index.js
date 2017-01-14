@@ -108,6 +108,19 @@ class mindsmine {
 
 mindsmine = mindsmine.Object.freeze(mindsmine, true);
 
+// Export the mindsmine object for NodeJS. For browser, add `mindsmine` as a global object
+if (typeof exports !== 'undefined' && !exports.nodeType) {
+    if (typeof module !== 'undefined' && !module.nodeType && module.exports) {
+        module.exports = mindsmine;
+    }
+
+    exports.mindsmine = mindsmine;
+} else {
+    let base = typeof window === 'object' && window.window === window && window || this || {};
+
+    base.mindsmine = mindsmine;
+}
+
 /*
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
