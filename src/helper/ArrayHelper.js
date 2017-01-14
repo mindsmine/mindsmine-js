@@ -40,7 +40,7 @@ mindsmine.Array = class {
      *
      * @param {Array} arr The array to safeguard against <code>null</code>.
      *
-     * @return {Array} If arr is <code>null</code> then <code>[]</code> (empty array).
+     * @returns {Array} If arr is <code>null</code> then <code>[]</code> (empty array).
      *
      * @since 1.0.0
      *

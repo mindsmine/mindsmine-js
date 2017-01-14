@@ -28,7 +28,7 @@ mindsmine.Object = class {
      * @param {Object} obj The object to freeze.
      * @param {Boolean} [deep=false] Pass <code>true</code> to freeze sub-objects recursively.
      *
-     * @return {Object} The given object <code>obj</code>.
+     * @returns {Object} The given object <code>obj</code>.
      *
      * @since 1.0.0
      *
@@ -70,7 +70,7 @@ mindsmine.Object = class {
      *
      * @param {Object} value The value to find.
      *
-     * @return {Object|null} First matching key. If no matching value is found, <code>null</code> is returned.
+     * @returns {Object|null} First matching key. If no matching value is found, <code>null</code> is returned.
      *
      * @since 1.0.0
      *
@@ -94,7 +94,7 @@ mindsmine.Object = class {
      *
      * @param {Object} rawJSON To be copied by value.
      *
-     * @return {Object} Newly copied by value object.
+     * @returns {Object} Newly copied by value object.
      *
      * @since 1.0.0
      *
@@ -112,7 +112,7 @@ mindsmine.Object = class {
      *
      * @param {Object} value The value to test.
      *
-     * @return {Boolean}
+     * @returns {Boolean}
      *
      * @since 1.0.0
      *
@@ -142,7 +142,7 @@ mindsmine.Object = class {
      *
      * @param {Object} obj The object to safeguard against <code>null</code>.
      *
-     * @return {Object} If obj is <code>null</code> then <code>{}</code> (empty object).
+     * @returns {Object} If obj is <code>null</code> then <code>{}</code> (empty object).
      *
      * @since 1.0.0
      *

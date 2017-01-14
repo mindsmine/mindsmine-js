@@ -27,7 +27,7 @@ mindsmine.Ajax = class {
      *
      * @constant
      *
-     * @return {Number}
+     * @returns {Number}
      *
      * @since 1.0.0
      *
@@ -41,7 +41,7 @@ mindsmine.Ajax = class {
      *
      * @constant
      *
-     * @return {Boolean}
+     * @returns {Boolean}
      *
      * @since 1.0.0
      *
@@ -55,7 +55,7 @@ mindsmine.Ajax = class {
      *
      * @constant
      *
-     * @return {Boolean}
+     * @returns {Boolean}
      *
      * @since 1.0.0
      *
@@ -67,7 +67,7 @@ mindsmine.Ajax = class {
     /**
      * Provides the default <code>scope</code> value for callbacks.
      *
-     * @return {Window}
+     * @returns {Window}
      *
      * @since 1.0.0
      *
@@ -79,7 +79,7 @@ mindsmine.Ajax = class {
     /**
      * Returns the Ajax object based upon the browser.
      *
-     * @return {XMLHttpRequest}
+     * @returns {XMLHttpRequest}
      *
      * @since 1.0.0
      *
@@ -123,7 +123,7 @@ mindsmine.Ajax = class {
      *
      * @constant
      *
-     * @return {String[]}
+     * @returns {String[]}
      *
      * @since 1.0.0
      *

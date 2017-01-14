@@ -40,7 +40,7 @@ mindsmine.Boolean = class {
      *
      * @param {Boolean} bool The boolean to safeguard against <code>null</code>.
      *
-     * @return {Boolean} If bool is <code>null</code> then <code>false</code>.
+     * @returns {Boolean} If bool is <code>null</code> then <code>false</code>.
      *
      * @since 1.0.0
      *

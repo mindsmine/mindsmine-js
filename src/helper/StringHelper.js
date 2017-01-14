@@ -37,7 +37,7 @@ mindsmine.String = class {
      * @param {String} string The tokenised string to be formatted.
      * @param {...String} values The values to replace tokens <code>{0}</code>, <code>{1}</code>, etc. in order.
      *
-     * @return {String} The formatted string
+     * @returns {String} The formatted string
      *
      * @since 1.0.0
      *
@@ -58,7 +58,7 @@ mindsmine.String = class {
      *
      * @param {String} str The string to encode.
      *
-     * @return {String} The encoded text.
+     * @returns {String} The encoded text.
      *
      * @since 1.0.0
      *
@@ -78,7 +78,7 @@ mindsmine.String = class {
      *
      * @param {String} str The string to decode.
      *
-     * @return {String} The decoded text.
+     * @returns {String} The decoded text.
      *
      * @since 1.0.0
      *
@@ -108,7 +108,7 @@ mindsmine.String = class {
      *
      * @param {Object} str The value to test.
      *
-     * @return {Boolean}
+     * @returns {Boolean}
      *
      * @since 1.0.0
      *
@@ -123,7 +123,7 @@ mindsmine.String = class {
      * @param {String} url The URL to append to.
      * @param {String} query The content to append to the URL.
      *
-     * @return {String} The resulting URL
+     * @returns {String} The resulting URL
      *
      * @since 1.0.0
      *
@@ -158,7 +158,7 @@ mindsmine.String = class {
      *
      * @param {String} str The string to safeguard against <code>null</code>.
      *
-     * @return {String} If str is <code>null</code> then <code>""</code> (empty string).
+     * @returns {String} If str is <code>null</code> then <code>""</code> (empty string).
      *
      * @since 1.0.0
      *
