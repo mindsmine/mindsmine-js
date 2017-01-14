@@ -69,7 +69,7 @@ class mindsmine {
     /**
      * Name of the product.
      *
-     * @returns {String} Name of the product.
+     * @return {String} Name of the product.
      *
      * @since 1.0.0
      *
@@ -81,7 +81,7 @@ class mindsmine {
     /**
      * Version of the product.
      *
-     * @returns {String} Version of the product.
+     * @return {String} Version of the product.
      *
      * @since 1.0.0
      *
@@ -93,7 +93,7 @@ class mindsmine {
     /**
      * Build timestamp of the product.
      *
-     * @returns {String} Build timestamp of the product.
+     * @return {String} Build timestamp of the product.
      *
      * @since 1.0.0
      *

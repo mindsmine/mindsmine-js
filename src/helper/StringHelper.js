@@ -35,9 +35,9 @@ mindsmine.String = class {
      *      // str3 now contains the string: "Let us combine Hello and World together."
      *
      * @param {String} string The tokenised string to be formatted.
-     * @param {String...} values The values to replace tokens <code>{0}</code>, <code>{1}</code>, etc. in order.
+     * @param {...String} values The values to replace tokens <code>{0}</code>, <code>{1}</code>, etc. in order.
      *
-     * @returns {String} The formatted string
+     * @return {String} The formatted string
      *
      * @since 1.0.0
      *
@@ -58,7 +58,7 @@ mindsmine.String = class {
      *
      * @param {String} str The string to encode.
      *
-     * @returns {String} The encoded text.
+     * @return {String} The encoded text.
      *
      * @since 1.0.0
      *
@@ -78,7 +78,7 @@ mindsmine.String = class {
      *
      * @param {String} str The string to decode.
      *
-     * @returns {String} The decoded text.
+     * @return {String} The decoded text.
      *
      * @since 1.0.0
      *
@@ -108,7 +108,7 @@ mindsmine.String = class {
      *
      * @param {Object} str The value to test.
      *
-     * @returns {Boolean}
+     * @return {Boolean}
      *
      * @since 1.0.0
      *
@@ -123,7 +123,7 @@ mindsmine.String = class {
      * @param {String} url The URL to append to.
      * @param {String} query The content to append to the URL.
      *
-     * @returns {String} The resulting URL
+     * @return {String} The resulting URL
      *
      * @since 1.0.0
      *
@@ -158,7 +158,7 @@ mindsmine.String = class {
      *
      * @param {String} str The string to safeguard against <code>null</code>.
      *
-     * @returns {String} If str is <code>null</code> then <code>""</code> (empty string).
+     * @return {String} If str is <code>null</code> then <code>""</code> (empty string).
      *
      * @since 1.0.0
      *

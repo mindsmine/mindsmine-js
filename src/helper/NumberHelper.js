@@ -40,7 +40,7 @@ mindsmine.Number = class {
      *
      * @param {Number} num The number to safeguard against <code>null</code>.
      *
-     * @returns {Number} If num is <code>null</code> then {@link Number#NEGATIVE_INFINITY}.
+     * @return {Number} If num is <code>null</code> then {@link Number#NEGATIVE_INFINITY}.
      *
      * @since 1.0.0
      *

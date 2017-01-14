@@ -25,7 +25,9 @@ mindsmine.Ajax = class {
     /**
      * Provides the default <code>timeout</code> (in milliseconds) for the Ajax calls.
      *
-     * @returns {Number}
+     * @constant
+     *
+     * @return {Number}
      *
      * @since 1.0.0
      *
@@ -37,7 +39,7 @@ mindsmine.Ajax = class {
     /**
      * Provides the default <code>async</code> value for the Ajax calls.
      *
-     * @returns {Boolean}
+     * @return {Boolean}
      *
      * @since 1.0.0
      *
@@ -49,7 +51,7 @@ mindsmine.Ajax = class {
     /**
      * Provides the default <code>withCredentials</code> value for Ajax calls.
      *
-     * @returns {Boolean}
+     * @return {Boolean}
      *
      * @since 1.0.0
      *
@@ -61,7 +63,7 @@ mindsmine.Ajax = class {
     /**
      * Provides the default <code>scope</code> value for callbacks.
      *
-     * @returns {Window}
+     * @return {Window}
      *
      * @since 1.0.0
      *
@@ -73,7 +75,7 @@ mindsmine.Ajax = class {
     /**
      * Returns the Ajax object based upon the browser.
      *
-     * @returns {XMLHttpRequest}
+     * @return {XMLHttpRequest}
      *
      * @since 1.0.0
      *
@@ -115,7 +117,7 @@ mindsmine.Ajax = class {
     /**
      * Provides an array of allowed HTTP methods.
      *
-     * @returns {String[]}
+     * @return {String[]}
      *
      * @since 1.0.0
      *

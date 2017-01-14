@@ -26,7 +26,7 @@ mindsmine.Window.Location = class {
      * Returns an object containing the names of the search parameters as properties and values of the search parameters
      * as the property values.
      *
-     * @returns {Object/null} Returns <code>null</code> if no search parameters exist.
+     * @return {Object|null} Returns <code>null</code> if no search parameters exist.
      *
      * @since 2.0.0
      *
@@ -51,7 +51,7 @@ mindsmine.Window.Location = class {
      *
      * @param {String} queryParam The query parameter (case-sensitive) string whose value is to be retrieved.
      *
-     * @returns {String/null} Returns <code>null</code> if unavailable.
+     * @return {String|null} Returns <code>null</code> if unavailable.
      *
      * @throws {TypeError} If invalid argument
      *
@@ -78,7 +78,7 @@ mindsmine.Window.Location = class {
      *
      * If a hash parameter does not have an associated value, it is provided with a <code>true</code> value.
      *
-     * @returns {Object/null} Returns <code>null</code> if no hash parameters exist.
+     * @return {Object|null} Returns <code>null</code> if no hash parameters exist.
      *
      * @since 2.0.0
      *
@@ -107,7 +107,7 @@ mindsmine.Window.Location = class {
      *
      * @param {String} hashParam The hash parameter (case-sensitive) string whose value is to be retrieved.
      *
-     * @returns {String/null} Returns <code>null</code> if unavailable.
+     * @return {String|null} Returns <code>null</code> if unavailable.
      *
      * @throws {TypeError} If invalid argument
      *
