@@ -23,3 +23,24 @@ describe("getKey", () => {
         expect(mindsmine.Object.getKey(obj1, "value3")).toBe(null);
     });
 });
+
+describe("isPrimitive", () => {
+    it("should check for primitive data types", () => {
+        expect(mindsmine.Object.isPrimitive(123)).toBe(true);
+        expect(mindsmine.Object.isPrimitive("")).toBe(true);
+        expect(mindsmine.Object.isPrimitive(false)).toBe(true);
+        expect(mindsmine.Object.isPrimitive({})).toBe(false);
+        expect(mindsmine.Object.isPrimitive([])).toBe(false);
+        expect(mindsmine.Object.isPrimitive(null)).toBe(false);
+    });
+});
+
+describe("getNullSafe", () => {
+    it("should get null safe objects", () => {
+        let obj1 = { "key1" : "value1", "key2" : "value2"},
+            obj2 = null;
+
+        expect(mindsmine.Object.getNullSafe(obj1)).toEqual({ "key1" : "value1", "key2" : "value2"});
+        expect(mindsmine.Object.getNullSafe(obj2)).toEqual({});
+    });
+});
