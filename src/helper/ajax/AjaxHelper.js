@@ -39,6 +39,8 @@ mindsmine.Ajax = class {
     /**
      * Provides the default <code>async</code> value for the Ajax calls.
      *
+     * @constant
+     *
      * @return {Boolean}
      *
      * @since 1.0.0
@@ -50,6 +52,8 @@ mindsmine.Ajax = class {
 
     /**
      * Provides the default <code>withCredentials</code> value for Ajax calls.
+     *
+     * @constant
      *
      * @return {Boolean}
      *
@@ -117,6 +121,8 @@ mindsmine.Ajax = class {
     /**
      * Provides an array of allowed HTTP methods.
      *
+     * @constant
+     *
      * @return {String[]}
      *
      * @since 1.0.0
@@ -178,7 +184,7 @@ mindsmine.Ajax = class {
      * @param {Object} [options.scope=window] The scope in which to execute the callbacks (refers to the "this"
      * parameter for the callback functions).
      *
-     * @param {Object/String} [options.jsonData] JSON data to use as the post.
+     * @param {Object|String} [options.jsonData] JSON data to use as the post.
      *
      * @param {Boolean} [options.withCredentials=false] <code>true</code> to add the <code>withCredentials</code>
      * property to the XHR object.
@@ -189,23 +195,18 @@ mindsmine.Ajax = class {
      * @param {Function} [options.afterRequest] The function to be called upon receipt of the HTTP response. This
      * function is called regardless of success or failure. The callback is passed the following parameters:
      * @param {XMLHttpRequest} options.afterRequest.response The XMLHttpRequest object containing the response data.
-     * See [www.w3.org/TR/XMLHttpRequest][1] for details about accessing elements of the response.
-     *
-     * [1]: http://www.w3.org/TR/XMLHttpRequest/
+     * See {@link http://www.w3.org/TR/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the
+     * response.
      *
      * @param {Function} options.success The function to be called upon success of the request. The callback is passed
      * the following parameters:
      * @param {XMLHttpRequest} options.success.response The XMLHttpRequest object containing the response data. See
-     * [www.w3.org/TR/XMLHttpRequest][1] for details about accessing elements of the response.
-     *
-     * [1]: http://www.w3.org/TR/XMLHttpRequest/
+     * {@link http://www.w3.org/TR/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
      *
      * @param {Function} options.failure The function to be called upon failure of the request. The callback is passed
      * the following parameters:
      * @param {XMLHttpRequest} options.failure.response The XMLHttpRequest object containing the response data. See
-     * [www.w3.org/TR/XMLHttpRequest][1] for details about accessing elements of the response.
-     *
-     * [1]: http://www.w3.org/TR/XMLHttpRequest/
+     * {@link http://www.w3.org/TR/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
      *
      * @throws {TypeError} If invalid arguments.
      *
