@@ -223,6 +223,7 @@ gulp.task(
                     includeDate: false,
                     collapseSymbols: true,
                     theme: "flatly",
+                    cleverLinks: true,
                     outputSourceFiles: false,
                     syntaxTheme: "dark",
                     systemName: `${buildProperties.packageJSON.name}`,
