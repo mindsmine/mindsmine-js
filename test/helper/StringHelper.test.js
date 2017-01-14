@@ -24,6 +24,21 @@ describe("format", () => {
     });
 });
 
+const decodedStr = '<a target="_blank" href="http://www.google.com"><span>Hello World</span></a>';
+const encodedStr = '&lt;a target=&quot;_blank&quot; href=&quot;http://www.google.com&quot;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/a&gt;';
+
+describe("htmlEncode", () => {
+    it("should encode the HTML content", () => {
+        expect(mindsmine.String.htmlEncode(decodedStr)).toBe(encodedStr);
+    });
+});
+
+describe("htmlDecode", () => {
+    it("should decode the HTML content", () => {
+        expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
+    });
+});
+
 describe("isEmpty", () => {
     it("should check for string emptiness", () => {
         expect(mindsmine.String.isEmpty(null)).toBe(true);
@@ -31,6 +46,17 @@ describe("isEmpty", () => {
         expect(mindsmine.String.isEmpty(123)).toBe(true);
         expect(mindsmine.String.isEmpty("")).toBe(true);
         expect(mindsmine.String.isEmpty("Some String")).toBe(false);
+    });
+});
+
+describe("urlAppend", () => {
+    it("should append to the URL", () => {
+        const url = "http://www.google.com",
+            urlQ = `${url}?param1=value1`,
+            query = "param2=value2";
+
+        expect(mindsmine.String.urlAppend(url, query)).toBe("http://www.google.com?param2=value2");
+        expect(mindsmine.String.urlAppend(urlQ, query)).toBe("http://www.google.com?param1=value1&param2=value2");
     });
 });
 
