@@ -19,139 +19,112 @@
  *
  * **NOTE**: Unless otherwise specified, all callback functions are under <code>window</code> scope.
  *
- * @singleton
- *
- * @since 1.0
+ * @since 1.0.0
  *
  */
-mindsmine.Window = (function () {
+mindsmine.Window = class {
 
-    var _prependTitle = function (title) {
-        if (mindsmine.String.isEmpty(title)) {
-            return "";
+    /**
+     * Loads a resource into a new browsing context (such as a window), depending on the browser preferences.
+     *
+     * This method creates a new secondary browser window, similar to choosing New Window from the File menu. The new
+     * window is created with the default toolbars of the main window.
+     *
+     * Note that remote URLs won't load immediately. The actual fetching of the URL is deferred and starts after the
+     * current script block finishes executing. The window creation and the loading of the referenced resource are done
+     * asynchronously.
+     *
+     * @param {String} externalURL The URL to be loaded in the newly opened window. It can be an HTML document on the
+     * web, image file or any resource supported by the browser.
+     *
+     * @throws {TypeError} If invalid argument
+     *
+     * @since 1.0.0
+     *
+     */
+    static open(externalURL) {
+        if (mindsmine.String.isEmpty(externalURL)) {
+            throw new TypeError("@ERROR_PERMITTED_STRING@");
         }
 
-        return title.trim() + "\n\n\n";
-    };
+        window.open(externalURL, "_blank");
+    }
 
-    var _confirm = function (message, title, okCallback, cancelCallback) {
+    /**
+     * Displays a modal dialog with a message and two buttons, <code>OK</code> and <code>Cancel</code>.
+     *
+     * ### Notes
+     *
+     * Dialog boxes are modal windows - they prevent the user from accessing the rest of the program's interface
+     * until the dialog box is closed. For this reason, you should not overuse any function that creates a dialog
+     * box (or modal window).
+     *
+     * @param {String} message Text you want to display in the dialog, or, alternatively, an object that is
+     * converted into a string and displayed.
+     * @param {String} [title] Title you want to display in the dialog.
+     * @param {Function} [okCallback] Callback function to be invoked after user clicks on the <code>OK</code>
+     * button.
+     * @param {Function} [cancelCallback] Callback function to be invoked after user clicks on the
+     * <code>Cancel</code> button, or simply closes the dialog window.
+     *
+     * @throws {TypeError} If invalid argument
+     *
+     * @since 1.0.0
+     *
+     */
+    static confirm(message, title, okCallback, cancelCallback) {
+        if (mindsmine.String.isEmpty(message)) {
+            throw new TypeError("@ERROR_PERMITTED_STRING@");
+        }
 
-        var __finalMessage = _prependTitle(title) + message;
+        let __finalMessage = (mindsmine.String.isEmpty(title)) ? message : `${title.trim()}\n\n\n${message}`;
 
-        var __isOK = window.confirm(__finalMessage);
+        let __isOK = window.confirm(__finalMessage);
 
         if (__isOK) {
-            if (okCallback) {
+            if (okCallback && typeof okCallback === "function") {
                 okCallback.call(window);
             }
         } else {
-            if (cancelCallback) {
+            if (cancelCallback && typeof cancelCallback === "function") {
                 cancelCallback.call(window);
             }
         }
-    };
+    }
 
-    var _alert = function (message, title, callback) {
+    /**
+     * Displays an alert dialog with the specified content and an <code>OK</code> button.
+     *
+     * ### Notes
+     *
+     * The alert dialog should be used for messages which do not require any response on the part of the user, other
+     * than the acknowledgement of the message.
+     *
+     * Dialog boxes are modal windows - they prevent the user from accessing the rest of the program's interface until
+     * the dialog box is closed. For this reason, you should not overuse any function that creates a dialog box (or
+     * modal window).
+     *
+     * @param {String} message Text you want to display in the alert dialog, or, alternatively, an object that is
+     * converted into a string and displayed.
+     * @param {String} [title] Title you want to display in the alert dialog.
+     * @param {Function} [callback] Callback function to be invoked after the message box is closed.
+     *
+     * @throws {TypeError} If invalid argument
+     *
+     * @since 1.0.0
+     *
+     */
+    static alert(message, title, callback) {
+        if (mindsmine.String.isEmpty(message)) {
+            throw new TypeError("@ERROR_PERMITTED_STRING@");
+        }
 
-        var __finalMessage = _prependTitle(title) + message;
+        let __finalMessage = (mindsmine.String.isEmpty(title)) ? message : `${title.trim()}\n\n\n${message}`;
 
         window.alert(__finalMessage);
 
-        if (callback) {
+        if (callback && typeof callback === "function") {
             callback.call(window);
         }
-    };
-
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    return {
-
-        /**
-         * Loads a resource into a new browsing context (such as a window), depending on the browser preferences.
-         *
-         * This method creates a new secondary browser window, similar to choosing New Window from the File menu. The
-         * new window is created with the default toolbars of the main window.
-         *
-         * Note that remote URLs won't load immediately. The actual fetching of the URL is deferred and starts after the
-         * current script block finishes executing. The window creation and the loading of the referenced resource are
-         * done asynchronously.
-         *
-         * @param {String} externalURL The URL to be loaded in the newly opened window. It can be an HTML document on
-         * the web, image file or any resource supported by the browser.
-         *
-         * @throws {TypeError} If invalid argument
-         *
-         * @since 1.0
-         *
-         */
-        open: function (externalURL) {
-            if (mindsmine.String.isEmpty(externalURL)) {
-                throw new TypeError("@ERROR_PERMITTED_STRING@");
-            }
-
-            window.open(externalURL, "_blank");
-        },
-
-        /**
-         * Displays a modal dialog with a message and two buttons, <code>OK</code> and <code>Cancel</code>.
-         *
-         * ### Notes
-         *
-         * Dialog boxes are modal windows - they prevent the user from accessing the rest of the program's interface
-         * until the dialog box is closed. For this reason, you should not overuse any function that creates a dialog
-         * box (or modal window).
-         *
-         * @param {String} message Text you want to display in the dialog, or, alternatively, an object that is
-         * converted into a string and displayed.
-         * @param {String} [title] Title you want to display in the dialog.
-         * @param {Function} [okCallback] Callback function to be invoked after user clicks on the <code>OK</code>
-         * button.
-         * @param {Function} [cancelCallback] Callback function to be invoked after user clicks on the
-         * <code>Cancel</code> button, or simply closes the dialog window.
-         *
-         * @throws {TypeError} If invalid argument
-         *
-         * @since 1.0
-         *
-         */
-        confirm: function (message, title, okCallback, cancelCallback) {
-            if (mindsmine.String.isEmpty(message)) {
-                throw new TypeError("@ERROR_PERMITTED_STRING@");
-            }
-
-            _confirm(message, title, okCallback, cancelCallback);
-        },
-
-        /**
-         * Displays an alert dialog with the specified content and an <code>OK</code> button.
-         *
-         * ### Notes
-         *
-         * The alert dialog should be used for messages which do not require any response on the part of the user, other
-         * than the acknowledgement of the message.
-         *
-         * Dialog boxes are modal windows - they prevent the user from accessing the rest of the program's interface
-         * until the dialog box is closed. For this reason, you should not overuse any function that creates a dialog
-         * box (or modal window).
-         *
-         * @param {String} message Text you want to display in the alert dialog, or, alternatively, an object that is
-         * converted into a string and displayed.
-         * @param {String} [title] Title you want to display in the alert dialog.
-         * @param {Function} [callback] Callback function to be invoked after the message box is closed.
-         *
-         * @throws {TypeError} If invalid argument
-         *
-         * @since 1.0
-         *
-         */
-        alert: function (message, title, callback) {
-            if (mindsmine.String.isEmpty(message)) {
-                throw new TypeError("@ERROR_PERMITTED_STRING@");
-            }
-
-            _alert(message, title, callback);
-        }
-    };
-})();
+    }
+};

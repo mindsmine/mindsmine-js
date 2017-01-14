@@ -17,98 +17,114 @@
 /**
  * A collection of useful static methods to deal with JavaScript window.location object.
  *
- * @singleton
- *
- * @since 1.0
+ * @since 1.0.0
  *
  */
-mindsmine.Window.Location = (function () {
+mindsmine.Window.Location = class {
 
-    var __queryParams = {},
-        __hashParams = {};
+    /**
+     * Returns an object containing the names of the search parameters as properties and values of the search parameters
+     * as the property values.
+     *
+     * @returns {Object|null} Returns <code>null</code> if no search parameters exist.
+     *
+     * @since 2.0.0
+     *
+     */
+    static getAllQueryParameters() {
+        if (window.location.search) {
+            let __queryParams = {};
 
-    if (window.location.search) {
-        var queryParamPairs = window.location.search.substr(1).split("&");
+            window.location.search.substr(1).split("&").forEach((p) => {
+                const pairs = p.split("=");
+                __queryParams[pairs[0]] = decodeURIComponent(pairs[1]);
+            });
 
-        for (var i = 0; i < queryParamPairs.length; i++) {
-            var queryPair = queryParamPairs[i].split("=");
-
-            //
-            // TODO Handle for multiple values for same parameter (hasOwnProperty)
-            //
-            __queryParams[queryPair[0]] = queryPair[1];
+            return __queryParams;
         }
+
+        return null;
     }
 
-    if (window.location.hash) {
-        var hashParamPairs = window.location.hash.substr(1).split("&");
-
-        for (var j = 0; j < hashParamPairs.length; j++) {
-            var hashPair = hashParamPairs[j].split("=");
-
-            //
-            // TODO Handle for multiple values for same parameter (hasOwnProperty)
-            //
-            if (hashPair.length == 1) {
-                __hashParams[hashPair[0]] = true;
-            } else {
-                __hashParams[hashPair[0]] = hashPair[1];
-            }
+    /**
+     * Retrieves the value of the query parameter.
+     *
+     * @param {String} queryParam The query parameter (case-sensitive) string whose value is to be retrieved.
+     *
+     * @returns {String|null} Returns <code>null</code> if unavailable.
+     *
+     * @throws {TypeError} If invalid argument
+     *
+     * @since 1.0.0
+     *
+     */
+    static getQueryParameter(queryParam) {
+        if (mindsmine.String.isEmpty(queryParam)) {
+            throw new TypeError("@ERROR_PERMITTED_STRING@");
         }
+
+        let __queryParams = this.getAllQueryParameters();
+
+        if (__queryParams && __queryParams.hasOwnProperty(queryParam)) {
+            return __queryParams[queryParam];
+        }
+
+        return null;
     }
 
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    /**
+     * Returns an object containing the names of the hash parameters as properties and values of the hash parameters
+     * as the property values.
+     *
+     * If a hash parameter does not have an associated value, it is provided with a <code>true</code> value.
+     *
+     * @returns {Object|null} Returns <code>null</code> if no hash parameters exist.
+     *
+     * @since 2.0.0
+     *
+     */
+    static getAllHashParameters() {
+        if (window.location.hash) {
+            let __hashParams = {};
 
-    return {
+            window.location.hash.substr(1).split("&").forEach((p) => {
+                const pairs = p.split("=");
+                if (pairs.length == 1) {
+                    __hashParams[pairs[0]] = true;
+                } else {
+                    __hashParams[pairs[0]] = decodeURIComponent(pairs[1]);
+                }
+            });
 
-        /**
-         * Retrieves the value of the query parameter.
-         *
-         * @param {String} queryParam The query parameter (case-sensitive) string whose value is to be retrieved.
-         *
-         * @returns {String/null} Returns <code>null</code> if unavailable.
-         *
-         * @throws {TypeError} If invalid argument
-         *
-         * @since 1.0
-         *
-         */
-        getQueryParameter: function (queryParam) {
-            if (mindsmine.String.isEmpty(queryParam)) {
-                throw new TypeError("@ERROR_PERMITTED_STRING@");
-            }
-
-            if (__queryParams && __queryParams.hasOwnProperty(queryParam)) {
-                return __queryParams[queryParam];
-            }
-
-            return null;
-        },
-
-        /**
-         * Retrieves the value of the hash parameter.
-         *
-         * @param {String} hashParam The hash parameter (case-sensitive) string whose value is to be retrieved.
-         *
-         * @returns {String/null} Returns <code>null</code> if unavailable.
-         *
-         * @throws {TypeError} If invalid argument
-         *
-         * @since 1.0
-         *
-         */
-        getHashParameter: function (hashParam) {
-            if (mindsmine.String.isEmpty(hashParam)) {
-                throw new TypeError("@ERROR_PERMITTED_STRING@");
-            }
-
-            if (__hashParams && __hashParams.hasOwnProperty(hashParam)) {
-                return __hashParams[hashParam];
-            }
-
-            return null;
+            return __hashParams;
         }
-    };
-})();
+
+        return null;
+    }
+
+    /**
+     * Retrieves the value of the hash parameter.
+     *
+     * @param {String} hashParam The hash parameter (case-sensitive) string whose value is to be retrieved.
+     *
+     * @returns {String|null} Returns <code>null</code> if unavailable.
+     *
+     * @throws {TypeError} If invalid argument
+     *
+     * @since 1.0.0
+     *
+     */
+    static getHashParameter(hashParam) {
+        if (mindsmine.String.isEmpty(hashParam)) {
+            throw new TypeError("@ERROR_PERMITTED_STRING@");
+        }
+
+        let __hashParams = this.getAllHashParameters();
+
+        if (__hashParams && __hashParams.hasOwnProperty(hashParam)) {
+            return __hashParams[hashParam];
+        }
+
+        return null;
+    }
+};

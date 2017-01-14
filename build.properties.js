@@ -40,18 +40,24 @@ const NOW = new Date(),
         });
 
         return _packageJSON;
-    })();
+    })(),
+    OUTPUT_FILE = `${PACKAGE_JSON.name}-${PACKAGE_JSON.version}.min.js`;
 
 export function handleError(sourceTask, sourceStep) {
     return function (err) {
-        console.error(`Error during the '${sourceStep}' step under the '${sourceTask} task'.`, err.toString());
+        console.error(`Error during the '${sourceStep}' step under the '${sourceTask}' task.`, err.toString());
     }
 }
 
 export default {
-    outputFile: `${PACKAGE_JSON.name}-${PACKAGE_JSON.version}.min.js`,
+    packageJSON: PACKAGE_JSON,
+    outputFile: OUTPUT_FILE,
     folder: FOLDER,
     replaceArray: [
+        [
+            "@REQUIRE_FILE@",
+            OUTPUT_FILE
+        ],
         [
             "@BUILD_TIMESTAMP@",
             TIMESTAMP
@@ -96,22 +102,5 @@ export default {
             "@ERROR_PERMITTED_STRING@",
             "Only non-empty string(s) are allowed as arguments."
         ]
-    ],
-    jsDuckProps: [
-        "--title",
-        `${PACKAGE_JSON.name} - API Documentation`,
-        "--footer",
-        `Generated on {DATE} by {JSDUCK} {VERSION}. Copyright &#169; ${NOW.getFullYear()} ${PACKAGE_JSON.homepage}. All Rights Reserved.`,
-        "--no-source",
-        true,
-        "--builtin-classes", true,
-        "--warnings",
-        [
-            "-sing_static"
-        ],
-        "--categories",
-        "./jsduck.categories.json",
-        "--output",
-        FOLDER.DOCS
     ]
 }
