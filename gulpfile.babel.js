@@ -241,6 +241,6 @@ gulp.task(
 gulp.task(
     "package",
     () => {
-        runSequence("documentation", "clean-unwanted");
+        runSequence("test", "clean-unwanted");
     }
 );
