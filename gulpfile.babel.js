@@ -131,9 +131,7 @@ gulp.task(
 
 gulp.task(
     "transpile",
-    [
-        "update-files"
-    ],
+    ["update-files"],
     () => {
         return gulp.src(
             [
@@ -157,9 +155,7 @@ gulp.task(
 
 gulp.task(
     "uglify",
-    [
-        "transpile"
-    ],
+    ["transpile"],
     () => {
         return gulp.src(
             [
@@ -185,9 +181,7 @@ gulp.task(
 
 gulp.task(
     "documentation",
-    [
-        "update-files"
-    ],
+    ["update-files"],
     () => {
         // Do nothing for now
     }
