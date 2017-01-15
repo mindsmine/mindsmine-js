@@ -5,3 +5,21 @@
 JavaScript already provides a lot of functions, yet every so often there's a need for some additional functions.
 **mindsmine JS** makes an attempt at providing utility functions such as String manipulation, Object wrappers, amongst
 others.
+
+---
+
+### Releases ###
+
+**2.0.0**
+* Added support for modules
+* Added test and transpile framework(s)
+* Updated to a NodeJS based documentation framework
+* Both Node and Browser compatible
+* Node 6+ supported
+* ECMAScript 2015 compliant
+
+**1.0**
+* Wrappers to primitive datatypes
+* Functionality most often used
+* Browser version alone
+* ECMAScript 5.1 compliant
