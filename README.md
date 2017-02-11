@@ -13,7 +13,8 @@ others.
 **2.1.0**
 * Added palindrome test, with leniency support
 * Added string equality test, with leniency support
-* Added polyfill for `String#endsWith`, `String#startsWith`
+* Added polyfill for `String#endsWith`, `String#startsWith`, `String#includes`, and `String#repeat`
+* Updated polyfill for `String#trim`
 
 **2.0.0**
 * Added support for modules
