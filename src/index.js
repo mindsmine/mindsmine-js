@@ -59,6 +59,18 @@ if (!String.prototype.trim) {
  * In case it doesn't exist already
  *
  */
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position) {
+        position = position || 0;
+
+        return this.substr(position, searchString.length) === searchString;
+    };
+}
+
+/*
+ * In case it doesn't exist already
+ *
+ */
 if (!String.prototype.endsWith) {
     String.prototype.endsWith = function(searchString, position) {
         let subjectString = this.toString();
