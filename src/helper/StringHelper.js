@@ -238,9 +238,66 @@ mindsmine.String = class {
             return  this.isEmpty(str1) &&
                     this.isEmpty(str2) ||
                     !(this.isEmpty(str1) || this.isEmpty(str2)) &&
-                    str1.trim().toLowerCase() == str2.trim().toLowerCase();
+                    str1.trim().search(new RegExp(str2.trim(), "i")) > -1;
         }
 
         return str1 != null && str1 == str2;
+    }
+
+    /**
+     * Returns <code>true</code> if the passed string is a palindrome, <code>false</code> otherwise.
+     * 
+     * A palindrome is a word, phrase, number, or other sequence of characters which reads the same backward or forward,
+     * such as madam or kayak.
+     * 
+     * Convenience method equivalent to <code>mindsmine.String.areEqual(string, string.reverse, flag)</code>
+     * 
+     * Example usage:
+     *
+     *      mindsmine.String.isPalindrome(null, true)      //  true
+     *      mindsmine.String.isPalindrome("", true)        //  true
+     *      mindsmine.String.isPalindrome("   ", true)     //  true
+     *      mindsmine.String.isPalindrome(" aba", true)    //  true
+     *      mindsmine.String.isPalindrome("aba", true)     //  true
+     *      mindsmine.String.isPalindrome("mAdAm", true)   //  true
+     *      mindsmine.String.isPalindrome("madAm", true)   //  true
+     *      mindsmine.String.isPalindrome("madam", true)   //  true
+     *      mindsmine.String.isPalindrome("Madam", true)   //  true
+     *      mindsmine.String.isPalindrome("hello", true)   //  false
+     *
+     *      mindsmine.String.isPalindrome(null)            //  true
+     *      mindsmine.String.isPalindrome("")              //  true
+     *      mindsmine.String.isPalindrome("   ")           //  true
+     *      mindsmine.String.isPalindrome(" aba")          //  true
+     *      mindsmine.String.isPalindrome("aba")           //  true
+     *      mindsmine.String.isPalindrome("mAdAm")         //  true
+     *      mindsmine.String.isPalindrome("madAm")         //  true
+     *      mindsmine.String.isPalindrome("madam")         //  true
+     *      mindsmine.String.isPalindrome("Madam")         //  true
+     *      mindsmine.String.isPalindrome("hello")         //  false
+     *
+     *      mindsmine.String.isPalindrome(null, false)     //  false
+     *      mindsmine.String.isPalindrome("", false)       //  true
+     *      mindsmine.String.isPalindrome("   ", false)    //  true
+     *      mindsmine.String.isPalindrome(" aba", false)   //  false
+     *      mindsmine.String.isPalindrome("aba", false)    //  true
+     *      mindsmine.String.isPalindrome("mAdAm", false)  //  true
+     *      mindsmine.String.isPalindrome("madAm", false)  //  false
+     *      mindsmine.String.isPalindrome("madam", false)  //  true
+     *      mindsmine.String.isPalindrome("Madam", false)  //  false
+     *      mindsmine.String.isPalindrome("hello", false)  //  false
+     *
+     * @see {@link mindsmine.String#areEqual(String, String, Boolean)}
+     * @see {@link https://en.wikipedia.org/wiki/Palindrome|Palindrome (Wikipedia)}
+     *
+     * @param {String} str to check
+     * @param {Boolean} [lenient=true] whether to be lenient or not
+     * 
+     * @returns {Boolean} if the string is a Palindrome
+     * 
+     * @since 2.1.0
+     */
+    static isPalindrome(str, lenient = true) {
+        return this.areEqual(str, this.getNullSafe(str).split("").reverse().join(""), lenient);
     }
 };

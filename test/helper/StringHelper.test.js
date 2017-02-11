@@ -111,3 +111,48 @@ describe("areEqual", () => {
         expect(mindsmine.String.areEqual("abc", "abc")).toBe(true);
     });
 });
+
+describe("isPalindromeLenient", () => {
+    it("should perform palindrome test, leniently", () => {
+        expect(mindsmine.String.isPalindrome(null, true)).toBe(true);
+        expect(mindsmine.String.isPalindrome("", true)).toBe(true);
+        expect(mindsmine.String.isPalindrome("   ", true)).toBe(true);
+        expect(mindsmine.String.isPalindrome(" aba", true)).toBe(true);
+        expect(mindsmine.String.isPalindrome("aba", true)).toBe(true);
+        expect(mindsmine.String.isPalindrome("mAdAm", true)).toBe(true);
+        expect(mindsmine.String.isPalindrome("madAm", true)).toBe(true);
+        expect(mindsmine.String.isPalindrome("madam", true)).toBe(true);
+        expect(mindsmine.String.isPalindrome("Madam", true)).toBe(true);
+        expect(mindsmine.String.isPalindrome("hello", true)).toBe(false);
+    });
+});
+
+describe("isPalindromeStrict", () => {
+    it("should perform palindrome test, strictly", () => {
+        expect(mindsmine.String.isPalindrome(null, false)).toBe(false);
+        expect(mindsmine.String.isPalindrome("", false)).toBe(true);
+        expect(mindsmine.String.isPalindrome("   ", false)).toBe(true);
+        expect(mindsmine.String.isPalindrome(" aba", false)).toBe(false);
+        expect(mindsmine.String.isPalindrome("aba", false)).toBe(true);
+        expect(mindsmine.String.isPalindrome("mAdAm", false)).toBe(true);
+        expect(mindsmine.String.isPalindrome("madAm", false)).toBe(false);
+        expect(mindsmine.String.isPalindrome("madam", false)).toBe(true);
+        expect(mindsmine.String.isPalindrome("Madam", false)).toBe(false);
+        expect(mindsmine.String.isPalindrome("hello", false)).toBe(false);
+    });
+});
+
+describe("isPalindrome", () => {
+    it("should perform palindrome test, default", () => {
+        expect(mindsmine.String.isPalindrome(null)).toBe(true);
+        expect(mindsmine.String.isPalindrome("")).toBe(true);
+        expect(mindsmine.String.isPalindrome("   ")).toBe(true);
+        expect(mindsmine.String.isPalindrome(" aba")).toBe(true);
+        expect(mindsmine.String.isPalindrome("aba")).toBe(true);
+        expect(mindsmine.String.isPalindrome("mAdAm")).toBe(true);
+        expect(mindsmine.String.isPalindrome("madAm")).toBe(true);
+        expect(mindsmine.String.isPalindrome("madam")).toBe(true);
+        expect(mindsmine.String.isPalindrome("Madam")).toBe(true);
+        expect(mindsmine.String.isPalindrome("hello")).toBe(false);
+    });
+});
