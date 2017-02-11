@@ -55,6 +55,31 @@ if (!String.prototype.trim) {
     };
 }
 
+/*
+ * In case it doesn't exist already
+ *
+ */
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function(searchString, position) {
+        let subjectString = this.toString();
+
+        if (
+            typeof position !== 'number' ||
+            !isFinite(position) ||
+            Math.floor(position) !== position ||
+            position > subjectString.length
+        ) {
+            position = subjectString.length;
+        }
+
+        position -= searchString.length;
+
+        let lastIndex = subjectString.lastIndexOf(searchString, position);
+
+        return lastIndex !== -1 && lastIndex === position;
+    };
+}
+
 /**
  * The mindsmine namespace (global object) encapsulates classes, singletons, and utility methods provided
  * by @PRODUCT_NAME@ library.
