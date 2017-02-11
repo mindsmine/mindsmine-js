@@ -66,3 +66,48 @@ describe("getNullSafe", () => {
         expect(mindsmine.String.getNullSafe(null)).toBe("");
     });
 });
+
+describe("areEqualLenient", () => {
+    it("should test string equality, leniently", () => {
+        expect(mindsmine.String.areEqual(null, null, true)).toBe(true);
+        expect(mindsmine.String.areEqual(null, "", true)).toBe(true);
+        expect(mindsmine.String.areEqual("", null, true)).toBe(true);
+        expect(mindsmine.String.areEqual("", "", true)).toBe(true);
+        expect(mindsmine.String.areEqual("   ", "", true)).toBe(true);
+        expect(mindsmine.String.areEqual(" abc", "abc ", true)).toBe(true);
+        expect(mindsmine.String.areEqual("", "abc", true)).toBe(false);
+        expect(mindsmine.String.areEqual("ab c", "abc", true)).toBe(false);
+        expect(mindsmine.String.areEqual("ABC", "abc", true)).toBe(true);
+        expect(mindsmine.String.areEqual("abc", "abc", true)).toBe(true);
+    });
+});
+
+describe("areEqualStrict", () => {
+    it("should test string equality, strictly", () => {
+        expect(mindsmine.String.areEqual(null, null, false)).toBe(false);
+        expect(mindsmine.String.areEqual(null, "", false)).toBe(false);
+        expect(mindsmine.String.areEqual("", null, false)).toBe(false);
+        expect(mindsmine.String.areEqual("", "", false)).toBe(true);
+        expect(mindsmine.String.areEqual("   ", "", false)).toBe(false);
+        expect(mindsmine.String.areEqual(" abc", "abc ", false)).toBe(false);
+        expect(mindsmine.String.areEqual("", "abc", false)).toBe(false);
+        expect(mindsmine.String.areEqual("ab c", "abc", false)).toBe(false);
+        expect(mindsmine.String.areEqual("ABC", "abc", false)).toBe(false);
+        expect(mindsmine.String.areEqual("abc", "abc", false)).toBe(true);
+    });
+});
+
+describe("areEqual", () => {
+    it("should test string equality, default", () => {
+        expect(mindsmine.String.areEqual(null, null)).toBe(true);
+        expect(mindsmine.String.areEqual(null, "")).toBe(true);
+        expect(mindsmine.String.areEqual("", null)).toBe(true);
+        expect(mindsmine.String.areEqual("", "")).toBe(true);
+        expect(mindsmine.String.areEqual("   ", "")).toBe(true);
+        expect(mindsmine.String.areEqual(" abc", "abc ")).toBe(true);
+        expect(mindsmine.String.areEqual("", "abc")).toBe(false);
+        expect(mindsmine.String.areEqual("ab c", "abc")).toBe(false);
+        expect(mindsmine.String.areEqual("ABC", "abc")).toBe(true);
+        expect(mindsmine.String.areEqual("abc", "abc")).toBe(true);
+    });
+});

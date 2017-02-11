@@ -44,12 +44,13 @@ mindsmine.String = class {
      */
     static format(format) {
         let args = Array.prototype.slice.call(arguments, 1);
-        return format.replace(/{(\d+)}/g, function(match, number) {
-            return typeof args[number] != 'undefined'
-                ? args[number]
-                : match
-                ;
-        });
+
+        return this.getNullSafe(format).replace(
+            /{(\d+)}/g,
+            (match, number) => {
+                return typeof args[number] != 'undefined' ? args[number] : match;
+            }
+        );
     }
 
     /**
@@ -129,7 +130,7 @@ mindsmine.String = class {
      *
      */
     static urlAppend(url, query) {
-        if (!mindsmine.String.isEmpty(query)) {
+        if (!this.isEmpty(query)) {
             //
             // TODO Tokenise the URL and then apply the logic
             //
@@ -169,5 +170,77 @@ mindsmine.String = class {
         }
 
         return "";
+    }
+
+    /**
+     * Returns <code>true</code> if the passed values are equal, <code>false</code> otherwise.
+     *
+     * When the lenient flag is unset or is set to <code>true</code>, the comparison will ignore the case and trim the
+     * strings before comparing; the two strings are considered equal if,
+     * <ul>
+     *     <li>Both strings are empty, as defined by {@link mindsmine.String#isEmpty(String)}.</li>
+     *     <li>Trimmed versions of both strings, as defined by {@link String#trim()}, are equal.</li>
+     * </ul>
+     * 
+     * Example usage:
+     * 
+     *      mindsmine.String.areEqual(null, null, true)       //  true
+     *      mindsmine.String.areEqual(null, "", true)         //  true
+     *      mindsmine.String.areEqual("", null, true)         //  true
+     *      mindsmine.String.areEqual("", "", true)           //  true
+     *      mindsmine.String.areEqual("   ", "", true)        //  true
+     *      mindsmine.String.areEqual(" abc", "abc ", true)   //  true
+     *      mindsmine.String.areEqual("", "abc", true)        //  false
+     *      mindsmine.String.areEqual("ab c", "abc", true)    //  false
+     *      mindsmine.String.areEqual("ABC", "abc", true)     //  true
+     *      mindsmine.String.areEqual("abc", "abc", true)     //  true
+     *
+     *      mindsmine.String.areEqual(null, null)             //  true
+     *      mindsmine.String.areEqual(null, "")               //  true
+     *      mindsmine.String.areEqual("", null)               //  true
+     *      mindsmine.String.areEqual("", "")                 //  true
+     *      mindsmine.String.areEqual("   ", "")              //  true
+     *      mindsmine.String.areEqual(" abc", "abc ")         //  true
+     *      mindsmine.String.areEqual("", "abc")              //  false
+     *      mindsmine.String.areEqual("ab c", "abc")          //  false
+     *      mindsmine.String.areEqual("ABC", "abc")           //  true
+     *      mindsmine.String.areEqual("abc", "abc")           //  true
+     *
+     * When the lenient flag is set to <code>false</code>, the two strings are considered equal if,
+     * <ul>
+     *     <li>Both strings are not null</li>
+     *     <li>Both strings represent the same sequence of characters</li>
+     * </ul>
+     *
+     * Example usage:
+     *
+     *      mindsmine.String.areEqual(null, null, false)      //  false
+     *      mindsmine.String.areEqual(null, "", false)        //  false
+     *      mindsmine.String.areEqual("", null, false)        //  false
+     *      mindsmine.String.areEqual("", "", false)          //  true
+     *      mindsmine.String.areEqual("   ", "", false)       //  false
+     *      mindsmine.String.areEqual(" abc", "abc ", false)  //  false
+     *      mindsmine.String.areEqual("", "abc", false)       //  false
+     *      mindsmine.String.areEqual("ab c", "abc", false)   //  false
+     *      mindsmine.String.areEqual("ABC", "abc", false)    //  false
+     *      mindsmine.String.areEqual("abc", "abc", false)    //  true
+     *
+     * @param {String} str1 to compare
+     * @param {String} str2 to compare
+     * @param {Boolean} [lenient=true] whether to be lenient or not
+     *
+     * @returns {Boolean} whether two strings are equal
+     *
+     * @since 2.1.0
+     */
+    static areEqual(str1, str2, lenient = true) {
+        if (lenient) {
+            return  this.isEmpty(str1) &&
+                    this.isEmpty(str2) ||
+                    !(this.isEmpty(str1) || this.isEmpty(str2)) &&
+                    str1.trim().toLowerCase() == str2.trim().toLowerCase();
+        }
+
+        return str1 != null && str1 == str2;
     }
 };
