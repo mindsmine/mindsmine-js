@@ -1,6 +1,6 @@
 {
   "name": "mindsmine-js",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "src/index.js",
   "description": "mindsmine-js",
   "authors": [
@@ -24,11 +24,11 @@
     "package": "gulp package"
   },
   "devDependencies": {
-    "babel-core": "6.21.0",
-    "babel-preset-es2015": "6.18.0",
+    "babel-core": "6.22.1",
+    "babel-preset-es2015": "6.22.0",
     "babel-preset-es2015-node6": "0.4.0",
     "del": "2.2.2",
-    "jest-cli": "18.0.0",
+    "jest-cli": "18.1.0",
     "jsdoc": "3.4.3",
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
@@ -37,7 +37,7 @@
     "gulp-jsdoc3": "1.0.1",
     "gulp-replace": "0.5.4",
     "gulp-rename": "1.2.2",
-    "gulp-uglify": "2.0.0",
+    "gulp-uglify": "2.0.1",
     "run-sequence": "1.2.2"
   }
 }
