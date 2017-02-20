@@ -72,6 +72,6 @@ mindsmine.Number = class {
             return 1;
         }
 
-        return Math.log10(Math.abs(num)) + 1;
+        return Math.floor(Math.log10(Math.abs(num))) + 1;
     }
 };

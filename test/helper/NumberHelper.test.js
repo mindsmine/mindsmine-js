@@ -42,6 +42,7 @@ describe("getNumOfDigits", () => {
 
     test("should count number of digits", () => {
         expect(mindsmine.Number.getNumOfDigits(0)).toBe(1);
+        expect(mindsmine.Number.getNumOfDigits(2)).toBe(1);
         expect(mindsmine.Number.getNumOfDigits(10)).toBe(2);
         expect(mindsmine.Number.getNumOfDigits(-10)).toBe(2);
     });
