@@ -11,6 +11,7 @@ others.
 ### Releases ###
 
 **2.1.0**
+* Added number of digits counting method
 * Added palindrome test, with leniency support
 * Added string equality test, with leniency support
 * Added polyfill for `String#endsWith`, `String#startsWith`, `String#includes`, and `String#repeat`
