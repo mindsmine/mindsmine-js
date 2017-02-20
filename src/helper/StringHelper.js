@@ -175,13 +175,24 @@ mindsmine.String = class {
     /**
      * Returns <code>true</code> if the passed values are equal, <code>false</code> otherwise.
      *
-     * When the lenient flag is unset or is set to <code>true</code>, the comparison will ignore the case and trim the
-     * strings before comparing; the two strings are considered equal if,
      * <ul>
-     *     <li>Both strings are empty, as defined by {@link mindsmine.String#isEmpty(String)}.</li>
-     *     <li>Trimmed versions of both strings, as defined by {@link String#trim()}, are equal.</li>
+     *     <li>
+     *         When the lenient flag is unset or is set to <code>true</code>, the comparison will ignore the case and
+     *         trim the strings before comparing; the two strings are considered equal if,
+     *         <ul>
+     *             <li>Both strings are empty, as defined by {@link mindsmine.String#isEmpty(String)}.</li>
+     *             <li>Trimmed versions of both strings, as defined by {@link String#trim()}, are equal.</li>
+     *         </ul>
+     *     </li>
+     *     <li>
+     *         When the lenient flag is set to <code>false</code>, the two strings are considered equal if,
+     *         <ul>
+     *             <li>Both strings are not null</li>
+     *             <li>Both strings represent the same sequence of characters</li>
+     *         </ul>
+     *     </li>
      * </ul>
-     * 
+     *
      * Example usage:
      * 
      *      mindsmine.String.areEqual(null, null, true)       //  true
@@ -205,14 +216,6 @@ mindsmine.String = class {
      *      mindsmine.String.areEqual("ab c", "abc")          //  false
      *      mindsmine.String.areEqual("ABC", "abc")           //  true
      *      mindsmine.String.areEqual("abc", "abc")           //  true
-     *
-     * When the lenient flag is set to <code>false</code>, the two strings are considered equal if,
-     * <ul>
-     *     <li>Both strings are not null</li>
-     *     <li>Both strings represent the same sequence of characters</li>
-     * </ul>
-     *
-     * Example usage:
      *
      *      mindsmine.String.areEqual(null, null, false)      //  false
      *      mindsmine.String.areEqual(null, "", false)        //  false
