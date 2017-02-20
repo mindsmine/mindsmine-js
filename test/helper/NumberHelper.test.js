@@ -15,8 +15,34 @@
  */
 
 describe("getNullSafe", () => {
-    it("should get null safe numbers", () => {
+    test("should get null safe numbers", () => {
         expect(mindsmine.Number.getNullSafe(123)).toBe(123);
         expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
+    });
+});
+
+describe("getNumOfDigits", () => {
+    test("should throw TypeError due to null", () => {
+        function callFunction() {
+            mindsmine.Number.getNumOfDigits(null);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+    });
+
+    test("should throw TypeError due to non-Number", () => {
+        function callFunction() {
+            mindsmine.Number.getNumOfDigits("a");
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+    });
+
+    test("should count number of digits", () => {
+        expect(mindsmine.Number.getNumOfDigits(0)).toBe(1);
+        expect(mindsmine.Number.getNumOfDigits(10)).toBe(2);
+        expect(mindsmine.Number.getNumOfDigits(-10)).toBe(2);
     });
 });

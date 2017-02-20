@@ -52,4 +52,26 @@ mindsmine.Number = class {
 
         return Number.NEGATIVE_INFINITY;
     }
+
+    /**
+     * Returns the number of digits in the passed in number
+     *
+     * @param {Number} num for which to count the number of digits in
+     *
+     * @returns {Number} number of digits
+     *
+     * @since 2.1.0
+     *
+     */
+    static getNumOfDigits(num) {
+        if (num == null || typeof num !== "number") {
+            throw new TypeError("@ERROR_PERMITTED_NUMBER@");
+        }
+
+        if (num == 0) {
+            return 1;
+        }
+
+        return Math.log10(Math.abs(num)) + 1;
+    }
 };
