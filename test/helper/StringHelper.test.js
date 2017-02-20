@@ -15,7 +15,7 @@
  */
 
 describe("format", () => {
-    it("should format the string", () => {
+    test("should format the string", () => {
         let str1 = "Hello";
         let str2 = "World";
 
@@ -28,19 +28,19 @@ const decodedStr = '<a target="_blank" href="http://www.google.com"><span>Hello 
 const encodedStr = '&lt;a target=&quot;_blank&quot; href=&quot;http://www.google.com&quot;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/a&gt;';
 
 describe("htmlEncode", () => {
-    it("should encode the HTML content", () => {
+    test("should encode the HTML content", () => {
         expect(mindsmine.String.htmlEncode(decodedStr)).toBe(encodedStr);
     });
 });
 
 describe("htmlDecode", () => {
-    it("should decode the HTML content", () => {
+    test("should decode the HTML content", () => {
         expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
     });
 });
 
 describe("isEmpty", () => {
-    it("should check for string emptiness", () => {
+    test("should check for string emptiness", () => {
         expect(mindsmine.String.isEmpty(null)).toBe(true);
         expect(mindsmine.String.isEmpty(undefined)).toBe(true);
         expect(mindsmine.String.isEmpty(123)).toBe(true);
@@ -50,7 +50,7 @@ describe("isEmpty", () => {
 });
 
 describe("urlAppend", () => {
-    it("should append to the URL", () => {
+    test("should append to the URL", () => {
         const url = "http://www.google.com",
             urlQ = `${url}?param1=value1`,
             query = "param2=value2";
@@ -61,14 +61,14 @@ describe("urlAppend", () => {
 });
 
 describe("getNullSafe", () => {
-    it("should get null safe strings", () => {
+    test("should get null safe strings", () => {
         expect(mindsmine.String.getNullSafe("Hello")).toBe("Hello");
         expect(mindsmine.String.getNullSafe(null)).toBe("");
     });
 });
 
-describe("areEqualLenient", () => {
-    it("should test string equality, leniently", () => {
+describe("areEqual", () => {
+    test("should test string equality, leniently", () => {
         expect(mindsmine.String.areEqual(null, null, true)).toBe(true);
         expect(mindsmine.String.areEqual(null, "", true)).toBe(true);
         expect(mindsmine.String.areEqual("", null, true)).toBe(true);
@@ -80,10 +80,8 @@ describe("areEqualLenient", () => {
         expect(mindsmine.String.areEqual("ABC", "abc", true)).toBe(true);
         expect(mindsmine.String.areEqual("abc", "abc", true)).toBe(true);
     });
-});
 
-describe("areEqualStrict", () => {
-    it("should test string equality, strictly", () => {
+    test("should test string equality, strictly", () => {
         expect(mindsmine.String.areEqual(null, null, false)).toBe(false);
         expect(mindsmine.String.areEqual(null, "", false)).toBe(false);
         expect(mindsmine.String.areEqual("", null, false)).toBe(false);
@@ -95,10 +93,8 @@ describe("areEqualStrict", () => {
         expect(mindsmine.String.areEqual("ABC", "abc", false)).toBe(false);
         expect(mindsmine.String.areEqual("abc", "abc", false)).toBe(true);
     });
-});
 
-describe("areEqual", () => {
-    it("should test string equality, default", () => {
+    test("should test string equality, default", () => {
         expect(mindsmine.String.areEqual(null, null)).toBe(true);
         expect(mindsmine.String.areEqual(null, "")).toBe(true);
         expect(mindsmine.String.areEqual("", null)).toBe(true);
@@ -112,8 +108,8 @@ describe("areEqual", () => {
     });
 });
 
-describe("isPalindromeLenient", () => {
-    it("should perform palindrome test, leniently", () => {
+describe("isPalindrome", () => {
+    test("should perform palindrome test, leniently", () => {
         expect(mindsmine.String.isPalindrome(null, true)).toBe(true);
         expect(mindsmine.String.isPalindrome("", true)).toBe(true);
         expect(mindsmine.String.isPalindrome("   ", true)).toBe(true);
@@ -125,10 +121,8 @@ describe("isPalindromeLenient", () => {
         expect(mindsmine.String.isPalindrome("Madam", true)).toBe(true);
         expect(mindsmine.String.isPalindrome("hello", true)).toBe(false);
     });
-});
 
-describe("isPalindromeStrict", () => {
-    it("should perform palindrome test, strictly", () => {
+    test("should perform palindrome test, strictly", () => {
         expect(mindsmine.String.isPalindrome(null, false)).toBe(false);
         expect(mindsmine.String.isPalindrome("", false)).toBe(true);
         expect(mindsmine.String.isPalindrome("   ", false)).toBe(true);
@@ -140,10 +134,8 @@ describe("isPalindromeStrict", () => {
         expect(mindsmine.String.isPalindrome("Madam", false)).toBe(false);
         expect(mindsmine.String.isPalindrome("hello", false)).toBe(false);
     });
-});
 
-describe("isPalindrome", () => {
-    it("should perform palindrome test, default", () => {
+    test("should perform palindrome test, default", () => {
         expect(mindsmine.String.isPalindrome(null)).toBe(true);
         expect(mindsmine.String.isPalindrome("")).toBe(true);
         expect(mindsmine.String.isPalindrome("   ")).toBe(true);
