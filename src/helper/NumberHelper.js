@@ -21,6 +21,31 @@
  *
  */
 mindsmine.Number = class {
+
+    /**
+     * Returns <code>true</code> if object is a Number
+     *
+     * Example usage:
+     *
+     *      mindsmine.Number.isNumber(null)       //  false
+     *      mindsmine.Number.isNumber(undefined)  //  false
+     *      mindsmine.Number.isNumber(NaN)        //  false
+     *      mindsmine.Number.isNumber(100)        //  true
+     *      mindsmine.Number.isNumber("")         //  false
+     *      mindsmine.Number.isNumber("hello")    //  false
+     *      mindsmine.Number.isNumber(true)       //  false
+     *
+     * @param {Object} obj The object to test
+     *
+     * @returns {Boolean} Whether or not the object is a Number
+     *
+     * @since 2.1.0
+     *
+     */
+    static isNumber(obj) {
+        return (obj != null && typeof obj === "number" && !Number.isNaN(obj));
+    }
+
     /**
      * Returns a non-null number, even if the object being passed is a null number.
      *
@@ -28,15 +53,13 @@ mindsmine.Number = class {
      *
      * Example usage:
      *
-     *      var num1 = 10;
-     *      var num2 = null;
-     *
-     *      var num3 = mindsmine.Number.getNullSafe(num1);
-     *
-     *      var num4 = mindsmine.Number.getNullSafe(num2);
-     *
-     *      // num3 now contains the number: 10
-     *      // num4 now contains the number: -Infinity
+     *      mindsmine.Number.getNullSafe(null)       //  -Infinity
+     *      mindsmine.Number.getNullSafe(undefined)  //  -Infinity
+     *      mindsmine.Number.getNullSafe(NaN)        //  -Infinity
+     *      mindsmine.Number.getNullSafe(100)        //  100
+     *      mindsmine.Number.getNullSafe("")         //  -Infinity
+     *      mindsmine.Number.getNullSafe("hello")    //  -Infinity
+     *      mindsmine.Number.getNullSafe(true)       //  -Infinity
      *
      * @param {Number} num The number to safeguard against <code>null</code>.
      *
@@ -46,7 +69,7 @@ mindsmine.Number = class {
      *
      */
     static getNullSafe(num) {
-        if (num != null && typeof num === "number") {
+        if (this.isNumber(num)) {
             return num;
         }
 
@@ -79,9 +102,9 @@ mindsmine.Number = class {
      */
     static getUniqueRandomNumbers(lowerBound, upperBound, arraySize) {
         if (
-            lowerBound == null || typeof lowerBound !== "number" ||
-            upperBound == null || typeof upperBound !== "number" ||
-            arraySize == null || typeof arraySize !== "number"
+            !this.isNumber(lowerBound) ||
+            !this.isNumber(upperBound) ||
+            !this.isNumber(arraySize)
         ) {
             throw new TypeError("@ERROR_PERMITTED_NUMBER@");
         }
@@ -120,7 +143,7 @@ mindsmine.Number = class {
      *
      */
     static getNumOfDigits(num) {
-        if (num == null || typeof num !== "number") {
+        if (!this.isNumber(num)) {
             throw new TypeError("@ERROR_PERMITTED_NUMBER@");
         }
 

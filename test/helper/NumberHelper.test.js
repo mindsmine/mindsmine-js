@@ -14,10 +14,27 @@
  limitations under the License.
  */
 
+describe("isNumber", () => {
+    test("should test that the object is a Number", () => {
+        expect(mindsmine.Number.isNumber(null)).toBeFalsy();
+        expect(mindsmine.Number.isNumber(undefined)).toBeFalsy();
+        expect(mindsmine.Number.isNumber(NaN)).toBeFalsy();
+        expect(mindsmine.Number.isNumber(100)).toBeTruthy();
+        expect(mindsmine.Number.isNumber("")).toBeFalsy();
+        expect(mindsmine.Number.isNumber("hello")).toBeFalsy();
+        expect(mindsmine.Number.isNumber(true)).toBeFalsy();
+    });
+});
+
 describe("getNullSafe", () => {
     test("should get null safe numbers", () => {
-        expect(mindsmine.Number.getNullSafe(123)).toBe(123);
         expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
+        expect(mindsmine.Number.getNullSafe(undefined)).toBe(Number.NEGATIVE_INFINITY);
+        expect(mindsmine.Number.getNullSafe(NaN)).toBe(Number.NEGATIVE_INFINITY);
+        expect(mindsmine.Number.getNullSafe(100)).toBe(100);
+        expect(mindsmine.Number.getNullSafe("")).toBe(Number.NEGATIVE_INFINITY);
+        expect(mindsmine.Number.getNullSafe("hello")).toBe(Number.NEGATIVE_INFINITY);
+        expect(mindsmine.Number.getNullSafe(true)).toBe(Number.NEGATIVE_INFINITY);
     });
 });
 
