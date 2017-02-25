@@ -65,7 +65,7 @@ mindsmine.String = class {
      *
      */
     static htmlEncode(str) {
-        if (str != null && typeof str === "string") {
+        if (!this.isEmpty(str)) {
             let __firstParse = document.createElement("a").appendChild(document.createTextNode(str)).parentNode.innerHTML;
 
             return __firstParse.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -85,7 +85,7 @@ mindsmine.String = class {
      *
      */
     static htmlDecode(str) {
-        if (str != null && typeof str === "string") {
+        if (!this.isEmpty(str)) {
             let __parser = document.createElement("a");
             __parser.innerHTML = str;
 
@@ -102,6 +102,7 @@ mindsmine.String = class {
      * <ul>
      *     <li><code>null</code></li>
      *     <li><code>undefined</code></li>
+     *     <li><code>NaN</code></li>
      *     <li>not a string</li>
      *     <li>a zero-length string</li>
      * </ul>
@@ -147,15 +148,13 @@ mindsmine.String = class {
      *
      * Example usage:
      *
-     *      var str1 = "Hello";
-     *      var str2 = null;
-     *
-     *      var str3 = mindsmine.String.getNullSafe(str1);
-     *
-     *      var str4 = mindsmine.String.getNullSafe(str2);
-     *
-     *      // str3 now contains the string: "Hello"
-     *      // str4 now contains the string: ""
+     *      mindsmine.String.getNullSafe(null)       //  ""
+     *      mindsmine.String.getNullSafe(undefined)  //  ""
+     *      mindsmine.String.getNullSafe(NaN)        //  ""
+     *      mindsmine.String.getNullSafe(100)        //  ""
+     *      mindsmine.String.getNullSafe("")         //  ""
+     *      mindsmine.String.getNullSafe("hello")    //  hello
+     *      mindsmine.String.getNullSafe(true)       //  ""
      *
      * @param {String} str The string to safeguard against <code>null</code>.
      *
