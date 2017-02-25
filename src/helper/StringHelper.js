@@ -180,8 +180,11 @@ mindsmine.String = class {
      *         When the lenient flag is unset or is set to <code>true</code>, the comparison will ignore the case and
      *         trim the strings before comparing; the two strings are considered equal if,
      *         <ul>
-     *             <li>Both strings are empty, as defined by {@link mindsmine.String#isEmpty(String)}.</li>
-     *             <li>Trimmed versions of both strings, as defined by {@link String#trim()}, are equal.</li>
+     *             <li>Both strings are empty, as defined by {@link mindsmine.String.isEmpty}.</li>
+     *             <li>
+     *                 Trimmed versions of both strings, as defined by {@link @MDN_JS_URI@/String/Trim|String.prototype.trim()},
+     *                 are equal.
+     *             </li>
      *         </ul>
      *     </li>
      *     <li>
@@ -290,7 +293,7 @@ mindsmine.String = class {
      *      mindsmine.String.isPalindrome("Madam", false)  //  false
      *      mindsmine.String.isPalindrome("hello", false)  //  false
      *
-     * @see {@link mindsmine.String#areEqual(String, String, Boolean)}
+     * @see {@link mindsmine.String.areEqual}
      * @see {@link https://en.wikipedia.org/wiki/Palindrome|Palindrome (Wikipedia)}
      *
      * @param {String} str to check

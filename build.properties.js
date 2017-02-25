@@ -79,6 +79,14 @@ export default {
             PACKAGE_JSON.version
         ],
         [
+            "@MDN_API_URI@",
+            "https://developer.mozilla.org/en-US/docs/Web/API"
+        ],
+        [
+            "@MDN_JS_URI@",
+            "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects"
+        ],
+        [
             "@ERROR_PERMITTED_ARRAY@",
             "Only non-empty array(s) are allowed as arguments."
         ],

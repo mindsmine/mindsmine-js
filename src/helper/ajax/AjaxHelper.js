@@ -67,6 +67,8 @@ mindsmine.Ajax = class {
     /**
      * Provides the default <code>scope</code> value for callbacks.
      *
+     * @constant
+     *
      * @returns {Window}
      *
      * @since 1.0.0
@@ -78,6 +80,8 @@ mindsmine.Ajax = class {
 
     /**
      * Returns the Ajax object based upon the browser.
+     *
+     * @constant
      *
      * @returns {XMLHttpRequest}
      *
@@ -142,8 +146,8 @@ mindsmine.Ajax = class {
      * Sends an HTTP request to a remote server.
      *
      * Requests made by this method are by default asynchronous, and will return immediately. No data from the server
-     * will be available to the statement immediately following the {@link #request} call. To process returned data, use
-     * a success (or afterRequest) callback in the request options object.
+     * will be available to the statement immediately following this call. To process returned data, use a success (or
+     * afterRequest) callback in the request options object.
      *
      * Example Usage:
      *
@@ -195,18 +199,17 @@ mindsmine.Ajax = class {
      * @param {Function} [options.afterRequest] The function to be called upon receipt of the HTTP response. This
      * function is called regardless of success or failure. The callback is passed the following parameters:
      * @param {XMLHttpRequest} options.afterRequest.response The XMLHttpRequest object containing the response data.
-     * See {@link http://www.w3.org/TR/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the
-     * response.
+     * See {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
      *
      * @param {Function} options.success The function to be called upon success of the request. The callback is passed
      * the following parameters:
      * @param {XMLHttpRequest} options.success.response The XMLHttpRequest object containing the response data. See
-     * {@link http://www.w3.org/TR/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
+     * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
      *
      * @param {Function} options.failure The function to be called upon failure of the request. The callback is passed
      * the following parameters:
      * @param {XMLHttpRequest} options.failure.response The XMLHttpRequest object containing the response data. See
-     * {@link http://www.w3.org/TR/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
+     * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
      *
      * @throws {TypeError} If invalid arguments.
      *
@@ -282,27 +285,17 @@ mindsmine.Ajax = class {
 
         let scope = options.scope || this.DEFAULT_SCOPE;
 
-        let __successFuncVal = options.success,
-            __successFunc = null;
-
-        if (__successFuncVal != null || typeof __successFuncVal === "function") {
-            __successFunc = __successFuncVal;
+        if (options.success == null || typeof options.success !== "function") {
+            throw new TypeError("Fatal Error. 'options.success'. @ERROR_PERMITTED_FUNCTION@");
         }
 
-        if (__successFunc == null) {
-            throw new TypeError("Fatal Error. @ERROR_PERMITTED_FUNCTION@");
+        let __successFunc = options.success;
+
+        if (options.failure == null || typeof options.failure !== "function") {
+            throw new TypeError("Fatal Error. 'options.failure'. @ERROR_PERMITTED_FUNCTION@");
         }
 
-        let __failureFuncVal = options.failure,
-            __failureFunc = null;
-
-        if (__failureFuncVal != null || typeof __failureFunc === "function") {
-            __failureFunc = __failureFuncVal;
-        }
-
-        if (__failureFunc == null) {
-            throw new TypeError("Fatal Error. @ERROR_PERMITTED_FUNCTION@");
-        }
+        let __failureFunc = options.failure;
 
         let __proceed = true;
 

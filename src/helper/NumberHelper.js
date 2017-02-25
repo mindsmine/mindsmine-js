@@ -40,7 +40,7 @@ mindsmine.Number = class {
      *
      * @param {Number} num The number to safeguard against <code>null</code>.
      *
-     * @returns {Number} If num is <code>null</code> then {@link Number#NEGATIVE_INFINITY}.
+     * @returns {Number} If num is <code>null</code> then {@link @MDN_JS_URI@/Number/NEGATIVE_INFINITY|Number.NEGATIVE_INFINITY}.
      *
      * @since 1.0.0
      *
@@ -57,16 +57,16 @@ mindsmine.Number = class {
      * Returns an array of pseudorandom int values between the specified lower bound (inclusive) and the specified upper
      * bound (exclusive).
      *
-     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random|Math#random}
-     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set|Set}
-     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from|Array#from}
+     * @see {@link @MDN_JS_URI@/Math/random|Math.random()}
+     * @see {@link @MDN_JS_URI@/Set|Set}
+     * @see {@link @MDN_JS_URI@/Array/from|Array.from()}
      *
      * @param {Number} lowerBound the least value returned
      * @param {Number} upperBound the upper bound (exclusive)
      * @param {Number} arraySize the number of unique random numbers expected
      *
-     * @returns {Array} an <code>Integer</code> array of pseudorandom integer values between the lower bound (inclusive)
-     * and the upper bound (exclusive).
+     * @returns {Array} an array of pseudorandom integer values between the lower bound (inclusive) and the upper bound
+     * (exclusive).
      *
      * @throws {TypeError} if any of the arguments are not numbers
      *
