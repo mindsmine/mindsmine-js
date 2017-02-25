@@ -54,6 +54,62 @@ mindsmine.Number = class {
     }
 
     /**
+     * Returns an array of pseudorandom int values between the specified lower bound (inclusive) and the specified upper
+     * bound (exclusive).
+     *
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random|Math#random}
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set|Set}
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from|Array#from}
+     *
+     * @param {Number} lowerBound the least value returned
+     * @param {Number} upperBound the upper bound (exclusive)
+     * @param {Number} arraySize the number of unique random numbers expected
+     *
+     * @returns {Array} an <code>Integer</code> array of pseudorandom integer values between the lower bound (inclusive)
+     * and the upper bound (exclusive).
+     *
+     * @throws {TypeError} if any of the arguments are not numbers
+     *
+     * @throws {Error} if any of the arguments are negative integers
+     *
+     * @throws {Error} if lower bound is greater than or equal to upper bound
+     *
+     * @since 2.1.0
+     *
+     */
+    static getUniqueRandomNumbers(lowerBound, upperBound, arraySize) {
+        if (
+            lowerBound == null || typeof lowerBound !== "number" ||
+            upperBound == null || typeof upperBound !== "number" ||
+            arraySize == null || typeof arraySize !== "number"
+        ) {
+            throw new TypeError("@ERROR_PERMITTED_NUMBER@");
+        }
+
+        if (lowerBound < 0 || upperBound < 0 || arraySize < 0) {
+            throw new Error("Negative number is not allowed as an argument.");
+        }
+
+        if (lowerBound >= upperBound) {
+            throw new Error("Lower Bound cannot be larger than Upper Bound.");
+        }
+
+        if (arraySize > upperBound || arraySize > (upperBound - lowerBound)) {
+            throw new Error("Not enough unique numbers available for the array size.");
+        }
+
+        let set = new Set();
+
+        while (set.size < arraySize) {
+            let num = Math.floor(Math.random() * (upperBound - lowerBound)) + lowerBound;
+
+            set.add(num);
+        }
+
+        return Array.from(set);
+    }
+
+    /**
      * Returns the number of digits in the passed in number
      *
      * @param {Number} num for which to count the number of digits in

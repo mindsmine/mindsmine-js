@@ -47,3 +47,94 @@ describe("getNumOfDigits", () => {
         expect(mindsmine.Number.getNumOfDigits(-10)).toBe(2);
     });
 });
+
+describe("getUniqueRandomNumbers", () => {
+    const lowerBound = 10;
+    const upperBound = 81;
+    const arraySize = 12;
+
+    test("should throw TypeError due to null", () => {
+        function callFunction() {
+            mindsmine.Number.getUniqueRandomNumbers(null, null, null);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+    });
+
+    test("should throw TypeError due to non-Number", () => {
+        function callFunction() {
+            mindsmine.Number.getUniqueRandomNumbers("a", upperBound, arraySize);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+    });
+
+    test("should throw Error due to negative 'lowerBound'", () => {
+        function callFunction() {
+            mindsmine.Number.getUniqueRandomNumbers(-1, upperBound, arraySize);
+        }
+
+        expect(callFunction).toThrow(Error);
+        expect(callFunction).toThrow("Negative number is not allowed as an argument.");
+    });
+
+    test("should throw Error due to negative 'upperBound'", () => {
+        function callFunction() {
+            mindsmine.Number.getUniqueRandomNumbers(lowerBound, -1, arraySize);
+        }
+
+        expect(callFunction).toThrow(Error);
+        expect(callFunction).toThrow("Negative number is not allowed as an argument.");
+    });
+
+    test("should throw Error due to negative 'arraySize'", () => {
+        function callFunction() {
+            mindsmine.Number.getUniqueRandomNumbers(lowerBound, upperBound, -1);
+        }
+
+        expect(callFunction).toThrow(Error);
+        expect(callFunction).toThrow("Negative number is not allowed as an argument.");
+    });
+
+    test("should throw Error due to 'lowerBound' larger than 'upperBound'", () => {
+        function callFunction() {
+            mindsmine.Number.getUniqueRandomNumbers(upperBound, lowerBound, arraySize);
+        }
+
+        expect(callFunction).toThrow(Error);
+        expect(callFunction).toThrow("Lower Bound cannot be larger than Upper Bound.");
+    });
+
+    test("should throw Error due to not enough unique numbers", () => {
+        function callFunction() {
+            mindsmine.Number.getUniqueRandomNumbers(lowerBound, arraySize, upperBound);
+        }
+
+        expect(callFunction).toThrow(Error);
+        expect(callFunction).toThrow("Not enough unique numbers available for the array size.");
+    });
+
+    test("should produce unique random integers", () => {
+        function areUniqueValues(arr) {
+            let set = new Set();
+
+            for (let i = 0; i < arr.length; i++) {
+                if (set.has(arr[i])) {
+                    return false;
+                }
+
+                set.add(arr[i]);
+            }
+
+            return true;
+        }
+
+        let arr1 = mindsmine.Number.getUniqueRandomNumbers(0, upperBound, arraySize);
+        let arr2 = mindsmine.Number.getUniqueRandomNumbers(lowerBound, upperBound, arraySize);
+
+        expect(areUniqueValues(arr1)).toBeTruthy();
+        expect(areUniqueValues(arr2)).toBeTruthy();
+    });
+});
