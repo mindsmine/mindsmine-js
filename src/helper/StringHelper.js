@@ -44,12 +44,13 @@ mindsmine.String = class {
      */
     static format(format) {
         let args = Array.prototype.slice.call(arguments, 1);
-        return format.replace(/{(\d+)}/g, function(match, number) {
-            return typeof args[number] != 'undefined'
-                ? args[number]
-                : match
-                ;
-        });
+
+        return this.getNullSafe(format).replace(
+            /{(\d+)}/g,
+            (match, number) => {
+                return typeof args[number] != 'undefined' ? args[number] : match;
+            }
+        );
     }
 
     /**
@@ -64,7 +65,7 @@ mindsmine.String = class {
      *
      */
     static htmlEncode(str) {
-        if (str != null && typeof str === "string") {
+        if (!this.isEmpty(str)) {
             let __firstParse = document.createElement("a").appendChild(document.createTextNode(str)).parentNode.innerHTML;
 
             return __firstParse.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -84,7 +85,7 @@ mindsmine.String = class {
      *
      */
     static htmlDecode(str) {
-        if (str != null && typeof str === "string") {
+        if (!this.isEmpty(str)) {
             let __parser = document.createElement("a");
             __parser.innerHTML = str;
 
@@ -101,6 +102,7 @@ mindsmine.String = class {
      * <ul>
      *     <li><code>null</code></li>
      *     <li><code>undefined</code></li>
+     *     <li><code>NaN</code></li>
      *     <li>not a string</li>
      *     <li>a zero-length string</li>
      * </ul>
@@ -129,7 +131,7 @@ mindsmine.String = class {
      *
      */
     static urlAppend(url, query) {
-        if (!mindsmine.String.isEmpty(query)) {
+        if (!this.isEmpty(query)) {
             //
             // TODO Tokenise the URL and then apply the logic
             //
@@ -146,15 +148,13 @@ mindsmine.String = class {
      *
      * Example usage:
      *
-     *      var str1 = "Hello";
-     *      var str2 = null;
-     *
-     *      var str3 = mindsmine.String.getNullSafe(str1);
-     *
-     *      var str4 = mindsmine.String.getNullSafe(str2);
-     *
-     *      // str3 now contains the string: "Hello"
-     *      // str4 now contains the string: ""
+     *      mindsmine.String.getNullSafe(null)       //  ""
+     *      mindsmine.String.getNullSafe(undefined)  //  ""
+     *      mindsmine.String.getNullSafe(NaN)        //  ""
+     *      mindsmine.String.getNullSafe(100)        //  ""
+     *      mindsmine.String.getNullSafe("")         //  ""
+     *      mindsmine.String.getNullSafe("hello")    //  hello
+     *      mindsmine.String.getNullSafe(true)       //  ""
      *
      * @param {String} str The string to safeguard against <code>null</code>.
      *
@@ -169,5 +169,140 @@ mindsmine.String = class {
         }
 
         return "";
+    }
+
+    /**
+     * Returns <code>true</code> if the passed values are equal, <code>false</code> otherwise.
+     *
+     * <ul>
+     *     <li>
+     *         When the lenient flag is unset or is set to <code>true</code>, the comparison will ignore the case and
+     *         trim the strings before comparing; the two strings are considered equal if,
+     *         <ul>
+     *             <li>Both strings are empty, as defined by {@link mindsmine.String.isEmpty}.</li>
+     *             <li>
+     *                 Trimmed versions of both strings, as defined by {@link @MDN_JS_URI@/String/Trim|String.prototype.trim()},
+     *                 are equal.
+     *             </li>
+     *         </ul>
+     *     </li>
+     *     <li>
+     *         When the lenient flag is set to <code>false</code>, the two strings are considered equal if,
+     *         <ul>
+     *             <li>Both strings are not null</li>
+     *             <li>Both strings represent the same sequence of characters</li>
+     *         </ul>
+     *     </li>
+     * </ul>
+     *
+     * Example usage:
+     * 
+     *      mindsmine.String.areEqual(null, null, true)       //  true
+     *      mindsmine.String.areEqual(null, "", true)         //  true
+     *      mindsmine.String.areEqual("", null, true)         //  true
+     *      mindsmine.String.areEqual("", "", true)           //  true
+     *      mindsmine.String.areEqual("   ", "", true)        //  true
+     *      mindsmine.String.areEqual(" abc", "abc ", true)   //  true
+     *      mindsmine.String.areEqual("", "abc", true)        //  false
+     *      mindsmine.String.areEqual("ab c", "abc", true)    //  false
+     *      mindsmine.String.areEqual("ABC", "abc", true)     //  true
+     *      mindsmine.String.areEqual("abc", "abc", true)     //  true
+     *
+     *      mindsmine.String.areEqual(null, null)             //  true
+     *      mindsmine.String.areEqual(null, "")               //  true
+     *      mindsmine.String.areEqual("", null)               //  true
+     *      mindsmine.String.areEqual("", "")                 //  true
+     *      mindsmine.String.areEqual("   ", "")              //  true
+     *      mindsmine.String.areEqual(" abc", "abc ")         //  true
+     *      mindsmine.String.areEqual("", "abc")              //  false
+     *      mindsmine.String.areEqual("ab c", "abc")          //  false
+     *      mindsmine.String.areEqual("ABC", "abc")           //  true
+     *      mindsmine.String.areEqual("abc", "abc")           //  true
+     *
+     *      mindsmine.String.areEqual(null, null, false)      //  false
+     *      mindsmine.String.areEqual(null, "", false)        //  false
+     *      mindsmine.String.areEqual("", null, false)        //  false
+     *      mindsmine.String.areEqual("", "", false)          //  true
+     *      mindsmine.String.areEqual("   ", "", false)       //  false
+     *      mindsmine.String.areEqual(" abc", "abc ", false)  //  false
+     *      mindsmine.String.areEqual("", "abc", false)       //  false
+     *      mindsmine.String.areEqual("ab c", "abc", false)   //  false
+     *      mindsmine.String.areEqual("ABC", "abc", false)    //  false
+     *      mindsmine.String.areEqual("abc", "abc", false)    //  true
+     *
+     * @param {String} str1 to compare
+     * @param {String} str2 to compare
+     * @param {Boolean} [lenient=true] whether to be lenient or not
+     *
+     * @returns {Boolean} whether two strings are equal
+     *
+     * @since 2.1.0
+     */
+    static areEqual(str1, str2, lenient = true) {
+        if (lenient) {
+            return  this.isEmpty(str1) &&
+                    this.isEmpty(str2) ||
+                    !(this.isEmpty(str1) || this.isEmpty(str2)) &&
+                    str1.trim().search(new RegExp(str2.trim(), "i")) > -1;
+        }
+
+        return str1 != null && str1 == str2;
+    }
+
+    /**
+     * Returns <code>true</code> if the passed string is a palindrome, <code>false</code> otherwise.
+     * 
+     * A palindrome is a word, phrase, number, or other sequence of characters which reads the same backward or forward,
+     * such as madam or kayak.
+     * 
+     * Convenience method equivalent to <code>mindsmine.String.areEqual(string, string.reverse, flag)</code>
+     * 
+     * Example usage:
+     *
+     *      mindsmine.String.isPalindrome(null, true)      //  true
+     *      mindsmine.String.isPalindrome("", true)        //  true
+     *      mindsmine.String.isPalindrome("   ", true)     //  true
+     *      mindsmine.String.isPalindrome(" aba", true)    //  true
+     *      mindsmine.String.isPalindrome("aba", true)     //  true
+     *      mindsmine.String.isPalindrome("mAdAm", true)   //  true
+     *      mindsmine.String.isPalindrome("madAm", true)   //  true
+     *      mindsmine.String.isPalindrome("madam", true)   //  true
+     *      mindsmine.String.isPalindrome("Madam", true)   //  true
+     *      mindsmine.String.isPalindrome("hello", true)   //  false
+     *
+     *      mindsmine.String.isPalindrome(null)            //  true
+     *      mindsmine.String.isPalindrome("")              //  true
+     *      mindsmine.String.isPalindrome("   ")           //  true
+     *      mindsmine.String.isPalindrome(" aba")          //  true
+     *      mindsmine.String.isPalindrome("aba")           //  true
+     *      mindsmine.String.isPalindrome("mAdAm")         //  true
+     *      mindsmine.String.isPalindrome("madAm")         //  true
+     *      mindsmine.String.isPalindrome("madam")         //  true
+     *      mindsmine.String.isPalindrome("Madam")         //  true
+     *      mindsmine.String.isPalindrome("hello")         //  false
+     *
+     *      mindsmine.String.isPalindrome(null, false)     //  false
+     *      mindsmine.String.isPalindrome("", false)       //  true
+     *      mindsmine.String.isPalindrome("   ", false)    //  true
+     *      mindsmine.String.isPalindrome(" aba", false)   //  false
+     *      mindsmine.String.isPalindrome("aba", false)    //  true
+     *      mindsmine.String.isPalindrome("mAdAm", false)  //  true
+     *      mindsmine.String.isPalindrome("madAm", false)  //  false
+     *      mindsmine.String.isPalindrome("madam", false)  //  true
+     *      mindsmine.String.isPalindrome("Madam", false)  //  false
+     *      mindsmine.String.isPalindrome("hello", false)  //  false
+     *
+     * @see {@link mindsmine.String.areEqual}
+     * @see {@link https://en.wikipedia.org/wiki/Palindrome|Palindrome (Wikipedia)}
+     *
+     * @param {String} str to check
+     * @param {Boolean} [lenient=true] whether to be lenient or not
+     * 
+     * @returns {Boolean} if the string is a Palindrome
+     * 
+     * @since 2.1.0
+     */
+    static isPalindrome(str, lenient = true) {
+        return this.areEqual(str, this.getNullSafe(str).split("").reverse().join(""), lenient);
     }
 };

@@ -28,15 +28,13 @@ mindsmine.Boolean = class {
      *
      * Example usage:
      *
-     *      var bool1 = true;
-     *      var bool2 = null;
-     *
-     *      var bool3 = mindsmine.Boolean.getNullSafe(bool1);
-     *
-     *      var bool4 = mindsmine.Boolean.getNullSafe(bool2);
-     *
-     *      // bool3 now contains the boolean: true
-     *      // bool4 now contains the boolean: false
+     *      mindsmine.Boolean.getNullSafe(null)       //  false
+     *      mindsmine.Boolean.getNullSafe(undefined)  //  false
+     *      mindsmine.Boolean.getNullSafe(NaN)        //  false
+     *      mindsmine.Boolean.getNullSafe(100)        //  false
+     *      mindsmine.Boolean.getNullSafe("")         //  false
+     *      mindsmine.Boolean.getNullSafe("hello")    //  false
+     *      mindsmine.Boolean.getNullSafe(true)       //  true
      *
      * @param {Boolean} bool The boolean to safeguard against <code>null</code>.
      *

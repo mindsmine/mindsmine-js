@@ -10,6 +10,16 @@ others.
 
 ### Releases ###
 
+**2.1.0**
+* Added number of digits counting method
+* Added unique random numbers generator method
+* Added palindrome test, with leniency support
+* Added string equality test, with leniency support
+* Added number check
+* Added polyfill for `Array.from`
+* Added polyfill for `String#endsWith`, `String#startsWith`, `String#includes`, and `String#repeat`
+* Updated polyfill for `String#trim`
+
 **2.0.0**
 * Added support for modules
 * Added test and transpile framework(s)

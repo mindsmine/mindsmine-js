@@ -16,8 +16,12 @@
 
 describe("getNullSafe", () => {
     it("should get null safe boolean", () => {
-        expect(mindsmine.Boolean.getNullSafe(false)).toBe(false);
-        expect(mindsmine.Boolean.getNullSafe(true)).toBe(true);
-        expect(mindsmine.Boolean.getNullSafe(null)).toBe(false);
+        expect(mindsmine.Boolean.getNullSafe(null)).toBeFalsy();
+        expect(mindsmine.Boolean.getNullSafe(undefined)).toBeFalsy();
+        expect(mindsmine.Boolean.getNullSafe(NaN)).toBeFalsy();
+        expect(mindsmine.Boolean.getNullSafe(100)).toBeFalsy();
+        expect(mindsmine.Boolean.getNullSafe("")).toBeFalsy();
+        expect(mindsmine.Boolean.getNullSafe("hello")).toBeFalsy();
+        expect(mindsmine.Boolean.getNullSafe(true)).toBeTruthy();
     });
 });

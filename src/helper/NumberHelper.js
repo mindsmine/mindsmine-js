@@ -21,6 +21,31 @@
  *
  */
 mindsmine.Number = class {
+
+    /**
+     * Returns <code>true</code> if object is a Number
+     *
+     * Example usage:
+     *
+     *      mindsmine.Number.isNumber(null)       //  false
+     *      mindsmine.Number.isNumber(undefined)  //  false
+     *      mindsmine.Number.isNumber(NaN)        //  false
+     *      mindsmine.Number.isNumber(100)        //  true
+     *      mindsmine.Number.isNumber("")         //  false
+     *      mindsmine.Number.isNumber("hello")    //  false
+     *      mindsmine.Number.isNumber(true)       //  false
+     *
+     * @param {Object} obj The object to test
+     *
+     * @returns {Boolean} Whether or not the object is a Number
+     *
+     * @since 2.1.0
+     *
+     */
+    static isNumber(obj) {
+        return (obj != null && typeof obj === "number" && !Number.isNaN(obj));
+    }
+
     /**
      * Returns a non-null number, even if the object being passed is a null number.
      *
@@ -28,28 +53,104 @@ mindsmine.Number = class {
      *
      * Example usage:
      *
-     *      var num1 = 10;
-     *      var num2 = null;
-     *
-     *      var num3 = mindsmine.Number.getNullSafe(num1);
-     *
-     *      var num4 = mindsmine.Number.getNullSafe(num2);
-     *
-     *      // num3 now contains the number: 10
-     *      // num4 now contains the number: -Infinity
+     *      mindsmine.Number.getNullSafe(null)       //  -Infinity
+     *      mindsmine.Number.getNullSafe(undefined)  //  -Infinity
+     *      mindsmine.Number.getNullSafe(NaN)        //  -Infinity
+     *      mindsmine.Number.getNullSafe(100)        //  100
+     *      mindsmine.Number.getNullSafe("")         //  -Infinity
+     *      mindsmine.Number.getNullSafe("hello")    //  -Infinity
+     *      mindsmine.Number.getNullSafe(true)       //  -Infinity
      *
      * @param {Number} num The number to safeguard against <code>null</code>.
      *
-     * @returns {Number} If num is <code>null</code> then {@link Number#NEGATIVE_INFINITY}.
+     * @returns {Number} If num is <code>null</code> then {@link @MDN_JS_URI@/Number/NEGATIVE_INFINITY|Number.NEGATIVE_INFINITY}.
      *
      * @since 1.0.0
      *
      */
     static getNullSafe(num) {
-        if (num != null && typeof num === "number") {
+        if (this.isNumber(num)) {
             return num;
         }
 
         return Number.NEGATIVE_INFINITY;
+    }
+
+    /**
+     * Returns an array of pseudorandom int values between the specified lower bound (inclusive) and the specified upper
+     * bound (exclusive).
+     *
+     * @see {@link @MDN_JS_URI@/Math/random|Math.random()}
+     * @see {@link @MDN_JS_URI@/Set|Set}
+     * @see {@link @MDN_JS_URI@/Array/from|Array.from()}
+     *
+     * @param {Number} lowerBound the least value returned
+     * @param {Number} upperBound the upper bound (exclusive)
+     * @param {Number} arraySize the number of unique random numbers expected
+     *
+     * @returns {Array} an array of pseudorandom integer values between the lower bound (inclusive) and the upper bound
+     * (exclusive).
+     *
+     * @throws {TypeError} if any of the arguments are not numbers
+     *
+     * @throws {Error} if any of the arguments are negative integers
+     *
+     * @throws {Error} if lower bound is greater than or equal to upper bound
+     *
+     * @since 2.1.0
+     *
+     */
+    static getUniqueRandomNumbers(lowerBound, upperBound, arraySize) {
+        if (
+            !this.isNumber(lowerBound) ||
+            !this.isNumber(upperBound) ||
+            !this.isNumber(arraySize)
+        ) {
+            throw new TypeError("@ERROR_PERMITTED_NUMBER@");
+        }
+
+        if (lowerBound < 0 || upperBound < 0 || arraySize < 0) {
+            throw new Error("Negative number is not allowed as an argument.");
+        }
+
+        if (lowerBound >= upperBound) {
+            throw new Error("Lower Bound cannot be larger than Upper Bound.");
+        }
+
+        if (arraySize > upperBound || arraySize > (upperBound - lowerBound)) {
+            throw new Error("Not enough unique numbers available for the array size.");
+        }
+
+        let set = new Set();
+
+        while (set.size < arraySize) {
+            let num = Math.floor(Math.random() * (upperBound - lowerBound)) + lowerBound;
+
+            set.add(num);
+        }
+
+        return Array.from(set);
+    }
+
+    /**
+     * Returns the number of digits in the passed in number
+     *
+     * @param {Number} num for which to count the number of digits in
+     *
+     * @returns {Number} number of digits
+     *
+     * @since 2.1.0
+     *
+     */
+    static getNumOfDigits(num) {
+        if (!this.isNumber(num)) {
+            throw new TypeError("@ERROR_PERMITTED_NUMBER@");
+        }
+
+        if (num == 0) {
+            return 1;
+        }
+
+        return Math.floor(Math.log10(Math.abs(num))) + 1;
     }
 };
