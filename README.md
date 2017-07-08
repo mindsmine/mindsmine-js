@@ -11,6 +11,7 @@ others.
 ### Releases ###
 
 **2.2.0**
+* Added function check
 * Added lint support for standardized code
 * Node 8+ supported
 
