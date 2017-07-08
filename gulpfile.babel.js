@@ -74,6 +74,7 @@ gulp.task(
     () => {
         return gulp.src([
             `${buildProperties.folder.SRC}/**/*`,
+            `${buildProperties.folder.TEST}/**/*`,
             "!node_modules/**"
         ])
             .on("error", handleError("lint", "gulp.src"))

@@ -24,8 +24,8 @@ describe("format", () => {
     });
 });
 
-const decodedStr = '<a target="_blank" href="http://www.google.com"><span>Hello World</span></a>';
-const encodedStr = '&lt;a target=&quot;_blank&quot; href=&quot;http://www.google.com&quot;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/a&gt;';
+const decodedStr = "<a target='_blank' href='http://www.google.com'><span>Hello World</span></a>";
+const encodedStr = "&lt;a target=&#39;_blank&#39; href=&#39;http://www.google.com&#39;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/a&gt;";
 
 describe("htmlEncode", () => {
     test("should encode the HTML content", () => {
