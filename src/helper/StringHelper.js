@@ -246,7 +246,7 @@ mindsmine.String = class {
                     str1.trim().search(new RegExp(str2.trim(), "i")) > -1;
         }
 
-        return str1 != null && str1 == str2;
+        return str1 != null && str1 === str2;
     }
 
     /**
