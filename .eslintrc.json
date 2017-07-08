@@ -42,6 +42,10 @@
       {
         "builtinGlobals": true
       }
+    ],
+    "no-return-assign": [
+      "error",
+      "always"
     ]
   }
 }
