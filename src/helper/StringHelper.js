@@ -48,7 +48,7 @@ mindsmine.String = class {
         return this.getNullSafe(format).replace(
             /{(\d+)}/g,
             (match, number) => {
-                return typeof args[number] != 'undefined' ? args[number] : match;
+                return typeof args[number] !== "undefined" ? args[number] : match;
             }
         );
     }
