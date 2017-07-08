@@ -147,7 +147,7 @@ mindsmine.Number = class {
             throw new TypeError("@ERROR_PERMITTED_NUMBER@");
         }
 
-        if (num == 0) {
+        if (num === 0) {
             return 1;
         }
 
