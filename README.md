@@ -10,7 +10,7 @@ others.
 
 ### Releases ###
 
-**2.1.1**
+**2.2.0**
 * Added lint support for standardized code
 * Node 8+ supported
 
