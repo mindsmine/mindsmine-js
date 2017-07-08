@@ -10,6 +10,10 @@ others.
 
 ### Releases ###
 
+**2.1.1**
+* Added lint support for standardized code
+* Node 8+ supported
+
 **2.1.0**
 * Added number of digits counting method
 * Added unique random numbers generator method
