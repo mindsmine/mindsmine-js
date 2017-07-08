@@ -89,7 +89,7 @@ mindsmine.Window.Location = class {
 
             window.location.hash.substr(1).split("&").forEach((p) => {
                 const pairs = p.split("=");
-                if (pairs.length == 1) {
+                if (pairs.length === 1) {
                     __hashParams[pairs[0]] = true;
                 } else {
                     __hashParams[pairs[0]] = decodeURIComponent(pairs[1]);
