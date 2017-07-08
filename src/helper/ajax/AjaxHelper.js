@@ -268,41 +268,35 @@ mindsmine.Ajax = class {
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         if (mindsmine.String.isEmpty(method)) {
-            throw new TypeError("Fatal Error. @ERROR_PERMITTED_STRING@");
+            throw new TypeError("Fatal Error. 'method'. @ERROR_PERMITTED_STRING@");
         }
 
         method = method.toUpperCase();
 
         if (this.ALLOWED_METHODS.indexOf(method) === -1) {
-            throw new TypeError(`Fatal Error. Allowed methods are ${this.ALLOWED_METHODS.join(" ")}.`);
+            throw new TypeError(`Fatal Error. 'method'. Allowed values are ${this.ALLOWED_METHODS.join(", ")}.`);
         }
 
         if (mindsmine.String.isEmpty(url)) {
-            throw new TypeError("Fatal Error. @ERROR_PERMITTED_STRING@");
+            throw new TypeError("Fatal Error. 'url'. @ERROR_PERMITTED_STRING@");
         }
 
-        options = options || {};
+        options = mindsmine.Object.getNullSafe(options);
 
         let scope = options.scope || this.DEFAULT_SCOPE;
 
-        if (options.success == null || typeof options.success !== "function") {
+        if (!mindsmine.Function.isFunction(options.success)) {
             throw new TypeError("Fatal Error. 'options.success'. @ERROR_PERMITTED_FUNCTION@");
         }
 
-        let __successFunc = options.success;
-
-        if (options.failure == null || typeof options.failure !== "function") {
+        if (!mindsmine.Function.isFunction(options.failure)) {
             throw new TypeError("Fatal Error. 'options.failure'. @ERROR_PERMITTED_FUNCTION@");
         }
 
-        let __failureFunc = options.failure;
-
         let __proceed = true;
 
-        let __beforeRequest = options.beforeRequest;
-
-        if (__beforeRequest != null && typeof __beforeRequest === "function") {
-            let __retVal = __beforeRequest.call(scope);
+        if (mindsmine.Function.isFunction(options.beforeRequest)) {
+            let __retVal = options.beforeRequest.call(scope);
 
             if (__retVal === null || __retVal === undefined || typeof __retVal !== "boolean") {
                 __proceed = true;
@@ -312,15 +306,8 @@ mindsmine.Ajax = class {
         }
 
         if (__proceed) {
-            let __afterRequestFuncVal = options.afterRequest,
-                __afterRequestFunc = null;
-
-            if (__afterRequestFuncVal != null && typeof __afterRequestFuncVal === "function") {
-                __afterRequestFunc = __afterRequestFuncVal;
-            }
-
             if (method === "GET") {
-                url = mindsmine.String.urlAppend(url, "_dc=" + (new Date().getTime()));
+                url = mindsmine.String.urlAppend(url, `_dc=${(new Date()).getTime()}`);
             }
 
             let async = (options.async !== false) ? (options.async || this.DEFAULT_ASYNC) : false;
@@ -332,7 +319,7 @@ mindsmine.Ajax = class {
             if (async) {
                 __xmlHttpRequest.timeout = this.DEFAULT_TIMEOUT;
                 __xmlHttpRequest.ontimeout = function () {
-                    __failureFunc.call(scope, __xmlHttpRequest);
+                    options.failure.call(scope, __xmlHttpRequest);
                 };
             }
 
@@ -355,29 +342,28 @@ mindsmine.Ajax = class {
                 throw new Error(`Fatal Error. Could not set the (${key}, ${header}) request header.`);
             }
 
+            let __afterRequestFunc = (mindsmine.Function.isFunction(options.afterRequest)) ? options.afterRequest : null;
+
             if (async) {
                 __xmlHttpRequest.onreadystatechange = function () {
                     if (__xmlHttpRequest.readyState === 4) {
-                        _onRequestComplete(__xmlHttpRequest, scope, __successFunc, __failureFunc, __afterRequestFunc);
+                        _onRequestComplete(__xmlHttpRequest, scope, options.success, options.failure, __afterRequestFunc);
                     }
                 };
             }
 
-            let __jsonData = options.jsonData,
-                data = null;
-
-            if (__jsonData != null) {
-                if (mindsmine.Object.isPrimitive(__jsonData)) {
-                    data = __jsonData;
-                } else {
-                    data = JSON.stringify(__jsonData);
-                }
-            }
+            let data = (options.jsonData != null)
+                ? (
+                    (mindsmine.Object.isPrimitive(options.jsonData))
+                        ? options.jsonData
+                        : JSON.stringify(options.jsonData)
+                )
+                : null;
 
             __xmlHttpRequest.send(data);
 
             if (!async) {
-                _onRequestComplete(__xmlHttpRequest, scope, __successFunc, __failureFunc, __afterRequestFunc);
+                _onRequestComplete(__xmlHttpRequest, scope, options.success, options.failure, __afterRequestFunc);
             }
         }
     }
