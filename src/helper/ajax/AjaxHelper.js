@@ -241,9 +241,9 @@ mindsmine.Ajax = class {
                     // Fix IE issue - IE mangles status code 204
                     // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
                     //
-                    status = (status == 1223) ? 204 : status;
+                    status = (status === 1223) ? 204 : status;
 
-                    return (status >= 200 && status < 300) || status == 304;
+                    return (status >= 200 && status < 300) || status === 304;
                 })(request.status);
             } catch (e) {
                 //
@@ -273,7 +273,7 @@ mindsmine.Ajax = class {
 
         method = method.toUpperCase();
 
-        if (this.ALLOWED_METHODS.indexOf(method) == -1) {
+        if (this.ALLOWED_METHODS.indexOf(method) === -1) {
             throw new TypeError(`Fatal Error. Allowed methods are ${this.ALLOWED_METHODS.join(" ")}.`);
         }
 
@@ -357,7 +357,7 @@ mindsmine.Ajax = class {
 
             if (async) {
                 __xmlHttpRequest.onreadystatechange = function () {
-                    if (__xmlHttpRequest.readyState == 4) {
+                    if (__xmlHttpRequest.readyState === 4) {
                         _onRequestComplete(__xmlHttpRequest, scope, __successFunc, __failureFunc, __afterRequestFunc);
                     }
                 };
