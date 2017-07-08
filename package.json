@@ -18,10 +18,11 @@
   },
   "scripts": {
     "clean": "gulp clean",
-    "test": "gulp test",
-    "docs": "gulp documentation",
     "dev-build": "gulp uglify",
-    "package": "gulp package"
+    "docs": "gulp documentation",
+    "lint": "gulp lint",
+    "package": "gulp package",
+    "test": "gulp test"
   },
   "devDependencies": {
     "babel-core": "6.25.0",
