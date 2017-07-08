@@ -36,6 +36,12 @@
     "no-else-return": "error",
     "no-implied-eval": "error",
     "no-iterator": "error",
-    "no-proto": "error"
+    "no-proto": "error",
+    "no-redeclare": [
+      "error",
+      {
+        "builtinGlobals": true
+      }
+    ]
   }
 }
