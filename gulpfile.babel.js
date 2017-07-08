@@ -21,6 +21,7 @@ import fs from "fs";
 import gulp from "gulp";
 import babel from "gulp-babel";
 import concat from "gulp-concat";
+import eslint from "gulp-eslint";
 import jest from "gulp-jest";
 import jsdoc3 from "gulp-jsdoc3";
 import replace from "gulp-replace";
@@ -68,8 +69,26 @@ gulp.task(
 );
 
 gulp.task(
-    "generate-source-files",
+    "lint",
     ["clean"],
+    () => {
+        return gulp.src([
+            `${buildProperties.folder.SRC}/**/*`,
+            "!node_modules/**"
+        ])
+            .on("error", handleError("lint", "gulp.src"))
+            .pipe(eslint())
+            .on("error", handleError("lint", "eslint"))
+            .pipe(eslint.format())
+            .on("error", handleError("lint", "eslint.format"))
+            .pipe(eslint.failAfterError())
+            .on("error", handleError("lint", "eslint.failAfterError"));
+    }
+);
+
+gulp.task(
+    "generate-source-files",
+    ["lint"],
     () => {
         let _task = gulp.src(`${buildProperties.folder.SRC}/**/*`)
             .on("error", handleError("generate-source-files", "gulp.src"));
