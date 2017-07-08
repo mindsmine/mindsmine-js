@@ -47,6 +47,7 @@
       "error",
       "always"
     ],
-    "no-script-url": "error"
+    "no-script-url": "error",
+    "no-self-assign": "error"
   }
 }
