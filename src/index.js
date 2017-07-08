@@ -230,7 +230,7 @@ if (!String.prototype.repeat) {
 
         count = +count;
 
-        if (count != count) {
+        if (count !== count) {
             count = 0;
         }
 
@@ -238,13 +238,13 @@ if (!String.prototype.repeat) {
             throw new RangeError("repeat count must be non-negative");
         }
 
-        if (count == Infinity) {
+        if (count === Infinity) {
             throw new RangeError("repeat count must be less than infinity");
         }
 
         count = Math.floor(count);
 
-        if (str.length == 0 || count == 0) {
+        if (str.length === 0 || count === 0) {
             return "";
         }
 
@@ -257,13 +257,13 @@ if (!String.prototype.repeat) {
         let rpt = "";
 
         for (;;) {
-            if ((count & 1) == 1) {
+            if ((count & 1) === 1) {
                 rpt += str;
             }
 
             count >>>= 1;
 
-            if (count == 0) {
+            if (count === 0) {
                 break;
             }
 
