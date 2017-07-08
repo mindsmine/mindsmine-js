@@ -48,6 +48,7 @@
       "always"
     ],
     "no-script-url": "error",
-    "no-self-assign": "error"
+    "no-self-assign": "error",
+    "no-throw-literal": "error"
   }
 }
