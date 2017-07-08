@@ -37,7 +37,7 @@ mindsmine.Object = class {
         let self = this;
 
         if (Object.freeze) {
-            if (obj && typeof obj === 'object' && !Object.isFrozen(obj)) {
+            if (obj && typeof obj === "object" && !Object.isFrozen(obj)) {
                 Object.freeze(obj);
 
                 if (deep) {
@@ -120,7 +120,7 @@ mindsmine.Object = class {
     static isPrimitive(value) {
         let type = typeof value;
 
-        return type === 'string' || type === 'number' || type === 'boolean';
+        return type === "string" || type === "number" || type === "boolean";
     }
 
     /**
