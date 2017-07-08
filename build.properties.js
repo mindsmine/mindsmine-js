@@ -16,32 +16,7 @@
 
 const NOW = new Date(),
     TIMESTAMP = NOW.toISOString().replace(/[-:]/g, "").replace(/T/g, ".").replace(/.[0-9]+Z/g, ""),
-    ATTR_DELETE = [
-        "repository",
-        "engine-strict",
-        "engines",
-        "scripts",
-        "devDependencies"
-    ],
-    FOLDER = {
-        SRC: "src",
-        TEST: "test",
-        BUILD: "build",
-        DIST: "dist",
-        DOCS: "docs"
-    },
-    PACKAGE_JSON = (function () {
-        delete require.cache[require.resolve("./package.json")];
-
-        let _packageJSON = require("./package.json");
-
-        ATTR_DELETE.forEach((attr) => {
-            delete _packageJSON[attr];
-        });
-
-        return _packageJSON;
-    })(),
-    OUTPUT_FILE = `${PACKAGE_JSON.name}-${PACKAGE_JSON.version}.min.js`;
+    OUTPUT_FILE = `${process.env.npm_package_name}-${process.env.npm_package_version}.min.js`;
 
 export function handleError(sourceTask, sourceStep) {
     return function (err) {
@@ -50,9 +25,14 @@ export function handleError(sourceTask, sourceStep) {
 }
 
 export default {
-    packageJSON: PACKAGE_JSON,
     outputFile: OUTPUT_FILE,
-    folder: FOLDER,
+    folder: {
+        SRC: "src",
+        TEST: "test",
+        BUILD: "build",
+        DIST: "dist",
+        DOCS: "docs"
+    },
     replaceArray: [
         [
             "@REQUIRE_FILE@",
@@ -68,15 +48,15 @@ export default {
         ],
         [
             "@COMPANY_LINK@",
-            PACKAGE_JSON.homepage
+            process.env.npm_package_homepage
         ],
         [
             "@PRODUCT_NAME@",
-            PACKAGE_JSON.name
+            process.env.npm_package_name
         ],
         [
             "@PRODUCT_VERSION@",
-            PACKAGE_JSON.version
+            process.env.npm_package_version
         ],
         [
             "@MDN_API_URI@",

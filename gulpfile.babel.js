@@ -136,8 +136,8 @@ gulp.task(
             .pipe(rename(buildProperties.outputFile))
             .on("error", handleError("uglify", "rename"))
             .pipe(uglify({
-                preserveComments: function (_node, _comment) {
-                    return (_comment.value.indexOf("! ") !== -1);
+                output: {
+                    comments: "/^!/"
                 }
             }))
             .on("error", handleError("uglify", "uglify"))
@@ -213,7 +213,7 @@ gulp.task(
             .on("error", handleError("documentation", "gulp.src"))
             .pipe(jsdoc3({
                 opts: {
-                    destination: `${buildProperties.folder.DOCS}/mindsmine/js/${buildProperties.packageJSON.version}`
+                    destination: `${buildProperties.folder.DOCS}/mindsmine/js/${process.env.npm_package_version}`
                 },
                 plugins: [
                     "plugins/markdown"
@@ -226,7 +226,7 @@ gulp.task(
                     cleverLinks: true,
                     outputSourceFiles: false,
                     syntaxTheme: "dark",
-                    systemName: `${buildProperties.packageJSON.name}`,
+                    systemName: `${process.env.npm_package_name}`,
                     copyright:
                         `<div style="text-align: center;">
                             Copyright &#169; 2008, ${(new Date()).getFullYear()},
