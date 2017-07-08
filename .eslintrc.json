@@ -34,6 +34,7 @@
     "no-eval": "error",
     "no-extra-semi": "error",
     "no-else-return": "error",
-    "no-implied-eval": "error"
+    "no-implied-eval": "error",
+    "no-iterator": "error"
   }
 }
