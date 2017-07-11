@@ -10,7 +10,8 @@ others.
 
 ### Releases ###
 
-**2.2.0**
+**3.0.0**
+* Refactoring of `mindsmine.Ajax.request` to support Promises
 * Added function check
 * Added lint support for standardized code
 * Node 8+ supported
