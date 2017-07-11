@@ -17,7 +17,7 @@
 /**
  * A collection of useful static methods to deal with JavaScript functions.
  *
- * @since 2.2.0
+ * @since 3.0.0
  *
  */
 mindsmine.Function = class {
@@ -39,7 +39,7 @@ mindsmine.Function = class {
      *
      * @returns {Boolean} Whether or not the object is a Function
      *
-     * @since 2.2.0
+     * @since 3.0.0
      *
      */
     static isFunction(obj) {
