@@ -57,19 +57,18 @@ mindsmine.Window = class {
      *
      * ### Notes
      *
-     * Dialog boxes are modal windows - they prevent the user from accessing the rest of the program's interface
-     * until the dialog box is closed. For this reason, you should not overuse any function that creates a dialog
-     * box (or modal window).
+     * Dialog boxes are modal windows - they prevent the user from accessing the rest of the program's interface until
+     * the dialog box is closed. For this reason, you should not overuse any function that creates a dialog box (or
+     * modal window).
      *
      * @see {@link @MDN_API_URI@/Window/confirm|Window.confirm()}
      *
-     * @param {String} message Text you want to display in the dialog, or, alternatively, an object that is
-     * converted into a string and displayed.
+     * @param {String} message Text you want to display in the dialog, or, alternatively, an object that is converted
+     * into a string and displayed.
      * @param {String} [title] Title you want to display in the dialog.
-     * @param {Function} [okCallback] Callback function to be invoked after user clicks on the <code>OK</code>
-     * button.
-     * @param {Function} [cancelCallback] Callback function to be invoked after user clicks on the
-     * <code>Cancel</code> button, or simply closes the dialog window.
+     * @param {Function} [okCallback] Callback function to be invoked after user clicks on the <code>OK</code> button.
+     * @param {Function} [cancelCallback] Callback function to be invoked after user clicks on the <code>Cancel</code>
+     * button, or simply closes the dialog window.
      *
      * @throws {TypeError} If invalid argument
      *
@@ -86,11 +85,11 @@ mindsmine.Window = class {
         let __isOK = window.confirm(__finalMessage);
 
         if (__isOK) {
-            if (okCallback && typeof okCallback === "function") {
+            if (mindsmine.Function.isFunction(okCallback)) {
                 okCallback.call(window);
             }
         } else {
-            if (cancelCallback && typeof cancelCallback === "function") {
+            if (mindsmine.Function.isFunction(cancelCallback)) {
                 cancelCallback.call(window);
             }
         }
@@ -129,7 +128,7 @@ mindsmine.Window = class {
 
         window.alert(__finalMessage);
 
-        if (callback && typeof callback === "function") {
+        if (mindsmine.Function.isFunction(callback)) {
             callback.call(window);
         }
     }
