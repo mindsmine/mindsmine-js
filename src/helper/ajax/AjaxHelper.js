@@ -143,34 +143,37 @@ mindsmine.Ajax = class {
     }
 
     /**
-     * Sends an HTTP request to a remote server.
+     * Sends an HTTP request to a remote server and returns a Promise object. The Promise callback functions are passed
+     * the XMLHttpRequest object containing the response data. See {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest}
+     * for details about accessing elements of the response.
      *
      * Requests made by this method are by default asynchronous, and will return immediately. No data from the server
-     * will be available to the statement immediately following this call. To process returned data, use a success (or
-     * afterRequest) callback in the request options object.
+     * will be available to the statement immediately following this call.
      *
      * Example Usage:
      *
      *      mindsmine.Ajax.request(
      *           "GET",
-     *           "valid URL",
+     *           "valid URI",
      *           {
      *                headers: {
      *                     "Accept" : "some value",
      *                     "Content-Type" : "some value",
      *                     "Authorization" : "some value"
-     *                },
-     *
-     *                success: function (request) {
-     *                     var responseJSON = JSON.parse(request.responseText);
-     *                     console.log(responseJSON);
-     *                },
-     *
-     *                failure: function (request) {
-     *                     console.log("HTTP error " + request.status);
      *                }
      *           }
-     *      );
+     *
+     *      ).then((response) => {
+     *
+     *           let responseJSON = JSON.parse(response.responseText);
+     *           console.log(responseJSON);
+     *
+     *      }).catch((response) => {
+     *
+     *           console.log(`HTTP error code = ${response.status}`);
+     *
+     *      });
+     *
      *
      * @param {String} method The HTTP method to use for the request. Note that the method name is case-sensitive and
      * should be all caps.
@@ -201,170 +204,154 @@ mindsmine.Ajax = class {
      * @param {XMLHttpRequest} options.afterRequest.response The XMLHttpRequest object containing the response data.
      * See {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
      *
-     * @param {Function} options.success The function to be called upon success of the request. The callback is passed
-     * the following parameters:
-     * @param {XMLHttpRequest} options.success.response The XMLHttpRequest object containing the response data. See
-     * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
-     *
-     * @param {Function} options.failure The function to be called upon failure of the request. The callback is passed
-     * the following parameters:
-     * @param {XMLHttpRequest} options.failure.response The XMLHttpRequest object containing the response data. See
-     * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
-     *
      * @throws {TypeError} If invalid arguments.
      *
      * @since 1.0.0
      *
      */
     static request(method, url, options) {
+        const parent = this;
 
-        /**
-         * Called when the request has come back from the server.
-         *
-         * @param {XMLHttpRequest} request
-         * @param {Object} scope The scope for the callback functions.
-         * @param {Function} successFunc The function to be called upon success of the request.
-         * @param {Function} failureFunc The function to be called upon failure of the request.
-         * @param {Function} [onCompleteFunc] The function to be called upon completion of the request.
-         *
-         * @private
-         *
-         * @since 1.0.0
-         *
-         */
-        let _onRequestComplete = function (request, scope, successFunc, failureFunc, onCompleteFunc) {
-            let __success;
+        return new Promise((resolve, reject) => {
 
-            try {
-                __success = (function (status) {
+            /**
+             * Called when the request has come back from the server.
+             *
+             * @param {XMLHttpRequest} xhrObj
+             * @param {Object} scope The scope for the callback functions.
+             * @param {Function} [onCompleteFunc] The function to be called upon completion of the request.
+             *
+             * @private
+             *
+             * @since 1.0.0
+             *
+             */
+            function _onRequestComplete(xhrObj, scope, onCompleteFunc) {
+                let __success;
+
+                try {
+                    __success = (function (status) {
+                        //
+                        // Fix IE issue - IE mangles status code 204
+                        // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
+                        //
+                        status = (status === 1223) ? 204 : status;
+
+                        return (status >= 200 && status < 300) || status === 304;
+                    })(xhrObj.status);
+                } catch (e) {
                     //
-                    // Fix IE issue - IE mangles status code 204
-                    // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
+                    // Some browsers do not provide access to status when request fails.
                     //
-                    status = (status === 1223) ? 204 : status;
-
-                    return (status >= 200 && status < 300) || status === 304;
-                })(request.status);
-            } catch (e) {
-                //
-                // Some browsers do not provide access to status when request fails.
-                //
-                __success = false;
-            }
-
-            if (onCompleteFunc) {
-                onCompleteFunc.call(scope, request);
-            }
-
-            if (__success) {
-                successFunc.call(scope, request);
-            } else {
-                failureFunc.call(scope, request);
-            }
-        };
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        if (mindsmine.String.isEmpty(method)) {
-            throw new TypeError("Fatal Error. 'method'. @ERROR_PERMITTED_STRING@");
-        }
-
-        method = method.toUpperCase();
-
-        if (this.ALLOWED_METHODS.indexOf(method) === -1) {
-            throw new TypeError(`Fatal Error. 'method'. Allowed values are ${this.ALLOWED_METHODS.join(", ")}.`);
-        }
-
-        if (mindsmine.String.isEmpty(url)) {
-            throw new TypeError("Fatal Error. 'url'. @ERROR_PERMITTED_STRING@");
-        }
-
-        options = mindsmine.Object.getNullSafe(options);
-
-        let scope = options.scope || this.DEFAULT_SCOPE;
-
-        if (!mindsmine.Function.isFunction(options.success)) {
-            throw new TypeError("Fatal Error. 'options.success'. @ERROR_PERMITTED_FUNCTION@");
-        }
-
-        if (!mindsmine.Function.isFunction(options.failure)) {
-            throw new TypeError("Fatal Error. 'options.failure'. @ERROR_PERMITTED_FUNCTION@");
-        }
-
-        let __proceed = true;
-
-        if (mindsmine.Function.isFunction(options.beforeRequest)) {
-            let __retVal = options.beforeRequest.call(scope);
-
-            if (__retVal === null || __retVal === undefined || typeof __retVal !== "boolean") {
-                __proceed = true;
-            } else {
-                __proceed = __retVal;
-            }
-        }
-
-        if (__proceed) {
-            if (method === "GET") {
-                url = mindsmine.String.urlAppend(url, `_dc=${(new Date()).getTime()}`);
-            }
-
-            let async = (options.async !== false) ? (options.async || this.DEFAULT_ASYNC) : false;
-
-            let __xmlHttpRequest = this.XHRObject;
-
-            __xmlHttpRequest.open(method, url, async);
-
-            if (async) {
-                __xmlHttpRequest.timeout = this.DEFAULT_TIMEOUT;
-                __xmlHttpRequest.ontimeout = function () {
-                    options.failure.call(scope, __xmlHttpRequest);
-                };
-            }
-
-            if (options.withCredentials || this.DEFAULT_WITH_CREDENTIALS) {
-                __xmlHttpRequest.withCredentials = true;
-            }
-
-            let headers = options.headers || {},
-                header = null,
-                key = null;
-
-            try {
-                for (key in headers) {
-                    if (headers.hasOwnProperty(key)) {
-                        header = headers[key];
-                        __xmlHttpRequest.setRequestHeader(key, header);
-                    }
+                    __success = false;
                 }
-            } catch (e) {
-                throw new Error(`Fatal Error. Could not set the (${key}, ${header}) request header.`);
+
+                if (onCompleteFunc) {
+                    onCompleteFunc.call(scope, xhrObj);
+                }
+
+                if (__success) {
+                    resolve(xhrObj);
+                } else {
+                    reject(xhrObj);
+                }
             }
 
-            let __afterRequestFunc = (mindsmine.Function.isFunction(options.afterRequest)) ? options.afterRequest : null;
+            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-            if (async) {
-                __xmlHttpRequest.onreadystatechange = function () {
-                    if (__xmlHttpRequest.readyState === 4) {
-                        _onRequestComplete(__xmlHttpRequest, scope, options.success, options.failure, __afterRequestFunc);
+            if (mindsmine.String.isEmpty(method)) {
+                throw new TypeError("Fatal Error. 'method'. @ERROR_PERMITTED_STRING@");
+            }
+
+            method = method.toUpperCase();
+
+            if (parent.ALLOWED_METHODS.indexOf(method) === -1) {
+                throw new TypeError(`Fatal Error. 'method'. Allowed values are ${parent.ALLOWED_METHODS.join(", ")}.`);
+            }
+
+            if (mindsmine.String.isEmpty(url)) {
+                throw new TypeError("Fatal Error. 'url'. @ERROR_PERMITTED_STRING@");
+            }
+
+            options = mindsmine.Object.getNullSafe(options);
+
+            let scope = options.scope || parent.DEFAULT_SCOPE;
+
+            let __proceed = true;
+
+            if (mindsmine.Function.isFunction(options.beforeRequest)) {
+                let __retVal = options.beforeRequest.call(scope);
+
+                if (__retVal === null || __retVal === undefined || typeof __retVal !== "boolean") {
+                    __proceed = true;
+                } else {
+                    __proceed = __retVal;
+                }
+            }
+
+            if (__proceed) {
+                if (method === "GET") {
+                    url = mindsmine.String.urlAppend(url, `_dc=${(new Date()).getTime()}`);
+                }
+
+                let async = (options.async !== false) ? (options.async || parent.DEFAULT_ASYNC) : false;
+
+                let __xmlHttpRequest = parent.XHRObject;
+
+                __xmlHttpRequest.open(method, url, async);
+
+                if (async) {
+                    __xmlHttpRequest.timeout = parent.DEFAULT_TIMEOUT;
+                    __xmlHttpRequest.ontimeout = function () {
+                        reject(__xmlHttpRequest);
+                    };
+                }
+
+                if (options.withCredentials || parent.DEFAULT_WITH_CREDENTIALS) {
+                    __xmlHttpRequest.withCredentials = true;
+                }
+
+                let headers = options.headers || {},
+                    header = null,
+                    key = null;
+
+                try {
+                    for (key in headers) {
+                        if (headers.hasOwnProperty(key)) {
+                            header = headers[key];
+                            __xmlHttpRequest.setRequestHeader(key, header);
+                        }
                     }
-                };
+                } catch (e) {
+                    throw new Error(`Fatal Error. Could not set the (${key}, ${header}) request header.`);
+                }
+
+                let __afterRequestFunc = (mindsmine.Function.isFunction(options.afterRequest)) ? options.afterRequest : null;
+
+                if (async) {
+                    __xmlHttpRequest.onreadystatechange = function () {
+                        if (__xmlHttpRequest.readyState === 4) {
+                            _onRequestComplete(__xmlHttpRequest, scope, __afterRequestFunc);
+                        }
+                    };
+                }
+
+                let data = (options.jsonData != null)
+                    ? (
+                        (mindsmine.Object.isPrimitive(options.jsonData))
+                            ? options.jsonData
+                            : JSON.stringify(options.jsonData)
+                    )
+                    : null;
+
+                __xmlHttpRequest.send(data);
+
+                if (!async) {
+                    _onRequestComplete(__xmlHttpRequest, scope, __afterRequestFunc);
+                }
             }
-
-            let data = (options.jsonData != null)
-                ? (
-                    (mindsmine.Object.isPrimitive(options.jsonData))
-                        ? options.jsonData
-                        : JSON.stringify(options.jsonData)
-                )
-                : null;
-
-            __xmlHttpRequest.send(data);
-
-            if (!async) {
-                _onRequestComplete(__xmlHttpRequest, scope, options.success, options.failure, __afterRequestFunc);
-            }
-        }
+        });
     }
 };
