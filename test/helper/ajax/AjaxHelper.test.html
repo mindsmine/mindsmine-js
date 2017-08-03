@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Ajax Helper Test</title>
+
+    <script type="text/javascript" src="../../../../../dist/@REQUIRE_FILE@"></script>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #DDDDDD;
+            padding: 7px 10px;
+        }
+
+        th {
+            background-color: #F0F0F0;
+        }
+
+        .currency {
+            text-align: right;
+        }
+    </style>
+</head>
+<body onload="_onDOMLoad()">
+<div id="mainContent">
+    <table>
+        <tbody id="content"></tbody>
+    </table>
+</div>
+</body>
+<script>
+    const YQL = (function () {
+        const STRING_QUERY = mindsmine.String.format(
+            "select * from csv where url = '{0}?s={1}&f=sl1d1t1' and columns='symbol,lastTradePrice,lastTradeDate,lastTradeTime'",
+            "http://download.finance.yahoo.com/d/quotes.csv",
+            [
+                "AAPL",
+                "ALBO"
+            ].join("+")
+        );
+
+        return {
+            URI: mindsmine.String.urlAppend(
+                "http://query.yahooapis.com/v1/public/yql",
+                [
+                    "q=" + encodeURIComponent(STRING_QUERY),
+                    "format=json"
+                ].join("&")
+            )
+        };
+    })();
+
+    const _getTableRow = function (symbol, timestamp, price) {
+        return mindsmine.String.format(
+            "<tr><td>{0}</td><td class='currency'>{1}</td><td>{2}</td></tr>",
+            mindsmine.String.format(
+                '<a target="_blank" href="http://finance.yahoo.com/quote/{0}">{0}</a>',
+                symbol
+            ),
+            parseFloat(price),
+            timestamp
+        );
+    };
+
+    const _onDOMLoad = function () {
+
+        mindsmine.Ajax.request(
+            "GET",
+            YQL.URI,
+            {
+                beforeRequest: function () {
+                    document.getElementById("content").innerHTML = "";
+                }
+            }
+        ).then((request) => {
+            let __responseJSON = JSON.parse(request.responseText),
+                __yahooObjArr = __responseJSON["query"]["results"]["row"] || [],
+                __innerHTML = __yahooObjArr.map(function (__quote) {
+                    return _getTableRow(
+                        __quote["symbol"],
+                        __quote["lastTradeDate"].slice(0, -5) + " " + __quote["lastTradeTime"],
+                        __quote["lastTradePrice"]
+                    );
+                });
+
+            document.getElementById("content").innerHTML = __innerHTML.join("");
+        }).catch((request) => {
+            document.getElementById("mainContent").innerHTML = mindsmine.String.format(
+                "Everything just broke down (status code = {0})",
+                request.status
+            );
+        });
+    };
+</script>
+</html>

@@ -75,7 +75,8 @@ gulp.task(
         return gulp.src([
             `${buildProperties.folder.SRC}/**/*`,
             `${buildProperties.folder.TEST}/**/*`,
-            "!node_modules/**"
+            "!node_modules/**",
+            "!**/*.html"
         ])
             .on("error", handleError("lint", "gulp.src"))
             .pipe(eslint())
@@ -185,7 +186,7 @@ gulp.task(
     "concat-test-files",
     ["generate-test-files"],
     () => {
-        return gulp.src(`${BUILD.TEST.CODE}/helper/**/*`)
+        return gulp.src(`${BUILD.TEST.CODE}/helper/**/*.js`)
             .on("error", handleError("concat-test-files", "gulp.src"))
             .pipe(concat("helper.js"))
             .on("error", handleError("concat-test-files", "concat"))
