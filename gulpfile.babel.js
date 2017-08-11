@@ -16,18 +16,15 @@
 
 "use strict";
 
-import del from "del";
 import fs from "fs";
 import gulp from "gulp";
 import babel from "gulp-babel";
 import concat from "gulp-concat";
-import eslint from "gulp-eslint";
 import jest from "gulp-jest";
 import jsdoc3 from "gulp-jsdoc3";
 import replace from "gulp-replace";
 import rename from "gulp-rename";
 import uglify from "gulp-uglify";
-import runSequence from "run-sequence";
 
 import buildProperties, {handleError} from "./build.properties";
 
@@ -44,53 +41,7 @@ const BUILD = {
 };
 
 gulp.task(
-    "clean-unwanted",
-    () => {
-        let _paths = del.sync([buildProperties.folder.BUILD]);
-
-        console.info("Deleting unwanted files\n", _paths.join("\n"));
-        return _paths;
-    }
-);
-
-gulp.task(
-    "clean",
-    ["clean-unwanted"],
-    () => {
-        let _paths = [];
-
-        _paths.push(del.sync([buildProperties.folder.DIST]));
-        _paths.push(del.sync([buildProperties.folder.DOCS]));
-
-        console.info("Cleaning\n", _paths.join("\n"));
-
-        return _paths;
-    }
-);
-
-gulp.task(
-    "lint",
-    ["clean"],
-    () => {
-        return gulp.src([
-            `${buildProperties.folder.SRC}/**/*`,
-            `${buildProperties.folder.TEST}/**/*`,
-            "!node_modules/**",
-            "!**/*.html"
-        ])
-            .on("error", handleError("lint", "gulp.src"))
-            .pipe(eslint())
-            .on("error", handleError("lint", "eslint"))
-            .pipe(eslint.format())
-            .on("error", handleError("lint", "eslint.format"))
-            .pipe(eslint.failAfterError())
-            .on("error", handleError("lint", "eslint.failAfterError"));
-    }
-);
-
-gulp.task(
     "generate-source-files",
-    ["lint"],
     () => {
         let _task = gulp.src(`${buildProperties.folder.SRC}/**/*`)
             .on("error", handleError("generate-source-files", "gulp.src"));
@@ -223,7 +174,6 @@ gulp.task(
 
 gulp.task(
     "documentation",
-    ["test"],
     () => {
         return gulp.src(
             [
@@ -257,12 +207,5 @@ gulp.task(
                 }
             }))
             .on("error", handleError("documentation", "jsdoc3"));
-    }
-);
-
-gulp.task(
-    "package",
-    () => {
-        runSequence("test", "clean-unwanted");
     }
 );
