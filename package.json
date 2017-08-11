@@ -23,7 +23,8 @@
     "docs": "npm run test && gulp documentation",
     "lint": "eslint src/**/* test/**/*",
     "package": "npm run test && npm run clean-unwanted",
-    "test": "npm run clean && npm run lint && gulp test"
+    "test": "npm run update-test-files && jest final.test.js",
+    "update-test-files": "npm run clean && npm run lint && gulp update-test-files"
   },
   "devDependencies": {
     "babel-core": "6.25.0",
@@ -36,7 +37,6 @@
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
     "gulp-concat": "2.6.1",
-    "gulp-jest": "2.0.0",
     "gulp-jsdoc3": "1.0.1",
     "gulp-replace": "0.6.1",
     "gulp-rename": "1.2.2",

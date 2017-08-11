@@ -20,7 +20,6 @@ import fs from "fs";
 import gulp from "gulp";
 import babel from "gulp-babel";
 import concat from "gulp-concat";
-import jest from "gulp-jest";
 import jsdoc3 from "gulp-jsdoc3";
 import replace from "gulp-replace";
 import rename from "gulp-rename";
@@ -155,21 +154,12 @@ gulp.task(
 
         return gulp.src(`${BUILD.TEST.CODE}/index.test.js`)
             .on("error", handleError("update-test-files", "gulp.src"))
+            .pipe(rename("final.test.js"))
+            .on("error", handleError("update-test-files", "rename"))
             .pipe(replace("//_CONCATENATED_HELPER_CODE", _helperCode))
             .on("error", handleError("update-test-files", "replace"))
             .pipe(gulp.dest(BUILD.TEST.CONCATENATED))
             .on("error", handleError("update-test-files", "gulp.dest"));
-    }
-);
-
-gulp.task(
-    "test",
-    ["update-test-files"],
-    () => {
-        return gulp.src(`${BUILD.TEST.CONCATENATED}`)
-            .on("error", handleError("test", "gulp.src"))
-            .pipe(jest())
-            .on("error", handleError("test", "jest"));
     }
 );
 
