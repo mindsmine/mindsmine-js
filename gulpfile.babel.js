@@ -27,6 +27,7 @@ import rename from "gulp-rename";
 import uglify from "gulp-uglify";
 
 import buildProperties, {handleError} from "./build.properties";
+import jsdocConf from "./jsdoc.conf";
 
 const BUILD = {
     SOURCE: {
@@ -182,30 +183,7 @@ gulp.task(
             ]
         )
             .on("error", handleError("documentation", "gulp.src"))
-            .pipe(jsdoc3({
-                opts: {
-                    destination: `${buildProperties.folder.DOCS}/mindsmine/js/${process.env.npm_package_version}`
-                },
-                plugins: [
-                    "plugins/markdown"
-                ],
-                templates: {
-                    navType: "inline",
-                    includeDate: false,
-                    collapseSymbols: true,
-                    theme: "flatly",
-                    cleverLinks: true,
-                    outputSourceFiles: false,
-                    syntaxTheme: "dark",
-                    systemName: `${process.env.npm_package_name}`,
-                    copyright:
-                        `<div style="text-align: center;">
-                            Copyright &#169; 2008, ${(new Date()).getFullYear()},
-                            <strong><a target="_blank" href="http://www.shaiksphere.com">Shaiksphere Inc</a></strong>.
-                            All rights reserved.
-                        </div>`
-                }
-            }))
+            .pipe(jsdoc3(jsdocConf))
             .on("error", handleError("documentation", "jsdoc3"));
     }
 );
