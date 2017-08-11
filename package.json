@@ -17,12 +17,12 @@
     "node": ">= 8.2.0"
   },
   "scripts": {
-    "clean-unwanted": "del-cli build",
-    "clean": "npm run clean-unwanted && del-cli dist docs",
+    "preclean": "del-cli build",
+    "clean": "del-cli dist docs",
     "dev-build": "gulp uglify",
     "docs": "npm run test && gulp documentation",
     "lint": "eslint src/**/* test/**/*",
-    "package": "npm run test && npm run clean-unwanted",
+    "package": "npm run test && npm run preclean",
     "test": "npm run update-test-files && jest final.test.js",
     "update-test-files": "npm run clean && npm run lint && gulp update-test-files"
   },
