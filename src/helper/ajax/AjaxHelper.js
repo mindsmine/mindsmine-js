@@ -193,8 +193,9 @@ mindsmine.Ajax = class {
      *
      * @param {Object|String} [options.jsonData] JSON data to use as the post.
      *
-     * @param {Boolean} [options.withCredentials=false] <code>true</code> to add the <code>withCredentials</code>
-     * property to the XHR object.
+     * @param {Boolean} [options.withCredentials=false] The value for the
+     * {@link @MDN_API_URI@/XMLHttpRequest/withCredentials|withCredentials} property of the
+     * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} object.
      *
      * @param {Function} [options.beforeRequest] The function to be called before a network request is made to retrieve
      * a data object.
@@ -203,6 +204,9 @@ mindsmine.Ajax = class {
      * function is called regardless of success or failure. The callback is passed the following parameters:
      * @param {XMLHttpRequest} options.afterRequest.response The XMLHttpRequest object containing the response data.
      * See {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
+     *
+     * @returns {Promise} A {@link @MDN_JS_URI@/Promise|Promise} that resolves to an
+     * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} object.
      *
      * @throws {TypeError} If invalid arguments.
      *
