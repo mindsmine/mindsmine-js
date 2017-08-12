@@ -18,8 +18,6 @@
 
 import gulp from "gulp";
 import jsdoc3 from "gulp-jsdoc3";
-import rename from "gulp-rename";
-import uglify from "gulp-uglify";
 
 import buildProperties, {handleError} from "./build.properties";
 import jsdocConf from "./jsdoc.conf";
@@ -35,24 +33,6 @@ const BUILD = {
         CONCATENATED: `${buildProperties.folder.BUILD}/test/concatenated`
     }
 };
-
-gulp.task(
-    "uglify",
-    () => {
-        return gulp.src(`${BUILD.SOURCE.TRANSPILED}/index.js`)
-            .on("error", handleError("uglify", "gulp.src"))
-            .pipe(rename(buildProperties.outputFile))
-            .on("error", handleError("uglify", "rename"))
-            .pipe(uglify({
-                output: {
-                    comments: "/^!/"
-                }
-            }))
-            .on("error", handleError("uglify", "uglify"))
-            .pipe(gulp.dest(buildProperties.folder.DIST))
-            .on("error", handleError("uglify", "gulp.dest"));
-    }
-);
 
 gulp.task(
     "documentation",
