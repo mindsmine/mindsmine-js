@@ -75,6 +75,28 @@ export default {
             process.env.npm_package_version
         ],
         [
+            "@JSDOC_DESTINATION_FOLDER@",
+            `docs/mindsmine/js/${process.env.npm_package_version}`
+        ],
+        [
+            "@JSDOC_README_FILE@",
+            path.resolve(__dirname, "..", "..", "README.md")
+        ],
+        [
+            "@JSDOC_INDEX_FILE@",
+            "build/source/concatenated/index.js"
+        ],
+        [
+            "@JSDOC_COPYRIGHT@",
+            [
+                "<div style='text-align: center;'>",
+                `Copyright &#169; 2008, ${(new Date()).getFullYear()},`,
+                "<strong><a target='_blank' href='http://www.shaiksphere.com'>Shaiksphere Inc</a></strong>.",
+                "All rights reserved.",
+                "</div>"
+            ].join(" ")
+        ],
+        [
             "@MDN_API_URI@",
             "https://developer.mozilla.org/en-US/docs/Web/API"
         ],

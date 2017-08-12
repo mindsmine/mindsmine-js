@@ -1,0 +1,26 @@
+{
+  "opts": {
+    "destination": "@JSDOC_DESTINATION_FOLDER@"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "source": {
+    "include": [
+      "README.md",
+      "@JSDOC_INDEX_FILE@"
+    ]
+  },
+  "templates": {
+    "navType": "inline",
+    "includeDate": false,
+    "collapseSymbols": true,
+    "theme": "flatly",
+    "cleverLinks": true,
+    "monospaceLinks": true,
+    "outputSourceFiles": false,
+    "syntaxTheme": "dark",
+    "systemName": "@PRODUCT_NAME@",
+    "copyright": "@JSDOC_COPYRIGHT@"
+  }
+}
