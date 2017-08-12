@@ -153,9 +153,7 @@ mindsmine.Window = class {
              *
              * @since 2.0.0
              *
-             * @function
              * @memberOf mindsmine.Window.Location
-             * @inner
              *
              */
             static getAllQueryParameters() {
@@ -184,9 +182,7 @@ mindsmine.Window = class {
              *
              * @since 1.0.0
              *
-             * @function
              * @memberOf mindsmine.Window.Location
-             * @inner
              *
              */
             static getQueryParameter(queryParam) {
@@ -213,9 +209,7 @@ mindsmine.Window = class {
              *
              * @since 2.0.0
              *
-             * @function
              * @memberOf mindsmine.Window.Location
-             * @inner
              *
              */
             static getAllHashParameters() {
@@ -248,9 +242,7 @@ mindsmine.Window = class {
              *
              * @since 1.0.0
              *
-             * @function
              * @memberOf mindsmine.Window.Location
-             * @inner
              *
              */
             static getHashParameter(hashParam) {
