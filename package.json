@@ -28,7 +28,8 @@
     "wip": "npm run clean && npm run build",
     "dev-build": "gulp uglify",
 
-    "docs": "npm run test && gulp documentation",
+    "predocs": "npm run test",
+    "docs": "jsdoc --configure build/scripts/helper/jsdoc.conf.json -t ./node_modules/ink-docstrap/template",
 
     "package": "npm run test && npm run preclean",
 
@@ -43,6 +44,7 @@
     "babel-preset-es2017-node7": "0.5.2",
     "del-cli": "1.1.0",
     "eslint": "4.4.1",
+    "ink-docstrap": "1.3.0",
     "jest-cli": "20.0.4",
     "jsdoc": "3.5.3",
     "gulp": "3.9.1",
