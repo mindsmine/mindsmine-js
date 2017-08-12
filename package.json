@@ -30,7 +30,9 @@
     "package": "npm run test && npm run preclean",
     "pretest": "npm run uglify",
     "test": "jest final.test.js",
-    "uglify": "npm run clean && npm run lint && npm run transpile && gulp uglify"
+    "preuglify": "npm run clean && npm run lint && npm run transpile",
+    "uglify": "gulp uglify"
+
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
@@ -42,6 +44,7 @@
     "gulp": "3.9.1",
     "gulp-jsdoc3": "1.0.1",
     "gulp-rename": "1.2.2",
-    "gulp-uglify": "3.0.0"
+    "gulp-uglify": "3.0.0",
+    "uglify-es": "3.0.27"
   }
 }
