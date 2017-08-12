@@ -17,7 +17,6 @@
 "use strict";
 
 import gulp from "gulp";
-import babel from "gulp-babel";
 import jsdoc3 from "gulp-jsdoc3";
 import rename from "gulp-rename";
 import uglify from "gulp-uglify";
@@ -37,25 +36,25 @@ const BUILD = {
     }
 };
 
-gulp.task(
-    "transpile-source-files",
-    () => {
-        return gulp.src(`${BUILD.SOURCE.CONCATENATED}/index.js`)
-            .on("error", handleError("transpile-source-files", "gulp.src"))
-            .pipe(babel({
-                presets: [
-                    "es2015"
-                ]
-            }))
-            .on("error", handleError("transpile-source-files", "babel"))
-            .pipe(gulp.dest(BUILD.SOURCE.TRANSPILED))
-            .on("error", handleError("transpile-source-files", "gulp.dest"));
-    }
-);
+// gulp.task(
+//     "transpile-source-files",
+//     () => {
+//         return gulp.src(`${BUILD.SOURCE.CONCATENATED}/index.js`)
+//             .on("error", handleError("transpile-source-files", "gulp.src"))
+//             .pipe(babel({
+//                 presets: [
+//                     "es2015"
+//                 ]
+//             }))
+//             .on("error", handleError("transpile-source-files", "babel"))
+//             .pipe(gulp.dest(BUILD.SOURCE.TRANSPILED))
+//             .on("error", handleError("transpile-source-files", "gulp.dest"));
+//     }
+// );
 
 gulp.task(
     "uglify",
-    ["transpile-source-files"],
+    // ["transpile-source-files"],
     () => {
         return gulp.src(`${BUILD.SOURCE.TRANSPILED}/index.js`)
             .on("error", handleError("uglify", "gulp.src"))

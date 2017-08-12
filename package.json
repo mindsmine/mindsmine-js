@@ -21,13 +21,15 @@
     "clean": "del-cli dist docs",
     "prebuild": "babel scripts --out-dir build/scripts",
     "build": "node build/scripts/build.js",
-    "wip": "npm run clean && npm run build",
+    "pretranspile": "npm run build",
+    "transpile": "babel build/source/concatenated/index.js --out-file build/source/transpiled/index.js --presets es2015",
+    "wip": "npm run clean && npm run transpile",
     "dev-build": "gulp uglify",
     "docs": "npm run test && gulp documentation",
     "lint": "eslint src/**/* test/**/*",
     "package": "npm run test && npm run preclean",
     "test": "npm run uglify && jest final.test.js",
-    "uglify": "npm run clean && npm run lint && npm run build && gulp uglify"
+    "uglify": "npm run clean && npm run lint && npm run transpile && gulp uglify"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
@@ -39,7 +41,6 @@
     "jest-cli": "20.0.4",
     "jsdoc": "3.5.3",
     "gulp": "3.9.1",
-    "gulp-babel": "6.1.2",
     "gulp-jsdoc3": "1.0.1",
     "gulp-rename": "1.2.2",
     "gulp-uglify": "3.0.0"
