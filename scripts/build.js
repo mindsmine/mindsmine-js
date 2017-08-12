@@ -19,11 +19,11 @@
 import fs from "fs";
 
 import FileSystemHelper from "./helper/FileSystemHelper";
-import buildProperties, {handleError} from "./build.properties";
+import buildProperties from "./build.properties";
 
 FileSystemHelper.mkdir(buildProperties.folder.SOURCE.CONCATENATED);
-FileSystemHelper.mkdir(buildProperties.folder.SOURCE.TRANSPILED);
 FileSystemHelper.mkdir(buildProperties.folder.TEST.CONCATENATED);
+FileSystemHelper.mkdir(buildProperties.folder.ROOT.DIST);
 
 FileSystemHelper.copy(buildProperties.folder.ROOT.SRC, buildProperties.folder.SOURCE.CODE);
 FileSystemHelper.copy(buildProperties.folder.ROOT.TEST, buildProperties.folder.TEST.CODE);
@@ -59,6 +59,13 @@ FileSystemHelper.replace(
 buildProperties.replaceArray.forEach(arr => {
     FileSystemHelper.replace(
         buildProperties.folder.SOURCE.CONCATENATED_FILE,
+        arr[0],
+        arr[1]
+    );
+
+    // TODO Find a better way out
+    FileSystemHelper.replace(
+        buildProperties.folder.TEST.CODE,
         arr[0],
         arr[1]
     );

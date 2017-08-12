@@ -28,12 +28,6 @@ const ROOT = {
     DOCS: path.resolve(__dirname, "..", "..", "docs")
 }; 
 
-export function handleError(sourceTask, sourceStep) {
-    return function (err) {
-        console.error(`Error during the '${sourceStep}' step under the '${sourceTask}' task.`, err.toString());
-    }
-}
-
 export default {
     outputFile: OUTPUT_FILE,
     folder: {
@@ -44,8 +38,7 @@ export default {
             CODE_HELPER_FILE: path.resolve(ROOT.BUILD, "source", "code", "helper"),
             CONCATENATED: path.resolve(ROOT.BUILD, "source", "concatenated"),
             CONCATENATED_FILE: path.resolve(ROOT.BUILD, "source", "concatenated", "index.js"),
-            CONCATENATED_HELPER_FILE: path.resolve(ROOT.BUILD, "source", "concatenated", "helper.js"),
-            TRANSPILED: path.resolve(ROOT.BUILD, "source", "transpiled")
+            CONCATENATED_HELPER_FILE: path.resolve(ROOT.BUILD, "source", "concatenated", "helper.js")
         },
         TEST: {
             CODE: path.resolve(ROOT.BUILD, "test", "code"),
@@ -114,4 +107,4 @@ export default {
             "Only non-empty string(s) are allowed as arguments."
         ]
     ]
-}
+};

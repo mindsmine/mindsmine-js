@@ -77,7 +77,7 @@ class Copy {
 export default class {
     static mkdir(folder) {
         const sep = path.sep;
-        const initDir = path.isAbsolute(folder) ? sep : '';
+        const initDir = path.isAbsolute(folder) ? sep : "";
 
         folder.split(sep).reduce(
             (parentDir, childDir) => {
