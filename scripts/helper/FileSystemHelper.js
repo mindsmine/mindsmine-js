@@ -127,9 +127,6 @@ export default class {
         const parent = this;
         const fromPattern = new RegExp(fromString, "g");
 
-        console.log(`File Path = ${filepath}`);
-        console.log(`From Pattern = ${fromPattern}`);
-
         const filepathStats = fs.lstatSync(filepath);
 
         if (filepathStats.isFile()) {
