@@ -17,27 +17,16 @@
     "node": ">= 8.2.0"
   },
   "scripts": {
-    "preclean": "rimraf build",
-    "clean": "rimraf dist docs",
-
-    "lint": "eslint scripts/**/* src/**/* test/**/*",
-
-    "prebuild": "babel scripts --out-dir build/scripts",
     "build": "node build/scripts/build",
-
-    "wip": "npm run clean && npm run build",
-    "dev-build": "gulp uglify",
-
-    "predocs": "npm run test",
+    "clean": "rimraf dist docs",
     "docs": "jsdoc --configure build/scripts/helper/jsdoc.conf.json -t ./node_modules/ink-docstrap/template",
-
+    "lint": "eslint scripts/**/* src/**/* test/**/*",
     "package": "npm run test && npm run preclean",
-
-    "pretest": "npm run uglify",
-    "test": "jest final.test.js",
-
-    "preuglify": "npm run clean && npm run lint && npm run build",
-    "uglify": "node build/scripts/uglify"
+    "prebuild": "babel scripts --out-dir build/scripts",
+    "preclean": "rimraf build",
+    "predocs": "npm run test",
+    "pretest": "npm run clean && npm run lint && npm run build && node build/scripts/uglify",
+    "test": "jest final.test.js"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
