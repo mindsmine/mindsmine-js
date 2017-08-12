@@ -20,7 +20,7 @@ import fs from "fs";
 import path from "path";
 
 import FileSystemHelper from "./helper/FileSystemHelper";
-import buildProperties from "./build.properties";
+import buildProperties from "./helper/build.properties";
 
 FileSystemHelper.mkdir(buildProperties.folder.SOURCE.CONCATENATED);
 FileSystemHelper.mkdir(buildProperties.folder.TEST.CONCATENATED);

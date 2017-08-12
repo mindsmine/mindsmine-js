@@ -20,7 +20,7 @@ import fs from "fs";
 import path from "path";
 import UglifyJS from "uglify-es";
 
-import buildProperties from "./build.properties";
+import buildProperties from "./helper/build.properties";
 
 const minifiedCode = UglifyJS.minify(
     fs.readFileSync(buildProperties.folder.SOURCE.CONCATENATED_FILE, "utf8"),

@@ -21,11 +21,11 @@ const NOW = new Date(),
     OUTPUT_FILE = `${process.env.npm_package_name}-${process.env.npm_package_version}.min.js`;
 
 const ROOT = {
-    SRC: path.resolve(__dirname, "..", "..", "src"),
-    TEST: path.resolve(__dirname, "..", "..", "test"),
-    BUILD: path.resolve(__dirname, "..", "..", "build"),
-    DIST: path.resolve(__dirname, "..", "..", "dist"),
-    DOCS: path.resolve(__dirname, "..", "..", "docs")
+    SRC: path.resolve(__dirname, "..", "..", "..", "src"),
+    TEST: path.resolve(__dirname, "..", "..", "..", "test"),
+    BUILD: path.resolve(__dirname, "..", "..", "..", "build"),
+    DIST: path.resolve(__dirname, "..", "..", "..", "dist"),
+    DOCS: path.resolve(__dirname, "..", "..", "..", "docs")
 }; 
 
 export default {
