@@ -30,7 +30,7 @@ const COLORS = {
 
 export default class {
     static began(message) {
-        console.log(`[ ${COLORS.CYAN}INFO${COLORS.OFF} ] Began -`, message);
+        console.log(`[ ${COLORS.CYAN}INFO${COLORS.OFF} ] BEGAN -`, message);
     }
 
     static debug(message) {
@@ -38,7 +38,7 @@ export default class {
     }
 
     static ended(message) {
-        console.log(`[ ${COLORS.CYAN}INFO${COLORS.OFF} ] Ended -`, message);
+        console.log(`[ ${COLORS.CYAN}INFO${COLORS.OFF} ] ENDED -`, message);
     }
 
     static error(message) {

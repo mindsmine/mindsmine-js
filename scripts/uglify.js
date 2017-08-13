@@ -23,6 +23,9 @@ import BuildProperties from "./helper/GeneralHelper";
 import Console from "./helper/ConsoleHelper";
 import FileSystem from "./helper/FileSystemHelper";
 
+Console.newline();
+Console.began(__filename);
+
 FileSystem.mkdir(BuildProperties.path.ROOT.DIST);
 FileSystem.mkdir(BuildProperties.path.SOURCE.CONCATENATED.ROOT);
 Console.info("Created necessary folder(s)");
@@ -83,3 +86,5 @@ if (minifiedCode.error) {
 fs.writeFileSync(BuildProperties.uglifiedFilename, minifiedCode.code);
 
 Console.info("Uglifying the code COMPLETED");
+
+Console.ended(__filename);
