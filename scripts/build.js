@@ -26,7 +26,7 @@ import buildProperties from "./helper/GeneralHelper";
 Console.began("Creating folders");
 FileSystemHelper.mkdir(buildProperties.folder.SOURCE.CONCATENATED);
 FileSystemHelper.mkdir(buildProperties.folder.TEST.CONCATENATED);
-FileSystemHelper.mkdir(buildProperties.folder.ROOT.DIST);
+//
 Console.ended("Creating folders");
 
 FileSystemHelper.copy(buildProperties.folder.ROOT.SRC, buildProperties.folder.SOURCE.CODE);

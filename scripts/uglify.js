@@ -21,6 +21,9 @@ import UglifyJS from "uglify-es";
 
 import BuildProperties from "./helper/GeneralHelper";
 import Console from "./helper/ConsoleHelper";
+import FileSystem from "./helper/FileSystemHelper";
+
+FileSystem.mkdir(BuildProperties.path.ROOT.DIST);
 
 const minifiedCode = UglifyJS.minify(
     fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED_FILE, "utf8"),
