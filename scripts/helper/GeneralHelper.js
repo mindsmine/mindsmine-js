@@ -41,7 +41,7 @@ const SOURCE_CONCATENATED_ROOT = path.resolve(SOURCE_ROOT, "concatenated");
 const TEST_CONCATENATED_ROOT = path.resolve(TEST_ROOT, "concatenated");
 
 export default {
-    outputFile: OUTPUT_FILE,
+    uglifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     path: {
         ROOT: ROOT
     },
