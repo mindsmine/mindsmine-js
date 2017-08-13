@@ -1,6 +1,7 @@
 {
   "opts": {
-    "destination": "@JSDOC_DESTINATION_FOLDER@"
+    "destination": "@JSDOC_DESTINATION_FOLDER@",
+    "template": "./node_modules/ink-docstrap/template"
   },
   "plugins": [
     "plugins/markdown"

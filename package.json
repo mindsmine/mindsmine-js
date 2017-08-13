@@ -19,7 +19,7 @@
   "scripts": {
     "build": "node build/scripts/build",
     "clean": "rimraf dist docs",
-    "docs": "jsdoc --configure build/scripts/helper/jsdoc.conf.json -t ./node_modules/ink-docstrap/template",
+    "docs": "jsdoc --configure build/scripts/helper/jsdoc.conf.json",
     "lint": "eslint scripts/**/* src/**/* test/**/*",
     "package": "npm run test && npm run preclean",
     "prebuild": "babel scripts --out-dir build/scripts",
