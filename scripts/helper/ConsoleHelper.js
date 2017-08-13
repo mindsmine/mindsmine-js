@@ -49,6 +49,10 @@ export default class {
         console.log(`[ ${COLORS.CYAN}INFO${COLORS.OFF} ]`, message);
     }
 
+    static newline() {
+        console.log("\n");
+    }
+
     static success(message) {
         console.log(`[ ${COLORS.GREEN}SUCCESS${COLORS.OFF} ]`, message);
     }
