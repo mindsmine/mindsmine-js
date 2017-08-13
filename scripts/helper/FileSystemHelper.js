@@ -19,8 +19,6 @@
 import fs from "fs";
 import path from "path";
 
-const ENCODING = "utf8";
-
 class Copy {
     constructor(source, target) {
         this.originalSource = source;
@@ -130,7 +128,7 @@ export default class {
         const filepathStats = fs.lstatSync(filepath);
 
         if (filepathStats.isFile()) {
-            let fileContent = fs.readFileSync(filepath, ENCODING);
+            let fileContent = fs.readFileSync(filepath, "utf8");
 
             const newContent = fileContent.replace(fromPattern, toString);
 
