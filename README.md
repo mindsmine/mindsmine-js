@@ -12,9 +12,11 @@ others.
 
 **3.0.0**
 * Refactoring of `mindsmine.Ajax.request` to support Promises
+* Added tests for `mindsmine.Ajax` functions
 * Added function check
 * Added lint support for standardized code
 * Node 8+ supported
+* Removed `gulp` dependency
 
 **2.1.0**
 * Added number of digits counting method
