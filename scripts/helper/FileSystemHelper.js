@@ -96,8 +96,6 @@ export default class {
     }
 
     static concat(source, targetFile, filter) {
-        const parent = this;
-
         if (Array.isArray(source)) {
             source.forEach(file => {
                 fs.appendFileSync(targetFile, fs.readFileSync(file));
