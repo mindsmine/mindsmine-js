@@ -68,7 +68,7 @@ BuildProperties.replaceArray.forEach(arr => {
 Console.info("Replaced all tokens with respective values in index file");
 
 const minifiedCode = UglifyJS.minify(
-    fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED_FILE, "utf8"),
+    fs.readFileSync(BuildProperties.path.SOURCE.CONCATENATED.INDEX_FILE, "utf8"),
     {
         ecma: 6,
         output: {

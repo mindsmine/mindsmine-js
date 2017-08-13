@@ -23,7 +23,7 @@
     "package": "npm run test && npm run preclean",
     "preclean": "rimraf build",
     "predocs": "npm run test && node build/scripts/predocs",
-    "pretest": "npm run uglify",
+    "pretest": "npm run uglify && node build/scripts/pretest",
     "preuglify": "npm run clean && npm run lint && babel scripts --out-dir build/scripts",
     "test": "jest final.test.js",
     "uglify": "node build/scripts/uglify"

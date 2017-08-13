@@ -55,29 +55,25 @@ export default {
                 HELPER: path.resolve(SOURCE_CONCATENATED_ROOT, "helper.js"),
                 INDEX_FILE: path.resolve(SOURCE_CONCATENATED_ROOT, "index.js")
             }
+        },
+        TEST: {
+            CODE: {
+                ROOT: TEST_CODE_ROOT,
+                HELPER: path.resolve(TEST_CODE_ROOT, "helper"),
+                INDEX_FILE: path.resolve(TEST_CODE_ROOT, "index.test.js"),
+                HTML_FILES: [
+                    path.resolve(TEST_CODE_ROOT, "helper", "ajax", "AjaxHelper.test.html")
+                ]
+            },
+            CONCATENATED: {
+                ROOT: TEST_CONCATENATED_ROOT,
+                HELPER: path.resolve(TEST_CONCATENATED_ROOT, "helper.test.js"),
+                INDEX_FILE: path.resolve(TEST_CONCATENATED_ROOT, "final.test.js")
+            }
         }
     },
     replaceToken: {
         HELPER_CODE: "//_CONCATENATED_HELPER_CODE"
-    },
-    folder: {
-        ROOT: ROOT,
-        SOURCE: {
-            CODE: SOURCE_CODE_ROOT,
-            CODE_FILE: path.resolve(SOURCE_CODE_ROOT, "index.js"),
-            CODE_HELPER_FILE: path.resolve(SOURCE_CODE_ROOT, "helper"),
-            CONCATENATED: SOURCE_CONCATENATED_ROOT,
-            CONCATENATED_FILE: path.resolve(SOURCE_CONCATENATED_ROOT, "index.js"),
-            CONCATENATED_HELPER_FILE: path.resolve(SOURCE_CONCATENATED_ROOT, "helper.js")
-        },
-        TEST: {
-            CODE: TEST_CODE_ROOT,
-            CODE_FILE: path.resolve(TEST_CODE_ROOT, "index.test.js"),
-            CODE_HELPER_FILE: path.resolve(TEST_CODE_ROOT, "helper"),
-            CONCATENATED: TEST_CONCATENATED_ROOT,
-            CONCATENATED_FILE: path.resolve(TEST_CONCATENATED_ROOT, "final.test.js"),
-            CONCATENATED_HELPER_FILE: path.resolve(TEST_CONCATENATED_ROOT, "helper.test.js")
-        }
     },
     replaceArray: [
         [
