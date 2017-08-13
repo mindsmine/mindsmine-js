@@ -25,8 +25,10 @@
     "prebuild": "babel scripts --out-dir build/scripts",
     "preclean": "rimraf build",
     "predocs": "npm run test && node build/scripts/predocs",
-    "pretest": "npm run clean && npm run lint && npm run build && node build/scripts/uglify",
-    "test": "jest final.test.js"
+    "pretest": "npm run uglify",
+    "preuglify": "npm run clean && npm run lint && npm run build",
+    "test": "jest final.test.js",
+    "uglify": "node build/scripts/uglify"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",

@@ -17,13 +17,13 @@
 "use strict";
 
 import fs from "fs";
-import path from "path";
 import UglifyJS from "uglify-es";
 
-import buildProperties from "./helper/GeneralHelper";
+import BuildProperties from "./helper/GeneralHelper";
+import Console from "./helper/ConsoleHelper";
 
 const minifiedCode = UglifyJS.minify(
-    fs.readFileSync(buildProperties.folder.SOURCE.CONCATENATED_FILE, "utf8"),
+    fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED_FILE, "utf8"),
     {
         ecma: 6,
         output: {
@@ -33,9 +33,11 @@ const minifiedCode = UglifyJS.minify(
 );
 
 if (minifiedCode.error) {
+    Console.error("Uglifying the code FAILED");
+
     throw minifiedCode.error;
 }
 
-const finalOutputFile = path.resolve(buildProperties.folder.ROOT.DIST, buildProperties.outputFile);
+fs.writeFileSync(BuildProperties.uglifiedFilename, minifiedCode.code);
 
-fs.writeFileSync(finalOutputFile, minifiedCode.code);
+Console.info("Uglifying the code COMPLETED");
