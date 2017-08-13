@@ -24,6 +24,45 @@ import Console from "./helper/ConsoleHelper";
 import FileSystem from "./helper/FileSystemHelper";
 
 FileSystem.mkdir(BuildProperties.path.ROOT.DIST);
+FileSystem.mkdir(BuildProperties.path.SOURCE.CONCATENATED.ROOT);
+Console.info("Created necessary folder(s)");
+
+FileSystem.copy(
+    BuildProperties.path.ROOT.SRC,
+    BuildProperties.path.SOURCE.CODE.ROOT
+);
+Console.info("Copied source code into build folder");
+
+FileSystem.concat(
+    BuildProperties.path.SOURCE.CODE.HELPER,
+    BuildProperties.path.SOURCE.CONCATENATED.HELPER,
+    FileSystem.Filter.JS
+);
+Console.info("Concatenated all helper files");
+
+FileSystem.copy(
+    BuildProperties.path.SOURCE.CODE.INDEX_FILE,
+    BuildProperties.path.SOURCE.CONCATENATED.INDEX_FILE
+);
+Console.info("Copied index file to concat folder");
+
+FileSystem.replace(
+    BuildProperties.path.SOURCE.CONCATENATED.INDEX_FILE,
+    BuildProperties.replaceToken.HELPER_CODE,
+    fs.readFileSync(
+        BuildProperties.path.SOURCE.CONCATENATED.HELPER,
+        "utf8"
+    )
+);
+
+BuildProperties.replaceArray.forEach(arr => {
+    FileSystem.replace(
+        BuildProperties.path.SOURCE.CONCATENATED.INDEX_FILE,
+        arr[0],
+        arr[1]
+    );
+});
+Console.info("Replaced all tokens with respective values in index file");
 
 const minifiedCode = UglifyJS.minify(
     fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED_FILE, "utf8"),

@@ -73,6 +73,17 @@ class Copy {
 }
 
 export default class {
+    static get Filter() {
+        return {
+            ES: ".es",
+            ES6: ".es6",
+            HTML: ".html",
+            JS: ".js",
+            JSON: ".json",
+            JSX: ".jsx"
+        };
+    }
+
     static mkdir(folder) {
         const sep = path.sep;
         const initDir = path.isAbsolute(folder) ? sep : "";

@@ -43,7 +43,22 @@ const TEST_CONCATENATED_ROOT = path.resolve(TEST_ROOT, "concatenated");
 export default {
     uglifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     path: {
-        ROOT: ROOT
+        ROOT: ROOT,
+        SOURCE: {
+            CODE: {
+                ROOT: SOURCE_CODE_ROOT,
+                HELPER: path.resolve(SOURCE_CODE_ROOT, "helper"),
+                INDEX_FILE: path.resolve(SOURCE_CODE_ROOT, "index.js")
+            },
+            CONCATENATED: {
+                ROOT: SOURCE_CONCATENATED_ROOT,
+                HELPER: path.resolve(SOURCE_CONCATENATED_ROOT, "helper.js"),
+                INDEX_FILE: path.resolve(SOURCE_CONCATENATED_ROOT, "index.js")
+            }
+        }
+    },
+    replaceToken: {
+        HELPER_CODE: "//_CONCATENATED_HELPER_CODE"
     },
     folder: {
         ROOT: ROOT,

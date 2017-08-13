@@ -17,16 +17,14 @@
     "node": ">= 8.2.0"
   },
   "scripts": {
-    "build": "node build/scripts/build",
     "clean": "rimraf dist docs",
     "docs": "jsdoc --configure build/jsdoc.conf.json",
     "lint": "eslint scripts/**/* src/**/* test/**/*",
     "package": "npm run test && npm run preclean",
-    "prebuild": "babel scripts --out-dir build/scripts",
     "preclean": "rimraf build",
     "predocs": "npm run test && node build/scripts/predocs",
     "pretest": "npm run uglify",
-    "preuglify": "npm run clean && npm run lint && npm run build",
+    "preuglify": "npm run clean && npm run lint && babel scripts --out-dir build/scripts",
     "test": "jest final.test.js",
     "uglify": "node build/scripts/uglify"
   },
