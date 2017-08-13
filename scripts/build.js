@@ -19,20 +19,18 @@
 import fs from "fs";
 import path from "path";
 
+import Console from "./helper/ConsoleHelper";
 import FileSystemHelper from "./helper/FileSystemHelper";
 import buildProperties from "./helper/GeneralHelper";
 
+Console.began("Creating folders");
 FileSystemHelper.mkdir(buildProperties.folder.SOURCE.CONCATENATED);
 FileSystemHelper.mkdir(buildProperties.folder.TEST.CONCATENATED);
 FileSystemHelper.mkdir(buildProperties.folder.ROOT.DIST);
+Console.ended("Creating folders");
 
 FileSystemHelper.copy(buildProperties.folder.ROOT.SRC, buildProperties.folder.SOURCE.CODE);
 FileSystemHelper.copy(buildProperties.folder.ROOT.TEST, buildProperties.folder.TEST.CODE);
-
-FileSystemHelper.copy(
-    path.resolve(__dirname, "..", "..", "scripts", "helper", "jsdoc.conf.json"),
-    path.resolve(buildProperties.folder.ROOT.BUILD, "scripts", "helper", "jsdoc.conf.json")
-);
 
 FileSystemHelper.concat(
     buildProperties.folder.SOURCE.CODE_HELPER_FILE,
@@ -63,13 +61,6 @@ FileSystemHelper.replace(
 );
 
 buildProperties.replaceArray.forEach(arr => {
-    // TODO Find a better way out
-    FileSystemHelper.replace(
-        path.resolve(buildProperties.folder.ROOT.BUILD, "scripts", "helper", "jsdoc.conf.json"),
-        arr[0],
-        arr[1]
-    );
-
     FileSystemHelper.replace(
         buildProperties.folder.SOURCE.CONCATENATED_FILE,
         arr[0],

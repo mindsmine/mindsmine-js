@@ -20,33 +20,48 @@ const NOW = new Date(),
     TIMESTAMP = NOW.toISOString().replace(/[-:]/g, "").replace(/T/g, ".").replace(/.[0-9]+Z/g, ""),
     OUTPUT_FILE = `${process.env.npm_package_name}-${process.env.npm_package_version}.min.js`;
 
+const __ROOT = path.resolve(__dirname, "..", "..", "..");
+
 const ROOT = {
-    SRC: path.resolve(__dirname, "..", "..", "..", "src"),
-    TEST: path.resolve(__dirname, "..", "..", "..", "test"),
-    BUILD: path.resolve(__dirname, "..", "..", "..", "build"),
-    DIST: path.resolve(__dirname, "..", "..", "..", "dist"),
-    DOCS: path.resolve(__dirname, "..", "..", "..", "docs")
-}; 
+    BUILD: path.resolve(__ROOT, "build"),
+    DIST: path.resolve(__ROOT, "dist"),
+    DOCS: path.resolve(__ROOT, "docs"),
+    SCRIPTS: path.resolve(__ROOT, "scripts"),
+    SRC: path.resolve(__ROOT, "src"),
+    TEST: path.resolve(__ROOT, "test")
+};
+
+const SOURCE_ROOT = path.resolve(ROOT.BUILD, "source");
+const TEST_ROOT = path.resolve(ROOT.BUILD, "test");
+
+const SOURCE_CODE_ROOT = path.resolve(SOURCE_ROOT, "code");
+const TEST_CODE_ROOT = path.resolve(TEST_ROOT, "code");
+
+const SOURCE_CONCATENATED_ROOT = path.resolve(SOURCE_ROOT, "concatenated");
+const TEST_CONCATENATED_ROOT = path.resolve(TEST_ROOT, "concatenated");
 
 export default {
     outputFile: OUTPUT_FILE,
+    path: {
+        ROOT: ROOT
+    },
     folder: {
         ROOT: ROOT,
         SOURCE: {
-            CODE: path.resolve(ROOT.BUILD, "source", "code"),
-            CODE_FILE: path.resolve(ROOT.BUILD, "source", "code", "index.js"),
-            CODE_HELPER_FILE: path.resolve(ROOT.BUILD, "source", "code", "helper"),
-            CONCATENATED: path.resolve(ROOT.BUILD, "source", "concatenated"),
-            CONCATENATED_FILE: path.resolve(ROOT.BUILD, "source", "concatenated", "index.js"),
-            CONCATENATED_HELPER_FILE: path.resolve(ROOT.BUILD, "source", "concatenated", "helper.js")
+            CODE: SOURCE_CODE_ROOT,
+            CODE_FILE: path.resolve(SOURCE_CODE_ROOT, "index.js"),
+            CODE_HELPER_FILE: path.resolve(SOURCE_CODE_ROOT, "helper"),
+            CONCATENATED: SOURCE_CONCATENATED_ROOT,
+            CONCATENATED_FILE: path.resolve(SOURCE_CONCATENATED_ROOT, "index.js"),
+            CONCATENATED_HELPER_FILE: path.resolve(SOURCE_CONCATENATED_ROOT, "helper.js")
         },
         TEST: {
-            CODE: path.resolve(ROOT.BUILD, "test", "code"),
-            CODE_FILE: path.resolve(ROOT.BUILD, "test", "code", "index.test.js"),
-            CODE_HELPER_FILE: path.resolve(ROOT.BUILD, "test", "code", "helper"),
-            CONCATENATED: path.resolve(ROOT.BUILD, "test", "concatenated"),
-            CONCATENATED_FILE: path.resolve(ROOT.BUILD, "test", "concatenated", "final.test.js"),
-            CONCATENATED_HELPER_FILE: path.resolve(ROOT.BUILD, "test", "concatenated", "helper.test.js")
+            CODE: TEST_CODE_ROOT,
+            CODE_FILE: path.resolve(TEST_CODE_ROOT, "index.test.js"),
+            CODE_HELPER_FILE: path.resolve(TEST_CODE_ROOT, "helper"),
+            CONCATENATED: TEST_CONCATENATED_ROOT,
+            CONCATENATED_FILE: path.resolve(TEST_CONCATENATED_ROOT, "final.test.js"),
+            CONCATENATED_HELPER_FILE: path.resolve(TEST_CONCATENATED_ROOT, "helper.test.js")
         }
     },
     replaceArray: [
@@ -73,28 +88,6 @@ export default {
         [
             "@PRODUCT_VERSION@",
             process.env.npm_package_version
-        ],
-        [
-            "@JSDOC_DESTINATION_FOLDER@",
-            `docs/mindsmine/js/${process.env.npm_package_version}`
-        ],
-        [
-            "@JSDOC_README_FILE@",
-            path.resolve(__dirname, "..", "..", "README.md")
-        ],
-        [
-            "@JSDOC_INDEX_FILE@",
-            "build/source/concatenated/index.js"
-        ],
-        [
-            "@JSDOC_COPYRIGHT@",
-            [
-                "<div style='text-align: center;'>",
-                `Copyright &#169; 2008, ${(new Date()).getFullYear()},`,
-                "<strong><a target='_blank' href='http://www.shaiksphere.com'>Shaiksphere Inc</a></strong>.",
-                "All rights reserved.",
-                "</div>"
-            ].join(" ")
         ],
         [
             "@MDN_API_URI@",
