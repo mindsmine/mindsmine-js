@@ -26,12 +26,12 @@ describe("getKey", () => {
 
 describe("isPrimitive", () => {
     it("should check for primitive data types", () => {
-        expect(mindsmine.Object.isPrimitive(123)).toBe(true);
-        expect(mindsmine.Object.isPrimitive("")).toBe(true);
-        expect(mindsmine.Object.isPrimitive(false)).toBe(true);
-        expect(mindsmine.Object.isPrimitive({})).toBe(false);
-        expect(mindsmine.Object.isPrimitive([])).toBe(false);
-        expect(mindsmine.Object.isPrimitive(null)).toBe(false);
+        expect(mindsmine.Object.isPrimitive(123)).toBeTruthy();
+        expect(mindsmine.Object.isPrimitive("")).toBeTruthy();
+        expect(mindsmine.Object.isPrimitive(false)).toBeTruthy();
+        expect(mindsmine.Object.isPrimitive({})).toBeFalsy();
+        expect(mindsmine.Object.isPrimitive([])).toBeFalsy();
+        expect(mindsmine.Object.isPrimitive(null)).toBeFalsy();
     });
 });
 
