@@ -24,6 +24,7 @@ describe("isNumber", () => {
         expect(mindsmine.Number.isNumber("hello")).toBeFalsy();
         expect(mindsmine.Number.isNumber(true)).toBeFalsy();
         expect(mindsmine.Number.isNumber(function() {})).toBeFalsy();
+        expect(mindsmine.Number.isNumber([])).toBeFalsy();
         expect(mindsmine.Number.isNumber({})).toBeFalsy();
     });
 });

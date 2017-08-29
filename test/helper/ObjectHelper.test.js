@@ -45,6 +45,7 @@ describe("isEmpty", () => {
         expect(mindsmine.Object.isEmpty("hello")).toBeFalsy();
         expect(mindsmine.Object.isEmpty(true)).toBeFalsy();
         expect(mindsmine.Object.isEmpty(function() {})).toBeFalsy();
+        expect(mindsmine.Object.isEmpty([])).toBeFalsy();
         expect(mindsmine.Object.isEmpty({})).toBeTruthy();
     });
 });

@@ -131,11 +131,12 @@ mindsmine.Object = class {
      *      mindsmine.Object.isEmpty(null)           //  false
      *      mindsmine.Object.isEmpty(undefined)      //  false
      *      mindsmine.Object.isEmpty(NaN)            //  false
-     *      mindsmine.Object.isEmpty(100)            //  true
+     *      mindsmine.Object.isEmpty(100)            //  false
      *      mindsmine.Object.isEmpty("")             //  false
      *      mindsmine.Object.isEmpty("hello")        //  false
      *      mindsmine.Object.isEmpty(true)           //  false
      *      mindsmine.Object.isEmpty(function() {})  //  false
+     *      mindsmine.Object.isEmpty([])             //  false
      *      mindsmine.Object.isEmpty({})             //  true
      *
      * @param {Object} obj The object to test.

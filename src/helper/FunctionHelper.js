@@ -34,6 +34,7 @@ mindsmine.Function = class {
      *      mindsmine.Function.isFunction("hello")        //  false
      *      mindsmine.Function.isFunction(true)           //  false
      *      mindsmine.Function.isFunction(function() {})  //  true
+     *      mindsmine.Function.isFunction([])             //  false
      *      mindsmine.Function.isFunction({})             //  false
      *
      * @param {Object} obj The object to test
