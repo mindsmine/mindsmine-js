@@ -24,5 +24,6 @@ describe("isFunction", () => {
         expect(mindsmine.Function.isFunction("hello")).toBeFalsy();
         expect(mindsmine.Function.isFunction(true)).toBeFalsy();
         expect(mindsmine.Function.isFunction(function() {})).toBeTruthy();
+        expect(mindsmine.Function.isFunction({})).toBeFalsy();
     });
 });
