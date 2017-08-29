@@ -20,7 +20,7 @@
     "clean": "rimraf dist docs",
     "docs": "jsdoc --configure build/jsdoc.conf.json",
     "lint": "eslint scripts/**/* src/**/* test/**/*",
-    "package": "npm run test && npm run preclean",
+    "package": "npm run docs && npm run preclean",
     "preclean": "rimraf build",
     "predocs": "npm run test && node build/scripts/predocs",
     "pretest": "npm run uglify && node build/scripts/pretest",
