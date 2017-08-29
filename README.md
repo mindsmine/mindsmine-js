@@ -10,6 +10,15 @@ others.
 
 ### Releases ###
 
+**3.0.0**
+* Refactored `mindsmine.Ajax.request` to support Promises
+* Added tests for `mindsmine.Ajax` functions
+* Added object emptiness check
+* Added function check
+* Added lint support
+* Node 8+ supported
+* Removed `gulp` dependency
+
 **2.1.0**
 * Added number of digits counting method
 * Added unique random numbers generator method

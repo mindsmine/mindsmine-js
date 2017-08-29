@@ -41,7 +41,7 @@
  */
 if(!Array.isArray) {
     Array.isArray = function (arg) {
-        return Object.prototype.toString.call(arg) === '[object Array]';
+        return Object.prototype.toString.call(arg) === "[object Array]";
     };
 }
 
@@ -54,7 +54,7 @@ if (!Array.from) {
         let toStr = Object.prototype.toString;
 
         let isCallable = function (fn) {
-            return typeof fn === 'function' || toStr.call(fn) === '[object Function]';
+            return typeof fn === "function" || toStr.call(fn) === "[object Function]";
         };
 
         let toInteger = function (value) {
@@ -97,7 +97,7 @@ if (!Array.from) {
 
             let T;
 
-            if (typeof mapFn !== 'undefined') {
+            if (typeof mapFn !== "undefined") {
                 // 5. else
                 // 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
                 if (!isCallable(mapFn)) {
@@ -130,7 +130,7 @@ if (!Array.from) {
                 kValue = items[k];
 
                 if (mapFn) {
-                    A[k] = typeof T === 'undefined' ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
+                    A[k] = typeof T === "undefined" ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
                 } else {
                     A[k] = kValue;
                 }
@@ -153,7 +153,7 @@ if (!Array.from) {
  */
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
-        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
     };
 }
 
@@ -178,7 +178,7 @@ if (!String.prototype.endsWith) {
         let subjectString = this.toString();
 
         if (
-            typeof position !== 'number' ||
+            typeof position !== "number" ||
             !isFinite(position) ||
             Math.floor(position) !== position ||
             position > subjectString.length
@@ -200,17 +200,17 @@ if (!String.prototype.endsWith) {
  */
 if (!String.prototype.includes) {
     String.prototype.includes = function(search, start) {
-        'use strict';
+        "use strict";
 
-        if (typeof start !== 'number') {
+        if (typeof start !== "number") {
             start = 0;
         }
 
         if (start + search.length > this.length) {
             return false;
-        } else {
-            return this.indexOf(search, start) !== -1;
         }
+
+        return this.indexOf(search, start) !== -1;
     };
 }
 
@@ -220,50 +220,50 @@ if (!String.prototype.includes) {
  */
 if (!String.prototype.repeat) {
     String.prototype.repeat = function(count) {
-        'use strict';
+        "use strict";
 
         if (this == null) {
-            throw new TypeError(`can't convert ${this} to object`);
+            throw new TypeError(`can"t convert ${this} to object`);
         }
 
-        let str = '' + this;
+        let str = "" + this;
 
         count = +count;
 
-        if (count != count) {
+        if (count !== count) {
             count = 0;
         }
 
         if (count < 0) {
-            throw new RangeError('repeat count must be non-negative');
+            throw new RangeError("repeat count must be non-negative");
         }
 
-        if (count == Infinity) {
-            throw new RangeError('repeat count must be less than infinity');
+        if (count === Infinity) {
+            throw new RangeError("repeat count must be less than infinity");
         }
 
         count = Math.floor(count);
 
-        if (str.length == 0 || count == 0) {
-            return '';
+        if (str.length === 0 || count === 0) {
+            return "";
         }
 
         // Ensuring count is a 31-bit integer allows us to heavily optimize the main part. But anyway, most current
-        // (August 2014) browsers can't handle strings 1 << 28 chars or longer, so:
+        // (August 2014) browsers can"t handle strings 1 << 28 chars or longer, so:
         if (str.length * count >= 1 << 28) {
-            throw new RangeError('repeat count must not overflow maximum string size');
+            throw new RangeError("repeat count must not overflow maximum string size");
         }
 
-        let rpt = '';
+        let rpt = "";
 
         for (;;) {
-            if ((count & 1) == 1) {
+            if ((count & 1) === 1) {
                 rpt += str;
             }
 
             count >>>= 1;
 
-            if (count == 0) {
+            if (count === 0) {
                 break;
             }
 
@@ -273,7 +273,7 @@ if (!String.prototype.repeat) {
         // Could we try:
         // return Array(count + 1).join(this);
         return rpt;
-    }
+    };
 }
 
 /**
@@ -335,14 +335,14 @@ class mindsmine {
 mindsmine = mindsmine.Object.freeze(mindsmine, true);
 
 // Export the mindsmine object for NodeJS. For browser, add `mindsmine` as a global object
-if (typeof exports !== 'undefined' && !exports.nodeType) {
-    if (typeof module !== 'undefined' && !module.nodeType && module.exports) {
+if (typeof exports !== "undefined" && !exports.nodeType) {
+    if (typeof module !== "undefined" && !module.nodeType && module.exports) {
         module.exports = mindsmine;
     }
 
     exports.mindsmine = mindsmine;
 } else {
-    let base = typeof window === 'object' && window.window === window && window || this || {};
+    let base = typeof window === "object" && window.window === window && window || this || {};
 
     base.mindsmine = mindsmine;
 }

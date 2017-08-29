@@ -27,13 +27,16 @@ mindsmine.Number = class {
      *
      * Example usage:
      *
-     *      mindsmine.Number.isNumber(null)       //  false
-     *      mindsmine.Number.isNumber(undefined)  //  false
-     *      mindsmine.Number.isNumber(NaN)        //  false
-     *      mindsmine.Number.isNumber(100)        //  true
-     *      mindsmine.Number.isNumber("")         //  false
-     *      mindsmine.Number.isNumber("hello")    //  false
-     *      mindsmine.Number.isNumber(true)       //  false
+     *      mindsmine.Number.isNumber(null)           //  false
+     *      mindsmine.Number.isNumber(undefined)      //  false
+     *      mindsmine.Number.isNumber(NaN)            //  false
+     *      mindsmine.Number.isNumber(100)            //  true
+     *      mindsmine.Number.isNumber("")             //  false
+     *      mindsmine.Number.isNumber("hello")        //  false
+     *      mindsmine.Number.isNumber(true)           //  false
+     *      mindsmine.Number.isNumber(function() {})  //  false
+     *      mindsmine.Number.isNumber([])             //  false
+     *      mindsmine.Number.isNumber({})             //  false
      *
      * @param {Object} obj The object to test
      *
@@ -147,7 +150,7 @@ mindsmine.Number = class {
             throw new TypeError("@ERROR_PERMITTED_NUMBER@");
         }
 
-        if (num == 0) {
+        if (num === 0) {
             return 1;
         }
 
