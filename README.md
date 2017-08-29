@@ -11,10 +11,11 @@ others.
 ### Releases ###
 
 **3.0.0**
-* Refactoring of `mindsmine.Ajax.request` to support Promises
+* Refactored `mindsmine.Ajax.request` to support Promises
 * Added tests for `mindsmine.Ajax` functions
+* Added object emptiness check
 * Added function check
-* Added lint support for standardized code
+* Added lint support
 * Node 8+ supported
 * Removed `gulp` dependency
 
