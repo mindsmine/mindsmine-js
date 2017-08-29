@@ -35,6 +35,20 @@ describe("isPrimitive", () => {
     });
 });
 
+describe("isEmpty", () => {
+    it("should check for empty objects", () => {
+        expect(mindsmine.Object.isEmpty(null)).toBeFalsy();
+        expect(mindsmine.Object.isEmpty(undefined)).toBeFalsy();
+        expect(mindsmine.Object.isEmpty(NaN)).toBeFalsy();
+        expect(mindsmine.Object.isEmpty(100)).toBeFalsy();
+        expect(mindsmine.Object.isEmpty("")).toBeFalsy();
+        expect(mindsmine.Object.isEmpty("hello")).toBeFalsy();
+        expect(mindsmine.Object.isEmpty(true)).toBeFalsy();
+        expect(mindsmine.Object.isEmpty(function() {})).toBeFalsy();
+        expect(mindsmine.Object.isEmpty({})).toBeTruthy();
+    });
+});
+
 describe("getNullSafe", () => {
     it("should get null safe objects", () => {
         let obj1 = { "key1" : "value1", "key2" : "value2"},

@@ -112,7 +112,7 @@ mindsmine.Object = class {
      *
      * @param {Object} value The value to test.
      *
-     * @returns {Boolean}
+     * @returns {Boolean} Whether or not the object is of primitive data type
      *
      * @since 1.0.0
      *
@@ -121,6 +121,32 @@ mindsmine.Object = class {
         let type = typeof value;
 
         return type === "string" || type === "number" || type === "boolean";
+    }
+
+    /**
+     * Returns <code>true</code> if the passed value is an Empty JavaScript Object.
+     *
+     * Example usage:
+     *
+     *      mindsmine.Object.isEmpty(null)           //  false
+     *      mindsmine.Object.isEmpty(undefined)      //  false
+     *      mindsmine.Object.isEmpty(NaN)            //  false
+     *      mindsmine.Object.isEmpty(100)            //  true
+     *      mindsmine.Object.isEmpty("")             //  false
+     *      mindsmine.Object.isEmpty("hello")        //  false
+     *      mindsmine.Object.isEmpty(true)           //  false
+     *      mindsmine.Object.isEmpty(function() {})  //  false
+     *      mindsmine.Object.isEmpty({})             //  true
+     *
+     * @param {Object} obj The object to test.
+     *
+     * @returns {Boolean} Whether or not the object is empty
+     *
+     * @since 3.0.0
+     *
+     */
+    static isEmpty(obj) {
+        return obj != null && Object.keys(obj).length === 0 && obj.constructor === Object;
     }
 
     /**
