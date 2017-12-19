@@ -79,6 +79,16 @@ mindsmine.Number = class {
         return Number.NEGATIVE_INFINITY;
     }
 
+    static isPerfectSquare(value) {
+        if (this.getNullSafe(value) < 0) {
+            return false;
+        }
+
+        let sqrt = Math.floor(Math.sqrt(value));
+
+        return Math.pow(sqrt, 2) === value;
+    }
+
     /**
      * Returns an array of pseudorandom int values between the specified lower bound (inclusive) and the specified upper
      * bound (exclusive).

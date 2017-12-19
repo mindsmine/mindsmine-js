@@ -10,6 +10,10 @@ others.
 
 ### Releases ###
 
+**3.1.0**
+* Added perfect square test method
+* Node 9+ supported
+
 **3.0.0**
 * Refactored `mindsmine.Ajax.request` to support Promises
 * Added tests for `mindsmine.Ajax` functions
