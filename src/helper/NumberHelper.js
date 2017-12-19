@@ -79,14 +79,34 @@ mindsmine.Number = class {
         return Number.NEGATIVE_INFINITY;
     }
 
-    static isPerfectSquare(value) {
-        if (this.getNullSafe(value) < 0) {
+    /**
+     * Returns <code>true</code> if number is a Perfect Square
+     *
+     * Example usage:
+     *
+     *      mindsmine.Number.isPerfectSquare(0)    //  true
+     *      mindsmine.Number.isPerfectSquare(1)    //  true
+     *      mindsmine.Number.isPerfectSquare(81)   //  true
+     *      mindsmine.Number.isPerfectSquare(100)  //  true
+     *      mindsmine.Number.isPerfectSquare(5)    //  false
+     *      mindsmine.Number.isPerfectSquare(101)  //  false
+     *      mindsmine.Number.isPerfectSquare(250)  //  false
+     *
+     * @param {Number} num The number to test
+     *
+     * @returns {Boolean} Whether or not the number is a Perfect Square
+     *
+     * @since 3.1.0
+     *
+     */
+    static isPerfectSquare(num) {
+        if (this.getNullSafe(num) < 0) {
             return false;
         }
 
-        let sqrt = Math.floor(Math.sqrt(value));
+        let sqrt = Math.floor(Math.sqrt(num));
 
-        return Math.pow(sqrt, 2) === value;
+        return Math.pow(sqrt, 2) === num;
     }
 
     /**
