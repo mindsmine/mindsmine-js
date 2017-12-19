@@ -92,6 +92,8 @@ mindsmine.Number = class {
      *      mindsmine.Number.isPerfectSquare(101)  //  false
      *      mindsmine.Number.isPerfectSquare(250)  //  false
      *
+     * @see {@link @WIKI_URI@/Perfect_square|Perfect Square (Wikipedia)}
+     *
      * @param {Number} num The number to test
      *
      * @returns {Boolean} Whether or not the number is a Perfect Square
