@@ -16,4 +16,16 @@
 
 const mindsmine = require("../../../dist/@REQUIRE_FILE@");
 
+describe("productName", () => {
+    test("should return product name", () => {
+        expect(mindsmine.productName).toBe("mindsmine-js");
+    });
+});
+
+describe("productVersion", () => {
+    test("should return product version", () => {
+        expect(mindsmine.productVersion).toBe("3.1.0");
+    });
+});
+
 //_CONCATENATED_HELPER_CODE

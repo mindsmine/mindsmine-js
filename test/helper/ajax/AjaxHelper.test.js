@@ -37,3 +37,17 @@ describe("DEFAULT_SCOPE", () => {
         expect(mindsmine.Ajax.DEFAULT_SCOPE).toEqual(window);
     });
 });
+
+describe("ALLOWED_METHODS", () => {
+    const expected = [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ];
+
+    it("should match the expected array of HTTP methods", () => {
+        expect(mindsmine.Ajax.ALLOWED_METHODS).toEqual(expect.arrayContaining(expected));
+    });
+});

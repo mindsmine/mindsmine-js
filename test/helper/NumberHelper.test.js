@@ -68,6 +68,19 @@ describe("getNumOfDigits", () => {
     });
 });
 
+describe("isPerfectSquare", () => {
+    test("should test that the number is a Perfect Square", () => {
+        expect(mindsmine.Number.isPerfectSquare(0)).toBeTruthy();
+        expect(mindsmine.Number.isPerfectSquare(1)).toBeTruthy();
+        expect(mindsmine.Number.isPerfectSquare(81)).toBeTruthy();
+        expect(mindsmine.Number.isPerfectSquare(100)).toBeTruthy();
+
+        expect(mindsmine.Number.isPerfectSquare(5)).toBeFalsy();
+        expect(mindsmine.Number.isPerfectSquare(101)).toBeFalsy();
+        expect(mindsmine.Number.isPerfectSquare(250)).toBeFalsy();
+    });
+});
+
 describe("getUniqueRandomNumbers", () => {
     const lowerBound = 10;
     const upperBound = 81;

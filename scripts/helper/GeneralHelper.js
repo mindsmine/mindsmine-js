@@ -101,6 +101,10 @@ export default {
             process.env.npm_package_version
         ],
         [
+            "@WIKI_URI@",
+            "https://en.wikipedia.org/wiki"
+        ],
+        [
             "@MDN_API_URI@",
             "https://developer.mozilla.org/en-US/docs/Web/API"
         ],

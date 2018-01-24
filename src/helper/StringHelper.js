@@ -293,7 +293,7 @@ mindsmine.String = class {
      *      mindsmine.String.isPalindrome("hello", false)  //  false
      *
      * @see {@link mindsmine.String.areEqual}
-     * @see {@link https://en.wikipedia.org/wiki/Palindrome|Palindrome (Wikipedia)}
+     * @see {@link @WIKI_URI@/Palindrome|Palindrome (Wikipedia)}
      *
      * @param {String} str to check
      * @param {Boolean} [lenient=true] whether to be lenient or not
