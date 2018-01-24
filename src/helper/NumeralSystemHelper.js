@@ -48,6 +48,8 @@ mindsmine.NumeralSystem = class {
      *
      * @returns {String} a string representation of the argument in the specified radix.
      *
+     * @throws {RangeError} If radix is not between <code>2</code> and <code>36</code>.
+     *
      * @since 3.1.0
      *
      */
