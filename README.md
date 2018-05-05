@@ -11,6 +11,7 @@ others.
 ### Releases ###
 
 **3.2.0**
+* Updated the tests code
 * Node 10+ supported
 
 **3.1.0**
