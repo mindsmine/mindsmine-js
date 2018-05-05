@@ -60,10 +60,7 @@ export default {
             CODE: {
                 ROOT: TEST_CODE_ROOT,
                 HELPER: path.resolve(TEST_CODE_ROOT, "helper"),
-                INDEX_FILE: path.resolve(TEST_CODE_ROOT, "index.test.js"),
-                HTML_FILES: [
-                    path.resolve(TEST_CODE_ROOT, "helper", "ajax", "AjaxHelper.test.html")
-                ]
+                INDEX_FILE: path.resolve(TEST_CODE_ROOT, "index.test.js")
             },
             CONCATENATED: {
                 ROOT: TEST_CONCATENATED_ROOT,

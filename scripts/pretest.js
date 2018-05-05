@@ -62,14 +62,6 @@ BuildProperties.replaceArray.forEach(arr => {
         arr[0],
         arr[1]
     );
-
-    BuildProperties.path.TEST.CODE.HTML_FILES.forEach(htmlFile => {
-        FileSystem.replace(
-            htmlFile,
-            arr[0],
-            arr[1]
-        );
-    });
 });
 Console.info("Replaced all tokens with respective values in index file");
 
