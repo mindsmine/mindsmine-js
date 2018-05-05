@@ -1,6 +1,6 @@
 {
   "name": "mindsmine-js",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "src/index.js",
   "description": "mindsmine-js",
   "authors": [
@@ -14,7 +14,7 @@
     "url": "https://github.com/mindsmine/mindsmine-js.git"
   },
   "engines": {
-    "node": ">= 9.4.0"
+    "node": ">= 10.0.0"
   },
   "scripts": {
     "clean": "rimraf dist docs",
@@ -30,12 +30,12 @@
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
-    "babel-preset-es2017-node7": "0.5.2",
-    "eslint": "4.16.0",
+    "babel-preset-env": "1.6.1",
+    "eslint": "4.19.1",
     "ink-docstrap": "1.3.2",
-    "jest-cli": "22.1.4",
+    "jest-cli": "22.4.3",
     "jsdoc": "3.5.5",
     "rimraf": "2.6.2",
-    "uglify-es": "3.3.8"
+    "uglify-es": "3.3.9"
   }
 }
