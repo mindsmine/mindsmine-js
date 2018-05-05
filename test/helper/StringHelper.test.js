@@ -14,63 +14,51 @@
  limitations under the License.
  */
 
-describe("format", () => {
-    test("should format the string", () => {
-        let str1 = "Hello";
-        let str2 = "World";
+test("format should format the string", () => {
+    let str1 = "Hello";
+    let str2 = "World";
 
-        expect(mindsmine.String.format("Let us combine {0} and {1} together.", str1, str2))
-            .toBe("Let us combine Hello and World together.");
-    });
+    expect(mindsmine.String.format("Let us combine {0} and {1} together.", str1, str2))
+        .toBe("Let us combine Hello and World together.");
 });
 
 const decodedStr = "<a target='_blank' href='http://www.google.com'><span>Hello World</span></a>";
 const encodedStr = "&lt;a target=&#39;_blank&#39; href=&#39;http://www.google.com&#39;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/a&gt;";
 
-describe("htmlEncode", () => {
-    test("should encode the HTML content", () => {
-        expect(mindsmine.String.htmlEncode(decodedStr)).toBe(encodedStr);
-    });
+test("htmlEncode should encode the HTML content", () => {
+    expect(mindsmine.String.htmlEncode(decodedStr)).toBe(encodedStr);
 });
 
-describe("htmlDecode", () => {
-    test("should decode the HTML content", () => {
-        expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
-    });
+test("htmlDecode should decode the HTML content", () => {
+    expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
 });
 
-describe("isEmpty", () => {
-    test("should check for string emptiness", () => {
-        expect(mindsmine.String.isEmpty(null)).toBeTruthy();
-        expect(mindsmine.String.isEmpty(undefined)).toBeTruthy();
-        expect(mindsmine.String.isEmpty(NaN)).toBeTruthy();
-        expect(mindsmine.String.isEmpty(123)).toBeTruthy();
-        expect(mindsmine.String.isEmpty("")).toBeTruthy();
-        expect(mindsmine.String.isEmpty("Some String")).toBeFalsy();
-    });
+test("isEmpty should check for string emptiness", () => {
+    expect(mindsmine.String.isEmpty(null)).toBeTruthy();
+    expect(mindsmine.String.isEmpty(undefined)).toBeTruthy();
+    expect(mindsmine.String.isEmpty(NaN)).toBeTruthy();
+    expect(mindsmine.String.isEmpty(123)).toBeTruthy();
+    expect(mindsmine.String.isEmpty("")).toBeTruthy();
+    expect(mindsmine.String.isEmpty("Some String")).toBeFalsy();
 });
 
-describe("urlAppend", () => {
-    test("should append to the URL", () => {
-        const url = "http://www.google.com",
-            urlQ = `${url}?param1=value1`,
-            query = "param2=value2";
+test("urlAppend should append to the URL", () => {
+    const url = "http://www.google.com",
+        urlQ = `${url}?param1=value1`,
+        query = "param2=value2";
 
-        expect(mindsmine.String.urlAppend(url, query)).toBe("http://www.google.com?param2=value2");
-        expect(mindsmine.String.urlAppend(urlQ, query)).toBe("http://www.google.com?param1=value1&param2=value2");
-    });
+    expect(mindsmine.String.urlAppend(url, query)).toBe("http://www.google.com?param2=value2");
+    expect(mindsmine.String.urlAppend(urlQ, query)).toBe("http://www.google.com?param1=value1&param2=value2");
 });
 
-describe("getNullSafe", () => {
-    test("should get null safe strings", () => {
-        expect(mindsmine.String.getNullSafe(null)).toBe("");
-        expect(mindsmine.String.getNullSafe(undefined)).toBe("");
-        expect(mindsmine.String.getNullSafe(NaN)).toBe("");
-        expect(mindsmine.String.getNullSafe(100)).toBe("");
-        expect(mindsmine.String.getNullSafe("")).toBe("");
-        expect(mindsmine.String.getNullSafe("hello")).toBe("hello");
-        expect(mindsmine.String.getNullSafe(true)).toBe("");
-    });
+test("getNullSafe should get null safe strings", () => {
+    expect(mindsmine.String.getNullSafe(null)).toBe("");
+    expect(mindsmine.String.getNullSafe(undefined)).toBe("");
+    expect(mindsmine.String.getNullSafe(NaN)).toBe("");
+    expect(mindsmine.String.getNullSafe(100)).toBe("");
+    expect(mindsmine.String.getNullSafe("")).toBe("");
+    expect(mindsmine.String.getNullSafe("hello")).toBe("hello");
+    expect(mindsmine.String.getNullSafe(true)).toBe("");
 });
 
 describe("areEqual", () => {

@@ -14,31 +14,23 @@
  limitations under the License.
  */
 
-describe("DEFAULT_TIMEOUT", () => {
-    it("should be fixed to two minutes", () => {
-        expect(mindsmine.Ajax.DEFAULT_TIMEOUT).toEqual(120000);
-    });
+test("DEFAULT_TIMEOUT should be fixed to two minutes", () => {
+    expect(mindsmine.Ajax.DEFAULT_TIMEOUT).toEqual(120000);
 });
 
-describe("DEFAULT_ASYNC", () => {
-    it("should be true", () => {
-        expect(mindsmine.Ajax.DEFAULT_ASYNC).toBeTruthy();
-    });
+test("DEFAULT_ASYNC should be true", () => {
+    expect(mindsmine.Ajax.DEFAULT_ASYNC).toBeTruthy();
 });
 
-describe("DEFAULT_WITH_CREDENTIALS", () => {
-    it("should be false", () => {
-        expect(mindsmine.Ajax.DEFAULT_WITH_CREDENTIALS).toBeFalsy();
-    });
+test("DEFAULT_WITH_CREDENTIALS should be false", () => {
+    expect(mindsmine.Ajax.DEFAULT_WITH_CREDENTIALS).toBeFalsy();
 });
 
-describe("DEFAULT_SCOPE", () => {
-    it("should be window", () => {
-        expect(mindsmine.Ajax.DEFAULT_SCOPE).toEqual(window);
-    });
+test("DEFAULT_SCOPE should be window", () => {
+    expect(mindsmine.Ajax.DEFAULT_SCOPE).toEqual(window);
 });
 
-describe("ALLOWED_METHODS", () => {
+test("ALLOWED_METHODS should match the expected array of HTTP methods", () => {
     const expected = [
         "GET",
         "POST",
@@ -47,7 +39,55 @@ describe("ALLOWED_METHODS", () => {
         "DELETE"
     ];
 
-    it("should match the expected array of HTTP methods", () => {
-        expect(mindsmine.Ajax.ALLOWED_METHODS).toEqual(expect.arrayContaining(expected));
+    expect(mindsmine.Ajax.ALLOWED_METHODS).toEqual(expect.arrayContaining(expected));
+});
+
+describe("request method", () => {
+    const symbols = [
+        "AAPL",
+        "ALBO"
+    ];
+
+    test("must work", () => {
+        expect.assertions(symbols.length + 1);
+
+        return mindsmine.Ajax.request(
+            "GET",
+            `https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbols=${symbols.join(",")}`
+        ).then(response => {
+            expect(response).not.toBeNull();
+
+            let __responseJSON = JSON.parse(response.responseText);
+
+            for (let __stock in __responseJSON) {
+                if (__responseJSON.hasOwnProperty(__stock)) {
+                    expect(symbols).toContain(__responseJSON[__stock]["quote"]["symbol"]);
+                }
+            }
+        });
+    });
+
+    test("must break with status code 400", () => {
+        expect.assertions(2);
+
+        return mindsmine.Ajax.request(
+            "GET",
+            `https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbol=${symbols.join(",")}`
+        ).catch(response => {
+            expect(response).not.toBeNull();
+            expect(response.status).toBe(400);
+        });
+    });
+
+    test("must break with SyntaxError", () => {
+        expect.assertions(2);
+
+        return mindsmine.Ajax.request(
+            "GET",
+            `https//api.iextrading.com/1.0/stock/market/batch?types=quote&symbol=${symbols.join(",")}`
+        ).catch(response => {
+            expect(response).not.toBeNull();
+            expect(response.toString()).toMatch("SyntaxError");
+        });
     });
 });

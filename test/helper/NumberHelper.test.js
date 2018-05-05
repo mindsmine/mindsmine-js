@@ -14,31 +14,27 @@
  limitations under the License.
  */
 
-describe("isNumber", () => {
-    test("should test that the object is a Number", () => {
-        expect(mindsmine.Number.isNumber(null)).toBeFalsy();
-        expect(mindsmine.Number.isNumber(undefined)).toBeFalsy();
-        expect(mindsmine.Number.isNumber(NaN)).toBeFalsy();
-        expect(mindsmine.Number.isNumber(100)).toBeTruthy();
-        expect(mindsmine.Number.isNumber("")).toBeFalsy();
-        expect(mindsmine.Number.isNumber("hello")).toBeFalsy();
-        expect(mindsmine.Number.isNumber(true)).toBeFalsy();
-        expect(mindsmine.Number.isNumber(function() {})).toBeFalsy();
-        expect(mindsmine.Number.isNumber([])).toBeFalsy();
-        expect(mindsmine.Number.isNumber({})).toBeFalsy();
-    });
+test("isNumber should test that the object is a Number", () => {
+    expect(mindsmine.Number.isNumber(null)).toBeFalsy();
+    expect(mindsmine.Number.isNumber(undefined)).toBeFalsy();
+    expect(mindsmine.Number.isNumber(NaN)).toBeFalsy();
+    expect(mindsmine.Number.isNumber(100)).toBeTruthy();
+    expect(mindsmine.Number.isNumber("")).toBeFalsy();
+    expect(mindsmine.Number.isNumber("hello")).toBeFalsy();
+    expect(mindsmine.Number.isNumber(true)).toBeFalsy();
+    expect(mindsmine.Number.isNumber(function() {})).toBeFalsy();
+    expect(mindsmine.Number.isNumber([])).toBeFalsy();
+    expect(mindsmine.Number.isNumber({})).toBeFalsy();
 });
 
-describe("getNullSafe", () => {
-    test("should get null safe numbers", () => {
-        expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe(undefined)).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe(NaN)).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe(100)).toBe(100);
-        expect(mindsmine.Number.getNullSafe("")).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe("hello")).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe(true)).toBe(Number.NEGATIVE_INFINITY);
-    });
+test("getNullSafe should get null safe numbers", () => {
+    expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe(undefined)).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe(NaN)).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe(100)).toBe(100);
+    expect(mindsmine.Number.getNullSafe("")).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe("hello")).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe(true)).toBe(Number.NEGATIVE_INFINITY);
 });
 
 describe("getNumOfDigits", () => {
@@ -68,17 +64,15 @@ describe("getNumOfDigits", () => {
     });
 });
 
-describe("isPerfectSquare", () => {
-    test("should test that the number is a Perfect Square", () => {
-        expect(mindsmine.Number.isPerfectSquare(0)).toBeTruthy();
-        expect(mindsmine.Number.isPerfectSquare(1)).toBeTruthy();
-        expect(mindsmine.Number.isPerfectSquare(81)).toBeTruthy();
-        expect(mindsmine.Number.isPerfectSquare(100)).toBeTruthy();
+test("isPerfectSquare should test that the number is a Perfect Square", () => {
+    expect(mindsmine.Number.isPerfectSquare(0)).toBeTruthy();
+    expect(mindsmine.Number.isPerfectSquare(1)).toBeTruthy();
+    expect(mindsmine.Number.isPerfectSquare(81)).toBeTruthy();
+    expect(mindsmine.Number.isPerfectSquare(100)).toBeTruthy();
 
-        expect(mindsmine.Number.isPerfectSquare(5)).toBeFalsy();
-        expect(mindsmine.Number.isPerfectSquare(101)).toBeFalsy();
-        expect(mindsmine.Number.isPerfectSquare(250)).toBeFalsy();
-    });
+    expect(mindsmine.Number.isPerfectSquare(5)).toBeFalsy();
+    expect(mindsmine.Number.isPerfectSquare(101)).toBeFalsy();
+    expect(mindsmine.Number.isPerfectSquare(250)).toBeFalsy();
 });
 
 describe("getUniqueRandomNumbers", () => {

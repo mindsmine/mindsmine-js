@@ -14,48 +14,40 @@
  limitations under the License.
  */
 
-describe("getKey", () => {
-    it("should retrieve the key from the value", () => {
-        let obj1 = { "key1" : "value1", "key2" : "value2"};
+test("getKey should retrieve the key from the value", () => {
+    let obj1 = { "key1" : "value1", "key2" : "value2"};
 
-        expect(mindsmine.Object.getKey(obj1, "value1")).toBe("key1");
-        expect(mindsmine.Object.getKey(obj1, "value2")).toBe("key2");
-        expect(mindsmine.Object.getKey(obj1, "value3")).toBe(null);
-    });
+    expect(mindsmine.Object.getKey(obj1, "value1")).toBe("key1");
+    expect(mindsmine.Object.getKey(obj1, "value2")).toBe("key2");
+    expect(mindsmine.Object.getKey(obj1, "value3")).toBe(null);
 });
 
-describe("isPrimitive", () => {
-    it("should check for primitive data types", () => {
-        expect(mindsmine.Object.isPrimitive(123)).toBeTruthy();
-        expect(mindsmine.Object.isPrimitive("")).toBeTruthy();
-        expect(mindsmine.Object.isPrimitive(false)).toBeTruthy();
-        expect(mindsmine.Object.isPrimitive({})).toBeFalsy();
-        expect(mindsmine.Object.isPrimitive([])).toBeFalsy();
-        expect(mindsmine.Object.isPrimitive(null)).toBeFalsy();
-    });
+test("isPrimitive should check for primitive data types", () => {
+    expect(mindsmine.Object.isPrimitive(123)).toBeTruthy();
+    expect(mindsmine.Object.isPrimitive("")).toBeTruthy();
+    expect(mindsmine.Object.isPrimitive(false)).toBeTruthy();
+    expect(mindsmine.Object.isPrimitive({})).toBeFalsy();
+    expect(mindsmine.Object.isPrimitive([])).toBeFalsy();
+    expect(mindsmine.Object.isPrimitive(null)).toBeFalsy();
 });
 
-describe("isEmpty", () => {
-    it("should check for empty objects", () => {
-        expect(mindsmine.Object.isEmpty(null)).toBeFalsy();
-        expect(mindsmine.Object.isEmpty(undefined)).toBeFalsy();
-        expect(mindsmine.Object.isEmpty(NaN)).toBeFalsy();
-        expect(mindsmine.Object.isEmpty(100)).toBeFalsy();
-        expect(mindsmine.Object.isEmpty("")).toBeFalsy();
-        expect(mindsmine.Object.isEmpty("hello")).toBeFalsy();
-        expect(mindsmine.Object.isEmpty(true)).toBeFalsy();
-        expect(mindsmine.Object.isEmpty(function() {})).toBeFalsy();
-        expect(mindsmine.Object.isEmpty([])).toBeFalsy();
-        expect(mindsmine.Object.isEmpty({})).toBeTruthy();
-    });
+test("isEmpty should check for empty objects", () => {
+    expect(mindsmine.Object.isEmpty(null)).toBeFalsy();
+    expect(mindsmine.Object.isEmpty(undefined)).toBeFalsy();
+    expect(mindsmine.Object.isEmpty(NaN)).toBeFalsy();
+    expect(mindsmine.Object.isEmpty(100)).toBeFalsy();
+    expect(mindsmine.Object.isEmpty("")).toBeFalsy();
+    expect(mindsmine.Object.isEmpty("hello")).toBeFalsy();
+    expect(mindsmine.Object.isEmpty(true)).toBeFalsy();
+    expect(mindsmine.Object.isEmpty(function() {})).toBeFalsy();
+    expect(mindsmine.Object.isEmpty([])).toBeFalsy();
+    expect(mindsmine.Object.isEmpty({})).toBeTruthy();
 });
 
-describe("getNullSafe", () => {
-    it("should get null safe objects", () => {
-        let obj1 = { "key1" : "value1", "key2" : "value2"},
-            obj2 = null;
+test("getNullSafe should get null safe objects", () => {
+    let obj1 = { "key1" : "value1", "key2" : "value2"},
+        obj2 = null;
 
-        expect(mindsmine.Object.getNullSafe(obj1)).toEqual({ "key1" : "value1", "key2" : "value2"});
-        expect(mindsmine.Object.getNullSafe(obj2)).toEqual({});
-    });
+    expect(mindsmine.Object.getNullSafe(obj1)).toEqual({ "key1" : "value1", "key2" : "value2"});
+    expect(mindsmine.Object.getNullSafe(obj2)).toEqual({});
 });
