@@ -10,6 +10,9 @@ others.
 
 ### Releases ###
 
+**3.2.0**
+* Node 10+ supported
+
 **3.1.0**
 * Added numeral system methods
 * Added perfect square test method

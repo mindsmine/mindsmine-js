@@ -24,7 +24,7 @@ describe("productName", () => {
 
 describe("productVersion", () => {
     test("should return product version", () => {
-        expect(mindsmine.productVersion).toBe("3.1.1");
+        expect(mindsmine.productVersion).toBe("3.2.0");
     });
 });
 
