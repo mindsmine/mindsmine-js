@@ -21,10 +21,11 @@
     "docs": "jsdoc --configure build/jsdoc.conf.json",
     "lint": "eslint scripts/**/* src/**/* test/**/*",
     "package": "npm run docs && npm run preclean",
+    "postlint": "babel scripts --out-dir build/scripts",
     "preclean": "rimraf build",
     "predocs": "npm run test && node build/scripts/pre/docs",
-    "pretest": "npm run uglify && node build/scripts/pretest",
-    "preuglify": "npm run clean && npm run lint && babel scripts --out-dir build/scripts",
+    "pretest": "npm run uglify",
+    "preuglify": "npm run clean && npm run lint && node build/scripts/pre/uglify",
     "test": "jest --coverage final.test.js",
     "uglify": "node build/scripts/uglify"
   },
