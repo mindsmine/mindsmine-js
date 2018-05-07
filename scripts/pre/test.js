@@ -18,15 +18,23 @@
 
 import fs from "fs";
 
-import BuildProperties from "./helper/GeneralHelper";
-import Console from "./helper/ConsoleHelper";
-import FileSystem from "./helper/FileSystemHelper";
+import BuildProperties from "../helper/GeneralHelper";
+import Console from "../helper/ConsoleHelper";
+import FileSystem from "../helper/FileSystemHelper";
 
 Console.newline();
 Console.began(__filename);
 
+FileSystem.mkdir(BuildProperties.path.ROOT.DIST);
+FileSystem.mkdir(BuildProperties.path.SOURCE.CONCATENATED.ROOT);
 FileSystem.mkdir(BuildProperties.path.TEST.CONCATENATED.ROOT);
 Console.info("Created necessary folder(s)");
+
+FileSystem.copy(
+    BuildProperties.path.ROOT.SRC,
+    BuildProperties.path.SOURCE.CODE.ROOT
+);
+Console.info("Copied source code into build folder");
 
 FileSystem.copy(
     BuildProperties.path.ROOT.TEST,
@@ -35,17 +43,39 @@ FileSystem.copy(
 Console.info("Copied test code into build folder");
 
 FileSystem.concat(
+    BuildProperties.path.SOURCE.CODE.HELPER,
+    BuildProperties.path.SOURCE.CONCATENATED.HELPER,
+    FileSystem.Filter.JS
+);
+Console.info("Concatenated all source helper files");
+
+FileSystem.concat(
     BuildProperties.path.TEST.CODE.HELPER,
     BuildProperties.path.TEST.CONCATENATED.HELPER,
     FileSystem.Filter.JS
 );
-Console.info("Concatenated all helper files");
+Console.info("Concatenated all test helper files");
+
+FileSystem.copy(
+    BuildProperties.path.SOURCE.CODE.INDEX_FILE,
+    BuildProperties.path.SOURCE.CONCATENATED.INDEX_FILE
+);
+Console.info("Copied source index file to concat folder");
 
 FileSystem.copy(
     BuildProperties.path.TEST.CODE.INDEX_FILE,
     BuildProperties.path.TEST.CONCATENATED.INDEX_FILE
 );
-Console.info("Copied index file to concat folder");
+Console.info("Copied test index file to concat folder");
+
+FileSystem.replace(
+    BuildProperties.path.SOURCE.CONCATENATED.INDEX_FILE,
+    BuildProperties.replaceToken.HELPER_CODE,
+    fs.readFileSync(
+        BuildProperties.path.SOURCE.CONCATENATED.HELPER,
+        "utf8"
+    )
+);
 
 FileSystem.replace(
     BuildProperties.path.TEST.CONCATENATED.INDEX_FILE,
@@ -57,6 +87,12 @@ FileSystem.replace(
 );
 
 BuildProperties.replaceArray.forEach(arr => {
+    FileSystem.replace(
+        BuildProperties.path.SOURCE.CONCATENATED.INDEX_FILE,
+        arr[0],
+        arr[1]
+    );
+
     FileSystem.replace(
         BuildProperties.path.TEST.CONCATENATED.INDEX_FILE,
         arr[0],
