@@ -31,42 +31,25 @@ const ROOT = {
     TEST: path.resolve(__ROOT, "test")
 };
 
-const SOURCE_ROOT = path.resolve(ROOT.BUILD, "source");
-const TEST_ROOT = path.resolve(ROOT.BUILD, "test");
-
-const SOURCE_CODE_ROOT = path.resolve(SOURCE_ROOT, "code");
-const TEST_CODE_ROOT = path.resolve(TEST_ROOT, "code");
-
-const SOURCE_CONCATENATED_ROOT = path.resolve(SOURCE_ROOT, "concatenated");
-const TEST_CONCATENATED_ROOT = path.resolve(TEST_ROOT, "concatenated");
+class folderRouters {
+    constructor(rootFolder, rootInnerFolder, helperName, indexFileName) {
+        this.ROOT = path.resolve(ROOT.BUILD, rootFolder, rootInnerFolder);
+        this.HELPER = path.resolve(this.ROOT, helperName);
+        this.INDEX_FILE = path.resolve(this.ROOT, indexFileName);
+    }
+}
 
 export default {
     uglifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     path: {
         ROOT: ROOT,
         SOURCE: {
-            CODE: {
-                ROOT: SOURCE_CODE_ROOT,
-                HELPER: path.resolve(SOURCE_CODE_ROOT, "helper"),
-                INDEX_FILE: path.resolve(SOURCE_CODE_ROOT, "index.js")
-            },
-            CONCATENATED: {
-                ROOT: SOURCE_CONCATENATED_ROOT,
-                HELPER: path.resolve(SOURCE_CONCATENATED_ROOT, "helper.js"),
-                INDEX_FILE: path.resolve(SOURCE_CONCATENATED_ROOT, "index.js")
-            }
+            CODE: new folderRouters("source", "code", "helper", "index.js"),
+            CONCATENATED: new folderRouters("source", "concatenated", "helper.js", "index.js")
         },
         TEST: {
-            CODE: {
-                ROOT: TEST_CODE_ROOT,
-                HELPER: path.resolve(TEST_CODE_ROOT, "helper"),
-                INDEX_FILE: path.resolve(TEST_CODE_ROOT, "index.test.js")
-            },
-            CONCATENATED: {
-                ROOT: TEST_CONCATENATED_ROOT,
-                HELPER: path.resolve(TEST_CONCATENATED_ROOT, "helper.test.js"),
-                INDEX_FILE: path.resolve(TEST_CONCATENATED_ROOT, "final.test.js")
-            }
+            CODE: new folderRouters("test", "code", "helper", "index.test.js"),
+            CONCATENATED: new folderRouters("test", "concatenated", "helper.test.js", "final.test.js")
         }
     },
     replaceToken: {
