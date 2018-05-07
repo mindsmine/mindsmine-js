@@ -22,7 +22,7 @@
     "lint": "eslint scripts/**/* src/**/* test/**/*",
     "package": "npm run docs && npm run preclean",
     "postlint": "babel scripts --out-dir build/scripts",
-    "preclean": "rimraf build",
+    "preclean": "rimraf build coverage",
     "predocs": "npm run test && node build/scripts/pre/docs",
     "pretest": "npm run uglify",
     "preuglify": "npm run clean && npm run lint && node build/scripts/pre/uglify",
