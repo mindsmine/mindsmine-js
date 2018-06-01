@@ -32,10 +32,17 @@ const ROOT = {
 };
 
 class folderRouters {
-    constructor(rootFolder, rootInnerFolder, helperName, indexFileName) {
-        this.ROOT = path.resolve(ROOT.BUILD, rootFolder, rootInnerFolder);
-        this.HELPER = path.resolve(this.ROOT, helperName);
-        this.INDEX_FILE = path.resolve(this.ROOT, indexFileName);
+    constructor(rootFolder, codeHelperName, concatenatedHelperName, codeIndexFileName, concatenatedIndexFileName) {
+        class innerClass {
+            constructor(rootFolder, rootInnerFolder, helperName, indexFileName) {
+                this.ROOT = path.resolve(ROOT.BUILD, rootFolder, rootInnerFolder);
+                this.HELPER = path.resolve(this.ROOT, helperName);
+                this.INDEX_FILE = path.resolve(this.ROOT, indexFileName);
+            }
+        }
+
+        this.CODE = new innerClass(rootFolder, "code", codeHelperName, codeIndexFileName);
+        this.CONCATENATED = new innerClass(rootFolder, "concatenated", concatenatedHelperName, concatenatedIndexFileName);
     }
 }
 
@@ -43,14 +50,8 @@ export default {
     uglifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     path: {
         ROOT: ROOT,
-        SOURCE: {
-            CODE: new folderRouters("source", "code", "helper", "index.js"),
-            CONCATENATED: new folderRouters("source", "concatenated", "helper.js", "index.js")
-        },
-        TEST: {
-            CODE: new folderRouters("test", "code", "helper", "index.test.js"),
-            CONCATENATED: new folderRouters("test", "concatenated", "helper.test.js", "final.test.js")
-        }
+        SOURCE: new folderRouters("source", "helper", "helper.js", "index.js", "index.js"),
+        TEST: new folderRouters("test", "helper", "helper.test.js", "index.test.js", "final.test.js")
     },
     replaceToken: {
         HELPER_CODE: "//_CONCATENATED_HELPER_CODE"
