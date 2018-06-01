@@ -79,7 +79,7 @@ describe("request method", () => {
         });
     });
 
-    test("must break with SyntaxError", () => {
+    test("must break with TypeError", () => {
         expect.assertions(2);
 
         return mindsmine.Ajax.request(
@@ -87,7 +87,7 @@ describe("request method", () => {
             `https//api.iextrading.com/1.0/stock/market/batch?types=quote&symbol=${symbols.join(",")}`
         ).catch(response => {
             expect(response).not.toBeNull();
-            expect(response.toString()).toMatch("SyntaxError");
+            expect(response.toString()).toMatch("TypeError");
         });
     });
 });

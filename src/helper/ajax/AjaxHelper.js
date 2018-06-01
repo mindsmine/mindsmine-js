@@ -234,7 +234,7 @@ mindsmine.Ajax = class {
                 let __success;
 
                 try {
-                    __success = (function (status) {
+                    __success = ((status) => {
                         //
                         // Fix IE issue - IE mangles status code 204
                         // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
@@ -277,6 +277,13 @@ mindsmine.Ajax = class {
 
             if (mindsmine.String.isEmpty(url)) {
                 throw new TypeError("Fatal Error. 'url'. @ERROR_PERMITTED_STRING@");
+            }
+
+            // Verify that the URL is valid
+            try {
+                let _url = new URL(url);
+            } catch (e) {
+                throw e;
             }
 
             options = mindsmine.Object.getNullSafe(options);
