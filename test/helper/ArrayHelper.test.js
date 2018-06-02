@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-test("getNullSafe should get null safe arrays", () => {
+test("mindsmine.Array.getNullSafe should get null safe arrays", () => {
     expect(mindsmine.Array.getNullSafe([123])).toEqual([123]);
     expect(mindsmine.Array.getNullSafe(null)).toEqual([]);
 });

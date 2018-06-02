@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-test("getNullSafe should get null safe boolean", () => {
+test("mindsmine.Boolean.getNullSafe should get null safe boolean", () => {
     expect(mindsmine.Boolean.getNullSafe(null)).toBeFalsy();
     expect(mindsmine.Boolean.getNullSafe(undefined)).toBeFalsy();
     expect(mindsmine.Boolean.getNullSafe(NaN)).toBeFalsy();
