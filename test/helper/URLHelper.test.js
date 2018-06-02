@@ -46,7 +46,7 @@ describe("mindsmine.URL.isValidURL", () => {
             "ftp://foo.bar/baz",
             "http://foo.bar/?q=Test%20URL-encoded%20stuff",
             "http://مثال.إختبار	",
-            "http://例子.测试",
+            "http://例子.测试"
         ].forEach(url => {
             expect(mindsmine.URL.isValidURL(url)).toBeTruthy();
         });

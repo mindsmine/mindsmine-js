@@ -4,6 +4,10 @@
     "sourceType": "module"
   },
   "rules": {
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
     "eqeqeq": [
       "error",
       "smart"
