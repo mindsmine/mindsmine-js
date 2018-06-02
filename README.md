@@ -11,6 +11,7 @@ others.
 ### Releases ###
 
 **3.2.0**
+* Added URL support methods
 * Updated the tests code
 * Node 10+ supported
 
