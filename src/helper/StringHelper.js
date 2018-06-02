@@ -129,7 +129,7 @@ mindsmine.String = class {
      *
      * @since 1.0.0
      *
-     * @deprecated since 3.2.0, use <code>mindsmine.URL.appendQuery(url, param, value)</code> instead. Will be removed
+     * @deprecated since 3.5.0, use <code>mindsmine.URL.appendQuery(url, param, value)</code> instead. Will be removed
      * in next major release.
      *
      * @see {@link mindsmine.URL.isValidURL}

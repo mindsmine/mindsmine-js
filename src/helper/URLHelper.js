@@ -17,7 +17,7 @@
 /**
  * A collection of useful static methods to deal with JavaScript URLs.
  *
- * @since 3.2.0
+ * @since 3.5.0
  *
  */
 mindsmine.URL = class {
@@ -35,7 +35,7 @@ mindsmine.URL = class {
      *
      * @returns {Boolean} if the string is a valid URL
      *
-     * @since 3.2.0
+     * @since 3.5.0
      *
      */
     static isValidURL(url) {
@@ -64,7 +64,7 @@ mindsmine.URL = class {
      *
      * @returns {String} The resulting URL
      *
-     * @since 3.2.0
+     * @since 3.5.0
      *
      */
     static appendQuery(url, param, value) {
