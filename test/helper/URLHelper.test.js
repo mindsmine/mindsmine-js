@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-describe("isValidURL", () => {
+describe("mindsmine.URL.isValidURL", () => {
     test("should pass for valid URLs", () => {
         [
             "https://api.iextrading.com",
@@ -54,6 +54,8 @@ describe("isValidURL", () => {
 
     test("should fail for invalid URLs", () => {
         [
+            null,
+            "",
             "http://",
             "http://?",
             "http://??",
@@ -75,17 +77,52 @@ describe("isValidURL", () => {
     });
 });
 
-test("appendQuery should append query params to the URL", () => {
-    const url = "http://www.google.com",
-        urlQ = `${url}?param1=value1`,
-        urlH = `${url}#hash1`,
-        urlQH = `${url}?param1=value1#hash1`,
-        param2 = "param2",
-        value2 = "value2",
-        query = "param2=value2";
+describe("mindsmine.URL.appendQuery", () => {
+    [
+        [
+            "null URL",
+            null,
+            null,
+            null,
+            "Fatal Error. 'url'. Invalid URL."
+        ],
+        [
+            "invalid URL",
+            ":// should fail",
+            null,
+            null,
+            "Fatal Error. 'url'. Invalid URL."
+        ],
+        [
+            "empty parameter key",
+            "http://www.google.com",
+            null,
+            null,
+            "Fatal Error. 'param'. @ERROR_PERMITTED_STRING@"
+        ]
+    ].forEach(arr => {
+        test(`should throw TypeError due to ${arr[0]}`, () => {
+            function callFunction() {
+                mindsmine.URL.appendQuery(arr[1], arr[2], arr[3]);
+            }
 
-    expect(mindsmine.URL.appendQuery(url, param2, value2)).toBe("http://www.google.com/?param2=value2");
-    expect(mindsmine.URL.appendQuery(urlQ, param2, value2)).toBe("http://www.google.com/?param1=value1&param2=value2");
-    expect(mindsmine.URL.appendQuery(urlH, param2, value2)).toBe("http://www.google.com/?param2=value2#hash1");
-    expect(mindsmine.URL.appendQuery(urlQH, param2, value2)).toBe("http://www.google.com/?param1=value1&param2=value2#hash1");
+            expect(callFunction).toThrow(TypeError);
+            expect(callFunction).toThrow(arr[4]);
+        });
+    });
+
+    test("should append query params to the URL", () => {
+        const url = "http://www.google.com",
+            urlQ = `${url}?param1=value1`,
+            urlH = `${url}#hash1`,
+            urlQH = `${url}?param1=value1#hash1`,
+            param2 = "param2",
+            value2 = "value2",
+            query = "param2=value2";
+
+        expect(mindsmine.URL.appendQuery(url, param2, value2)).toBe("http://www.google.com/?param2=value2");
+        expect(mindsmine.URL.appendQuery(urlQ, param2, value2)).toBe("http://www.google.com/?param1=value1&param2=value2");
+        expect(mindsmine.URL.appendQuery(urlH, param2, value2)).toBe("http://www.google.com/?param2=value2#hash1");
+        expect(mindsmine.URL.appendQuery(urlQH, param2, value2)).toBe("http://www.google.com/?param1=value1&param2=value2#hash1");
+    });
 });

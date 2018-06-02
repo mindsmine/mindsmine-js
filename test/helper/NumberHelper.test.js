@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-test("isNumber should test that the object is a Number", () => {
+test("mindsmine.Number.isNumber should test that the object is a Number", () => {
     expect(mindsmine.Number.isNumber(null)).toBeFalsy();
     expect(mindsmine.Number.isNumber(undefined)).toBeFalsy();
     expect(mindsmine.Number.isNumber(NaN)).toBeFalsy();
@@ -27,7 +27,7 @@ test("isNumber should test that the object is a Number", () => {
     expect(mindsmine.Number.isNumber({})).toBeFalsy();
 });
 
-test("getNullSafe should get null safe numbers", () => {
+test("mindsmine.Number.getNullSafe should get null safe numbers", () => {
     expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
     expect(mindsmine.Number.getNullSafe(undefined)).toBe(Number.NEGATIVE_INFINITY);
     expect(mindsmine.Number.getNullSafe(NaN)).toBe(Number.NEGATIVE_INFINITY);
@@ -37,23 +37,25 @@ test("getNullSafe should get null safe numbers", () => {
     expect(mindsmine.Number.getNullSafe(true)).toBe(Number.NEGATIVE_INFINITY);
 });
 
-describe("getNumOfDigits", () => {
-    test("should throw TypeError due to null", () => {
-        function callFunction() {
-            mindsmine.Number.getNumOfDigits(null);
-        }
+describe("mindsmine.Number.getNumOfDigits", () => {
+    [
+        [
+            "null",
+            null
+        ],
+        [
+            "non-Number",
+            "a"
+        ]
+    ].forEach(arr => {
+        test(`should throw TypeError due to ${arr[0]}`, () => {
+            function callFunction() {
+                mindsmine.Number.getNumOfDigits(arr[1]);
+            }
 
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
-    });
-
-    test("should throw TypeError due to non-Number", () => {
-        function callFunction() {
-            mindsmine.Number.getNumOfDigits("a");
-        }
-
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+            expect(callFunction).toThrow(TypeError);
+            expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+        });
     });
 
     test("should count number of digits", () => {
@@ -64,7 +66,7 @@ describe("getNumOfDigits", () => {
     });
 });
 
-test("isPerfectSquare should test that the number is a Perfect Square", () => {
+test("mindsmine.Number.isPerfectSquare should test that the number is a Perfect Square", () => {
     expect(mindsmine.Number.isPerfectSquare(0)).toBeTruthy();
     expect(mindsmine.Number.isPerfectSquare(1)).toBeTruthy();
     expect(mindsmine.Number.isPerfectSquare(81)).toBeTruthy();
@@ -75,7 +77,7 @@ test("isPerfectSquare should test that the number is a Perfect Square", () => {
     expect(mindsmine.Number.isPerfectSquare(250)).toBeFalsy();
 });
 
-describe("getUniqueRandomNumbers", () => {
+describe("mindsmine.Number.getUniqueRandomNumbers", () => {
     const lowerBound = 10;
     const upperBound = 81;
     const arraySize = 12;
