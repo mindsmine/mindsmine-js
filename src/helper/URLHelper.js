@@ -64,6 +64,8 @@ mindsmine.URL = class {
      *
      * @returns {String} The resulting URL
      *
+     * @throws {TypeError} for Invalid URL or empty arguments
+     *
      * @since 3.5.0
      *
      */
