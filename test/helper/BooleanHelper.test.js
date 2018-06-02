@@ -14,14 +14,12 @@
  limitations under the License.
  */
 
-describe("getNullSafe", () => {
-    it("should get null safe boolean", () => {
-        expect(mindsmine.Boolean.getNullSafe(null)).toBeFalsy();
-        expect(mindsmine.Boolean.getNullSafe(undefined)).toBeFalsy();
-        expect(mindsmine.Boolean.getNullSafe(NaN)).toBeFalsy();
-        expect(mindsmine.Boolean.getNullSafe(100)).toBeFalsy();
-        expect(mindsmine.Boolean.getNullSafe("")).toBeFalsy();
-        expect(mindsmine.Boolean.getNullSafe("hello")).toBeFalsy();
-        expect(mindsmine.Boolean.getNullSafe(true)).toBeTruthy();
-    });
+test("mindsmine.Boolean.getNullSafe should get null safe boolean", () => {
+    expect(mindsmine.Boolean.getNullSafe(null)).toBeFalsy();
+    expect(mindsmine.Boolean.getNullSafe(undefined)).toBeFalsy();
+    expect(mindsmine.Boolean.getNullSafe(NaN)).toBeFalsy();
+    expect(mindsmine.Boolean.getNullSafe(100)).toBeFalsy();
+    expect(mindsmine.Boolean.getNullSafe("")).toBeFalsy();
+    expect(mindsmine.Boolean.getNullSafe("hello")).toBeFalsy();
+    expect(mindsmine.Boolean.getNullSafe(true)).toBeTruthy();
 });

@@ -234,7 +234,7 @@ mindsmine.Ajax = class {
                 let __success;
 
                 try {
-                    __success = (function (status) {
+                    __success = ((status) => {
                         //
                         // Fix IE issue - IE mangles status code 204
                         // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
@@ -279,6 +279,10 @@ mindsmine.Ajax = class {
                 throw new TypeError("Fatal Error. 'url'. @ERROR_PERMITTED_STRING@");
             }
 
+            if (!mindsmine.URL.isValidURL(url)) {
+                throw new TypeError("Fatal Error. 'url'. Invalid URL.");
+            }
+
             options = mindsmine.Object.getNullSafe(options);
 
             let scope = options.scope || parent.DEFAULT_SCOPE;
@@ -297,7 +301,7 @@ mindsmine.Ajax = class {
 
             if (__proceed) {
                 if (method === "GET") {
-                    url = mindsmine.String.urlAppend(url, `_dc=${(new Date()).getTime()}`);
+                    url = mindsmine.URL.appendQuery(url, "_dc", (new Date()).getTime());
                 }
 
                 let async = (options.async !== false) ? (options.async || parent.DEFAULT_ASYNC) : false;

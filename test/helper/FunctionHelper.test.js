@@ -14,17 +14,15 @@
  limitations under the License.
  */
 
-describe("isFunction", () => {
-    it("should test that the object is a Function", () => {
-        expect(mindsmine.Function.isFunction(null)).toBeFalsy();
-        expect(mindsmine.Function.isFunction(undefined)).toBeFalsy();
-        expect(mindsmine.Function.isFunction(NaN)).toBeFalsy();
-        expect(mindsmine.Function.isFunction(100)).toBeFalsy();
-        expect(mindsmine.Function.isFunction("")).toBeFalsy();
-        expect(mindsmine.Function.isFunction("hello")).toBeFalsy();
-        expect(mindsmine.Function.isFunction(true)).toBeFalsy();
-        expect(mindsmine.Function.isFunction(function() {})).toBeTruthy();
-        expect(mindsmine.Function.isFunction([])).toBeFalsy();
-        expect(mindsmine.Function.isFunction({})).toBeFalsy();
-    });
+test("mindsmine.Function.isFunction should test that the object is a Function", () => {
+    expect(mindsmine.Function.isFunction(null)).toBeFalsy();
+    expect(mindsmine.Function.isFunction(undefined)).toBeFalsy();
+    expect(mindsmine.Function.isFunction(NaN)).toBeFalsy();
+    expect(mindsmine.Function.isFunction(100)).toBeFalsy();
+    expect(mindsmine.Function.isFunction("")).toBeFalsy();
+    expect(mindsmine.Function.isFunction("hello")).toBeFalsy();
+    expect(mindsmine.Function.isFunction(true)).toBeFalsy();
+    expect(mindsmine.Function.isFunction(function() {})).toBeTruthy();
+    expect(mindsmine.Function.isFunction([])).toBeFalsy();
+    expect(mindsmine.Function.isFunction({})).toBeFalsy();
 });

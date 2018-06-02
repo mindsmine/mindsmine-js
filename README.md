@@ -10,6 +10,11 @@ others.
 
 ### Releases ###
 
+**3.5.0**
+* Added URL support methods
+* Updated the tests code
+* Node 10+ supported
+
 **3.1.0**
 * Added numeral system methods
 * Added perfect square test method

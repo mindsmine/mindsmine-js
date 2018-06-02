@@ -14,50 +14,48 @@
  limitations under the License.
  */
 
-describe("isNumber", () => {
-    test("should test that the object is a Number", () => {
-        expect(mindsmine.Number.isNumber(null)).toBeFalsy();
-        expect(mindsmine.Number.isNumber(undefined)).toBeFalsy();
-        expect(mindsmine.Number.isNumber(NaN)).toBeFalsy();
-        expect(mindsmine.Number.isNumber(100)).toBeTruthy();
-        expect(mindsmine.Number.isNumber("")).toBeFalsy();
-        expect(mindsmine.Number.isNumber("hello")).toBeFalsy();
-        expect(mindsmine.Number.isNumber(true)).toBeFalsy();
-        expect(mindsmine.Number.isNumber(function() {})).toBeFalsy();
-        expect(mindsmine.Number.isNumber([])).toBeFalsy();
-        expect(mindsmine.Number.isNumber({})).toBeFalsy();
-    });
+test("mindsmine.Number.isNumber should test that the object is a Number", () => {
+    expect(mindsmine.Number.isNumber(null)).toBeFalsy();
+    expect(mindsmine.Number.isNumber(undefined)).toBeFalsy();
+    expect(mindsmine.Number.isNumber(NaN)).toBeFalsy();
+    expect(mindsmine.Number.isNumber(100)).toBeTruthy();
+    expect(mindsmine.Number.isNumber("")).toBeFalsy();
+    expect(mindsmine.Number.isNumber("hello")).toBeFalsy();
+    expect(mindsmine.Number.isNumber(true)).toBeFalsy();
+    expect(mindsmine.Number.isNumber(function() {})).toBeFalsy();
+    expect(mindsmine.Number.isNumber([])).toBeFalsy();
+    expect(mindsmine.Number.isNumber({})).toBeFalsy();
 });
 
-describe("getNullSafe", () => {
-    test("should get null safe numbers", () => {
-        expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe(undefined)).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe(NaN)).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe(100)).toBe(100);
-        expect(mindsmine.Number.getNullSafe("")).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe("hello")).toBe(Number.NEGATIVE_INFINITY);
-        expect(mindsmine.Number.getNullSafe(true)).toBe(Number.NEGATIVE_INFINITY);
-    });
+test("mindsmine.Number.getNullSafe should get null safe numbers", () => {
+    expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe(undefined)).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe(NaN)).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe(100)).toBe(100);
+    expect(mindsmine.Number.getNullSafe("")).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe("hello")).toBe(Number.NEGATIVE_INFINITY);
+    expect(mindsmine.Number.getNullSafe(true)).toBe(Number.NEGATIVE_INFINITY);
 });
 
-describe("getNumOfDigits", () => {
-    test("should throw TypeError due to null", () => {
-        function callFunction() {
-            mindsmine.Number.getNumOfDigits(null);
-        }
+describe("mindsmine.Number.getNumOfDigits", () => {
+    [
+        [
+            "null",
+            null
+        ],
+        [
+            "non-Number",
+            "a"
+        ]
+    ].forEach(arr => {
+        test(`should throw TypeError due to ${arr[0]}`, () => {
+            function callFunction() {
+                mindsmine.Number.getNumOfDigits(arr[1]);
+            }
 
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
-    });
-
-    test("should throw TypeError due to non-Number", () => {
-        function callFunction() {
-            mindsmine.Number.getNumOfDigits("a");
-        }
-
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+            expect(callFunction).toThrow(TypeError);
+            expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+        });
     });
 
     test("should count number of digits", () => {
@@ -68,85 +66,82 @@ describe("getNumOfDigits", () => {
     });
 });
 
-describe("isPerfectSquare", () => {
-    test("should test that the number is a Perfect Square", () => {
-        expect(mindsmine.Number.isPerfectSquare(0)).toBeTruthy();
-        expect(mindsmine.Number.isPerfectSquare(1)).toBeTruthy();
-        expect(mindsmine.Number.isPerfectSquare(81)).toBeTruthy();
-        expect(mindsmine.Number.isPerfectSquare(100)).toBeTruthy();
+test("mindsmine.Number.isPerfectSquare should test that the number is a Perfect Square", () => {
+    expect(mindsmine.Number.isPerfectSquare(0)).toBeTruthy();
+    expect(mindsmine.Number.isPerfectSquare(1)).toBeTruthy();
+    expect(mindsmine.Number.isPerfectSquare(81)).toBeTruthy();
+    expect(mindsmine.Number.isPerfectSquare(100)).toBeTruthy();
 
-        expect(mindsmine.Number.isPerfectSquare(5)).toBeFalsy();
-        expect(mindsmine.Number.isPerfectSquare(101)).toBeFalsy();
-        expect(mindsmine.Number.isPerfectSquare(250)).toBeFalsy();
-    });
+    expect(mindsmine.Number.isPerfectSquare(5)).toBeFalsy();
+    expect(mindsmine.Number.isPerfectSquare(101)).toBeFalsy();
+    expect(mindsmine.Number.isPerfectSquare(250)).toBeFalsy();
 });
 
-describe("getUniqueRandomNumbers", () => {
+describe("mindsmine.Number.getUniqueRandomNumbers", () => {
     const lowerBound = 10;
     const upperBound = 81;
     const arraySize = 12;
 
-    test("should throw TypeError due to null", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers(null, null, null);
-        }
+    [
+        [
+            "null",
+            null,
+            null,
+            null,
+            TypeError,
+            "@ERROR_PERMITTED_NUMBER@"
+        ],
+        [
+            "non-Number",
+            "a",
+            upperBound,
+            arraySize,
+            TypeError,
+            "@ERROR_PERMITTED_NUMBER@"
+        ],
+        [
+            "negative 'lowerBound'",
+            -1,
+            upperBound,
+            arraySize,
+            Error,
+            "Negative number is not allowed as an argument."
+        ],
+        [
+            "negative 'upperBound'",
+            lowerBound,
+            -1,
+            arraySize,
+            Error,
+            "Negative number is not allowed as an argument."
+        ],
+        [
+            "negative 'arraySize'",
+            lowerBound, upperBound, -1,
+            Error,
+            "Negative number is not allowed as an argument."
+        ],
+        [
+            "'lowerBound' larger than 'upperBound'",
+            upperBound, lowerBound, arraySize,
+            Error,
+            "Lower Bound cannot be larger than Upper Bound."
+        ],
+        [
+            "not enough unique numbers",
+            lowerBound, arraySize, upperBound,
+            Error,
+            "Not enough unique numbers available for the array size."
+        ]
+    ].forEach(arr => {
+        test(`should throw ${arr[4].name} due to ${arr[0]}`, () => {
+            function callFunction() {
+                mindsmine.Number.getUniqueRandomNumbers(arr[1], arr[2], arr[3]);
+            }
 
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
-    });
-
-    test("should throw TypeError due to non-Number", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers("a", upperBound, arraySize);
-        }
-
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
-    });
-
-    test("should throw Error due to negative 'lowerBound'", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers(-1, upperBound, arraySize);
-        }
-
-        expect(callFunction).toThrow(Error);
-        expect(callFunction).toThrow("Negative number is not allowed as an argument.");
-    });
-
-    test("should throw Error due to negative 'upperBound'", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers(lowerBound, -1, arraySize);
-        }
-
-        expect(callFunction).toThrow(Error);
-        expect(callFunction).toThrow("Negative number is not allowed as an argument.");
-    });
-
-    test("should throw Error due to negative 'arraySize'", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers(lowerBound, upperBound, -1);
-        }
-
-        expect(callFunction).toThrow(Error);
-        expect(callFunction).toThrow("Negative number is not allowed as an argument.");
-    });
-
-    test("should throw Error due to 'lowerBound' larger than 'upperBound'", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers(upperBound, lowerBound, arraySize);
-        }
-
-        expect(callFunction).toThrow(Error);
-        expect(callFunction).toThrow("Lower Bound cannot be larger than Upper Bound.");
-    });
-
-    test("should throw Error due to not enough unique numbers", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers(lowerBound, arraySize, upperBound);
-        }
-
-        expect(callFunction).toThrow(Error);
-        expect(callFunction).toThrow("Not enough unique numbers available for the array size.");
+            expect(callFunction).toThrow(arr[4]);
+            expect(callFunction).toThrow(arr[5]);
+        });
     });
 
     test("should produce unique random integers", () => {
