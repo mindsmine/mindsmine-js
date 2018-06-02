@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-test("format should format the string", () => {
+test("mindsmine.String.format should format the string", () => {
     let str1 = "Hello";
     let str2 = "World";
 
@@ -25,15 +25,15 @@ test("format should format the string", () => {
 const decodedStr = "<a target='_blank' href='http://www.google.com'><span>Hello World</span></a>";
 const encodedStr = "&lt;a target=&#39;_blank&#39; href=&#39;http://www.google.com&#39;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/a&gt;";
 
-test("htmlEncode should encode the HTML content", () => {
+test("mindsmine.String.htmlEncode should encode the HTML content", () => {
     expect(mindsmine.String.htmlEncode(decodedStr)).toBe(encodedStr);
 });
 
-test("htmlDecode should decode the HTML content", () => {
+test("mindsmine.String.htmlDecode should decode the HTML content", () => {
     expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
 });
 
-test("isEmpty should check for string emptiness", () => {
+test("mindsmine.String.isEmpty should check for string emptiness", () => {
     expect(mindsmine.String.isEmpty(null)).toBeTruthy();
     expect(mindsmine.String.isEmpty(undefined)).toBeTruthy();
     expect(mindsmine.String.isEmpty(NaN)).toBeTruthy();
@@ -42,7 +42,7 @@ test("isEmpty should check for string emptiness", () => {
     expect(mindsmine.String.isEmpty("Some String")).toBeFalsy();
 });
 
-test("urlAppend should append to the URL", () => {
+test("mindsmine.String.urlAppend should append to the URL", () => {
     const url = "http://www.google.com",
         urlQ = `${url}?param1=value1`,
         query = "param2=value2";
@@ -51,7 +51,7 @@ test("urlAppend should append to the URL", () => {
     expect(mindsmine.String.urlAppend(urlQ, query)).toBe("http://www.google.com?param1=value1&param2=value2");
 });
 
-test("getNullSafe should get null safe strings", () => {
+test("mindsmine.String.getNullSafe should get null safe strings", () => {
     expect(mindsmine.String.getNullSafe(null)).toBe("");
     expect(mindsmine.String.getNullSafe(undefined)).toBe("");
     expect(mindsmine.String.getNullSafe(NaN)).toBe("");
@@ -61,7 +61,7 @@ test("getNullSafe should get null safe strings", () => {
     expect(mindsmine.String.getNullSafe(true)).toBe("");
 });
 
-describe("areEqual", () => {
+describe("mindsmine.String.areEqual", () => {
     test("should test string equality, leniently", () => {
         expect(mindsmine.String.areEqual(null, null, true)).toBeTruthy();
         expect(mindsmine.String.areEqual(null, "", true)).toBeTruthy();
@@ -102,7 +102,7 @@ describe("areEqual", () => {
     });
 });
 
-describe("isPalindrome", () => {
+describe("mindsmine.String.isPalindrome", () => {
     test("should perform palindrome test, leniently", () => {
         expect(mindsmine.String.isPalindrome(null, true)).toBeTruthy();
         expect(mindsmine.String.isPalindrome("", true)).toBeTruthy();
