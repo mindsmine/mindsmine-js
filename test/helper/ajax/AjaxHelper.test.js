@@ -14,23 +14,23 @@
  limitations under the License.
  */
 
-test("DEFAULT_TIMEOUT should be fixed to two minutes", () => {
+test("mindsmine.Ajax.DEFAULT_TIMEOUT should be fixed to two minutes", () => {
     expect(mindsmine.Ajax.DEFAULT_TIMEOUT).toEqual(120000);
 });
 
-test("DEFAULT_ASYNC should be true", () => {
+test("mindsmine.Ajax.DEFAULT_ASYNC should be true", () => {
     expect(mindsmine.Ajax.DEFAULT_ASYNC).toBeTruthy();
 });
 
-test("DEFAULT_WITH_CREDENTIALS should be false", () => {
+test("mindsmine.Ajax.DEFAULT_WITH_CREDENTIALS should be false", () => {
     expect(mindsmine.Ajax.DEFAULT_WITH_CREDENTIALS).toBeFalsy();
 });
 
-test("DEFAULT_SCOPE should be window", () => {
+test("mindsmine.Ajax.DEFAULT_SCOPE should be window", () => {
     expect(mindsmine.Ajax.DEFAULT_SCOPE).toEqual(window);
 });
 
-test("ALLOWED_METHODS should match the expected array of HTTP methods", () => {
+test("mindsmine.Ajax.ALLOWED_METHODS should match the expected array of HTTP methods", () => {
     const expected = [
         "GET",
         "POST",
@@ -42,7 +42,7 @@ test("ALLOWED_METHODS should match the expected array of HTTP methods", () => {
     expect(mindsmine.Ajax.ALLOWED_METHODS).toEqual(expect.arrayContaining(expected));
 });
 
-describe("request method", () => {
+describe("mindsmine.Ajax.request method", () => {
     const symbols = [
         "AAPL",
         "ALBO"
