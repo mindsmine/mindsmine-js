@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-test("getKey should retrieve the key from the value", () => {
+test("mindsmine.Object.getKey should retrieve the key from the value", () => {
     let obj1 = { "key1" : "value1", "key2" : "value2"};
 
     expect(mindsmine.Object.getKey(obj1, "value1")).toBe("key1");
@@ -22,7 +22,7 @@ test("getKey should retrieve the key from the value", () => {
     expect(mindsmine.Object.getKey(obj1, "value3")).toBe(null);
 });
 
-test("isPrimitive should check for primitive data types", () => {
+test("mindsmine.Object.isPrimitive should check for primitive data types", () => {
     expect(mindsmine.Object.isPrimitive(123)).toBeTruthy();
     expect(mindsmine.Object.isPrimitive("")).toBeTruthy();
     expect(mindsmine.Object.isPrimitive(false)).toBeTruthy();
@@ -31,7 +31,7 @@ test("isPrimitive should check for primitive data types", () => {
     expect(mindsmine.Object.isPrimitive(null)).toBeFalsy();
 });
 
-test("isEmpty should check for empty objects", () => {
+test("mindsmine.Object.isEmpty should check for empty objects", () => {
     expect(mindsmine.Object.isEmpty(null)).toBeFalsy();
     expect(mindsmine.Object.isEmpty(undefined)).toBeFalsy();
     expect(mindsmine.Object.isEmpty(NaN)).toBeFalsy();
@@ -44,7 +44,7 @@ test("isEmpty should check for empty objects", () => {
     expect(mindsmine.Object.isEmpty({})).toBeTruthy();
 });
 
-test("getNullSafe should get null safe objects", () => {
+test("mindsmine.Object.getNullSafe should get null safe objects", () => {
     let obj1 = { "key1" : "value1", "key2" : "value2"},
         obj2 = null;
 
