@@ -20,50 +20,50 @@ const hexStr = "A";
 const octStr = "12";
 const binaryStr = "1010";
 
-test("convertDecimalToHexadecimal should convert decimal to hexadecimal", () => {
+test("mindsmine.NumeralSystem.convertDecimalToHexadecimal should convert decimal to hexadecimal", () => {
     expect(mindsmine.NumeralSystem.convertDecimalToHexadecimal(integer)).toMatch(new RegExp(hexStr, "i"));
 });
 
-test("convertDecimalToBinary should convert decimal to binary", () => {
+test("mindsmine.NumeralSystem.convertDecimalToBinary should convert decimal to binary", () => {
     expect(mindsmine.NumeralSystem.convertDecimalToBinary(integer)).toBe(binaryStr);
 });
 
-test("convertDecimalToOctal should convert decimal to octal", () => {
+test("mindsmine.NumeralSystem.convertDecimalToOctal should convert decimal to octal", () => {
     expect(mindsmine.NumeralSystem.convertDecimalToOctal(integer)).toBe(octStr);
 });
 
-test("convertBinaryToHexadecimal should convert binary to hexadecimal", () => {
+test("mindsmine.NumeralSystem.convertBinaryToHexadecimal should convert binary to hexadecimal", () => {
     expect(mindsmine.NumeralSystem.convertBinaryToHexadecimal(binaryStr)).toMatch(new RegExp(hexStr, "i"));
 });
 
-test("convertBinaryToOctal should convert binary to octal", () => {
+test("mindsmine.NumeralSystem.convertBinaryToOctal should convert binary to octal", () => {
     expect(mindsmine.NumeralSystem.convertBinaryToOctal(binaryStr)).toBe(octStr);
 });
 
-test("convertBinaryToDecimal should convert binary to decimal", () => {
+test("mindsmine.NumeralSystem.convertBinaryToDecimal should convert binary to decimal", () => {
     expect(mindsmine.NumeralSystem.convertBinaryToDecimal(binaryStr)).toBe(decimalStr);
 });
 
-test("convertHexadecimalToBinary should convert hexadecimal to binary", () => {
+test("mindsmine.NumeralSystem.convertHexadecimalToBinary should convert hexadecimal to binary", () => {
     expect(mindsmine.NumeralSystem.convertHexadecimalToBinary(hexStr)).toBe(binaryStr);
 });
 
-test("convertHexadecimalToOctal should convert hexadecimal to octal", () => {
+test("mindsmine.NumeralSystem.convertHexadecimalToOctal should convert hexadecimal to octal", () => {
     expect(mindsmine.NumeralSystem.convertHexadecimalToOctal(hexStr)).toBe(octStr);
 });
 
-test("convertHexadecimalToDecimal should convert hexadecimal to decimal", () => {
+test("mindsmine.NumeralSystem.convertHexadecimalToDecimal should convert hexadecimal to decimal", () => {
     expect(mindsmine.NumeralSystem.convertHexadecimalToDecimal(hexStr)).toBe(decimalStr);
 });
 
-test("convertOctalToBinary should convert octal to binary", () => {
+test("mindsmine.NumeralSystem.convertOctalToBinary should convert octal to binary", () => {
     expect(mindsmine.NumeralSystem.convertOctalToBinary(octStr)).toBe(binaryStr);
 });
 
-test("convertOctalToHexadecimal should convert octal to hexadecimal", () => {
+test("mindsmine.NumeralSystem.convertOctalToHexadecimal should convert octal to hexadecimal", () => {
     expect(mindsmine.NumeralSystem.convertOctalToHexadecimal(octStr)).toMatch(new RegExp(hexStr, "i"));
 });
 
-test("convertOctalToDecimal should convert octal to decimal", () => {
+test("mindsmine.NumeralSystem.convertOctalToDecimal should convert octal to decimal", () => {
     expect(mindsmine.NumeralSystem.convertOctalToDecimal(octStr)).toBe(decimalStr);
 });
