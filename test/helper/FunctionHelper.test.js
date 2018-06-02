@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-test("isFunction should test that the object is a Function", () => {
+test("mindsmine.Function.isFunction should test that the object is a Function", () => {
     expect(mindsmine.Function.isFunction(null)).toBeFalsy();
     expect(mindsmine.Function.isFunction(undefined)).toBeFalsy();
     expect(mindsmine.Function.isFunction(NaN)).toBeFalsy();
