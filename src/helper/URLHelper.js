@@ -44,7 +44,7 @@ mindsmine.URL = class {
         }
 
         try {
-            let _url = new URL(url);
+            new URL(url);
         } catch (e) {
             return false;
         }
