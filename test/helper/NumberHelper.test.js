@@ -82,22 +82,32 @@ describe("mindsmine.Number.getUniqueRandomNumbers", () => {
     const upperBound = 81;
     const arraySize = 12;
 
-    test("should throw TypeError due to null", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers(null, null, null);
-        }
+    [
+        [
+            "null",
+            null,
+            null,
+            null,
+            TypeError,
+            "@ERROR_PERMITTED_NUMBER@"
+        ],
+        [
+            "non-Number",
+            "a",
+            upperBound,
+            arraySize,
+            TypeError,
+            "@ERROR_PERMITTED_NUMBER@"
+        ]
+    ].forEach(arr => {
+        test(`should throw TypeError due to ${arr[0]}`, () => {
+            function callFunction() {
+                mindsmine.Number.getUniqueRandomNumbers(arr[1], arr[2], arr[3]);
+            }
 
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
-    });
-
-    test("should throw TypeError due to non-Number", () => {
-        function callFunction() {
-            mindsmine.Number.getUniqueRandomNumbers("a", upperBound, arraySize);
-        }
-
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("@ERROR_PERMITTED_NUMBER@");
+            expect(callFunction).toThrow(arr[4]);
+            expect(callFunction).toThrow(arr[5]);
+        });
     });
 
     test("should throw Error due to negative 'lowerBound'", () => {
