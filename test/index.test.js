@@ -16,11 +16,11 @@
 
 const mindsmine = require("../../../dist/@REQUIRE_FILE@");
 
-test("productName should return product name", () => {
+test("mindsmine.productName should return product name", () => {
     expect(mindsmine.productName).toBe("mindsmine-js");
 });
 
-test("productVersion should return product version", () => {
+test("mindsmine.productVersion should return product version", () => {
     expect(mindsmine.productVersion).toBe("3.2.0");
 });
 
