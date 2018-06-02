@@ -279,11 +279,8 @@ mindsmine.Ajax = class {
                 throw new TypeError("Fatal Error. 'url'. @ERROR_PERMITTED_STRING@");
             }
 
-            // Verify that the URL is valid
-            try {
-                let _url = new URL(url);
-            } catch (e) {
-                throw e;
+            if (!mindsmine.URL.isValidURL(url)) {
+                throw new TypeError("Fatal Error. 'url'. Invalid URL.");
             }
 
             options = mindsmine.Object.getNullSafe(options);
@@ -304,7 +301,7 @@ mindsmine.Ajax = class {
 
             if (__proceed) {
                 if (method === "GET") {
-                    url = mindsmine.String.urlAppend(url, `_dc=${(new Date()).getTime()}`);
+                    url = mindsmine.URL.appendQuery(url, "_dc", (new Date()).getTime());
                 }
 
                 let async = (options.async !== false) ? (options.async || parent.DEFAULT_ASYNC) : false;
