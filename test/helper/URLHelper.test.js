@@ -117,8 +117,7 @@ describe("mindsmine.URL.appendQuery", () => {
             urlH = `${url}#hash1`,
             urlQH = `${url}?param1=value1#hash1`,
             param2 = "param2",
-            value2 = "value2",
-            query = "param2=value2";
+            value2 = "value2";
 
         expect(mindsmine.URL.appendQuery(url, param2, value2)).toBe("http://www.google.com/?param2=value2");
         expect(mindsmine.URL.appendQuery(urlQ, param2, value2)).toBe("http://www.google.com/?param1=value1&param2=value2");
