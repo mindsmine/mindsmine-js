@@ -11,6 +11,7 @@ others.
 ### Releases ###
 
 **3.6.0**
+* Updated code
 * Babel 7+ supported
 * Node 11+ supported
 

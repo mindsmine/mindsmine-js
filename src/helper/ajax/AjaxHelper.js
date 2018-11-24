@@ -209,7 +209,7 @@ mindsmine.Ajax = class {
                 let __success;
 
                 try {
-                    __success = ((status) => {
+                    __success = (status => {
                         //
                         // Fix IE issue - IE mangles status code 204
                         // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
