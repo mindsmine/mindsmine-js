@@ -28,7 +28,8 @@ test("mindsmine.Object.isPrimitive should check for primitive data types", () =>
     expect(mindsmine.Object.isPrimitive(false)).toBeTruthy();
     expect(mindsmine.Object.isPrimitive({})).toBeFalsy();
     expect(mindsmine.Object.isPrimitive([])).toBeFalsy();
-    expect(mindsmine.Object.isPrimitive(null)).toBeFalsy();
+    expect(mindsmine.Object.isPrimitive(undefined)).toBeTruthy();
+    expect(mindsmine.Object.isPrimitive(null)).toBeTruthy();
 });
 
 test("mindsmine.Object.isEmpty should check for empty objects", () => {

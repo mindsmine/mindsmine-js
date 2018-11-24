@@ -118,9 +118,7 @@ mindsmine.Object = class {
      *
      */
     static isPrimitive(value) {
-        let type = typeof value;
-
-        return type === "string" || type === "number" || type === "boolean";
+        return (typeof value !== "object" && typeof value !== "function") || value === null;
     }
 
     /**
