@@ -150,4 +150,22 @@ export default class {
             });
         }
     }
+
+    static rmdir(dirPath) {
+        const parent = this;
+
+        if (fs.existsSync(dirPath)) {
+            fs.readdirSync(dirPath).forEach(dirName => {
+                const currPath = path.join(dirPath, dirName);
+
+                if (fs.lstatSync(currPath).isDirectory()) {
+                    parent.rmdir(currPath);
+                } else {
+                    fs.unlinkSync(currPath);
+                }
+            });
+
+            fs.rmdirSync(dirPath);
+        }
+    }
 }
