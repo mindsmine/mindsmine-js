@@ -17,9 +17,9 @@
 test("mindsmine.Object.getKey should retrieve the key from the value", () => {
     let obj1 = { "key1" : "value1", "key2" : "value2"};
 
-    expect(mindsmine.Object.getKey(obj1, "value1")).toBe("key1");
-    expect(mindsmine.Object.getKey(obj1, "value2")).toBe("key2");
-    expect(mindsmine.Object.getKey(obj1, "value3")).toBe(null);
+    expect(mindsmine.Object.getKey(obj1, "value1")).toEqual("key1");
+    expect(mindsmine.Object.getKey(obj1, "value2")).toEqual("key2");
+    expect(mindsmine.Object.getKey(obj1, "value3")).toBeNull();
 });
 
 test("mindsmine.Object.isPrimitive should check for primitive data types", () => {
@@ -49,6 +49,6 @@ test("mindsmine.Object.getNullSafe should get null safe objects", () => {
     let obj1 = { "key1" : "value1", "key2" : "value2"},
         obj2 = null;
 
-    expect(mindsmine.Object.getNullSafe(obj1)).toEqual({ "key1" : "value1", "key2" : "value2"});
+    expect(mindsmine.Object.getNullSafe(obj1)).toEqual(expect.objectContaining(obj1));
     expect(mindsmine.Object.getNullSafe(obj2)).toEqual({});
 });
