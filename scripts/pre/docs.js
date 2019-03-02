@@ -56,7 +56,7 @@ const jsdocConfJSON = {
 };
 
 fs.writeFileSync(
-    path.resolve(BuildProperties.path.ROOT.BUILD, "jsdoc.conf.json"),
+    path.resolve(BuildProperties.folder.ROOT.BUILD, "jsdoc.conf.json"),
     JSON.stringify(jsdocConfJSON),
     "utf8"
 );
