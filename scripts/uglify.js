@@ -26,7 +26,7 @@ Console.newline();
 Console.began(__filename);
 
 const minifiedCode = UglifyJS.minify(
-    fs.readFileSync(BuildProperties.path.SOURCE.CONCATENATED.INDEX_FILE, "utf8"),
+    fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE, "utf8"),
     {
         ecma: 5,
         output: {

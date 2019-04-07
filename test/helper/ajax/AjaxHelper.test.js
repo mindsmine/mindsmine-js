@@ -14,6 +14,26 @@
  limitations under the License.
  */
 
+const
+    testJSONObject = {
+        param1: "something",
+        param2: "something else"
+    },
+    expected = [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ],
+    code = 215,
+    username = "username",
+    password = "password",
+    symbols = [
+        "AAPL",
+        "ALBO"
+    ];
+
 test("mindsmine.Ajax.DEFAULT_TIMEOUT should be fixed to two minutes", () => {
     expect(mindsmine.Ajax.DEFAULT_TIMEOUT).toEqual(120000);
 });
@@ -22,33 +42,29 @@ test("mindsmine.Ajax.DEFAULT_ASYNC should be true", () => {
     expect(mindsmine.Ajax.DEFAULT_ASYNC).toBeTruthy();
 });
 
-test("mindsmine.Ajax.DEFAULT_WITH_CREDENTIALS should be false", () => {
-    expect(mindsmine.Ajax.DEFAULT_WITH_CREDENTIALS).toBeFalsy();
-});
-
-test("mindsmine.Ajax.DEFAULT_SCOPE should be window", () => {
-    expect(mindsmine.Ajax.DEFAULT_SCOPE).toEqual(window);
-});
-
 test("mindsmine.Ajax.ALLOWED_METHODS should match the expected array of HTTP methods", () => {
-    const expected = [
-        "GET",
-        "POST",
-        "PUT",
-        "PATCH",
-        "DELETE"
-    ];
-
     expect(mindsmine.Ajax.ALLOWED_METHODS).toEqual(expect.arrayContaining(expected));
 });
 
 describe("mindsmine.Ajax.request method", () => {
-    const symbols = [
-        "AAPL",
-        "ALBO"
-    ];
+    test("basic auth must work", () => {
+        expect.assertions(2);
 
-    test("must work", () => {
+        return mindsmine.Ajax.request(
+            "GET",
+            `http://httpbin.org/basic-auth/${username}/${password}`,
+            {
+                headers: {
+                    "Authorization": "Basic " + window.btoa(`${username}:${password}`)
+                }
+            }
+        ).then(response => {
+            expect(response).not.toBeNull();
+            expect(response.status).toBe(200);
+        });
+    });
+
+    test("GET JSON must work", () => {
         expect.assertions(symbols.length + 1);
 
         return mindsmine.Ajax.request(
@@ -67,7 +83,7 @@ describe("mindsmine.Ajax.request method", () => {
         });
     });
 
-    test("must break with status code 400", () => {
+    test("GET must break with status code 400", () => {
         expect.assertions(2);
 
         return mindsmine.Ajax.request(
@@ -79,15 +95,49 @@ describe("mindsmine.Ajax.request method", () => {
         });
     });
 
-    test("must break with TypeError", () => {
+    expected.forEach(method => {
+        test(`${method} must break with TypeError`, () => {
+            expect.assertions(2);
+
+            return mindsmine.Ajax.request(
+                method,
+                `https//api.iextrading.com/1.0/stock/market/batch?types=quote&symbol=${symbols.join(",")}`
+            ).catch(response => {
+                expect(response).not.toBeNull();
+                expect(response.toString()).toMatch("TypeError");
+            });
+        });
+    });
+
+    expected.forEach(method => {
+        test(`${method} must work`, () => {
+            expect.assertions(2);
+
+            return mindsmine.Ajax.request(
+                method,
+                `http://httpbin.org/status/${code}`
+            ).then(response => {
+                expect(response).not.toBeNull();
+                expect(response.status).toBe(code);
+            });
+        });
+    });
+
+    test("POST JSON must work", () => {
         expect.assertions(2);
 
         return mindsmine.Ajax.request(
-            "GET",
-            `https//api.iextrading.com/1.0/stock/market/batch?types=quote&symbol=${symbols.join(",")}`
-        ).catch(response => {
+            "POST",
+            "http://httpbin.org/anything",
+            {
+                jsonData: testJSONObject
+            }
+        ).then(response => {
             expect(response).not.toBeNull();
-            expect(response.toString()).toMatch("TypeError");
+
+            let __responseJSON = JSON.parse(response.responseText);
+
+            expect(__responseJSON["json"]).toEqual(expect.objectContaining(testJSONObject));
         });
     });
 });

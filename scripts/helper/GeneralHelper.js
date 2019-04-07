@@ -48,7 +48,7 @@ class folderRouters {
 
 export default {
     uglifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
-    path: {
+    folder: {
         ROOT: ROOT,
         SOURCE: new folderRouters("source", "helper", "helper.js", "index.js", "index.js"),
         TEST: new folderRouters("test", "helper", "helper.test.js", "index.test.js", "final.test.js")

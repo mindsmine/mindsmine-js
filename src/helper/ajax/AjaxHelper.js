@@ -51,34 +51,6 @@ mindsmine.Ajax = class {
     }
 
     /**
-     * Provides the default <code>withCredentials</code> value for Ajax calls.
-     *
-     * @constant
-     *
-     * @returns {Boolean}
-     *
-     * @since 1.0.0
-     *
-     */
-    static get DEFAULT_WITH_CREDENTIALS() {
-        return false;
-    }
-
-    /**
-     * Provides the default <code>scope</code> value for callbacks.
-     *
-     * @constant
-     *
-     * @returns {Window}
-     *
-     * @since 1.0.0
-     *
-     */
-    static get DEFAULT_SCOPE() {
-        return window;
-    }
-
-    /**
      * Returns the Ajax object based upon the browser.
      *
      * @constant
@@ -90,16 +62,16 @@ mindsmine.Ajax = class {
      */
     static get XHRObject() {
         let trials = [
-            function () {
+            () => {
                 return new XMLHttpRequest();
             },
-            function () {
+            () => {
                 return new ActiveXObject("MSXML2.XMLHTTP.3.0");
             },
-            function () {
+            () => {
                 return new ActiveXObject("MSXML2.XMLHTTP");
             },
-            function () {
+            () => {
                 return new ActiveXObject("Microsoft.XMLHTTP");
             }
         ];
@@ -191,7 +163,10 @@ mindsmine.Ajax = class {
      * @param {Object} [options.scope=window] The scope in which to execute the callbacks (refers to the "this"
      * parameter for the callback functions).
      *
-     * @param {Object|String} [options.jsonData] JSON data to use as the post.
+     * @param {Number} [options.timeout=120000] The timeout is an unsigned long representing the number of milliseconds
+     * a request can take before automatically being terminated. Timeout should not be used for synchronous requests.
+     *
+     * @param {Object|String} [options.jsonData] JSON data to be used in the request body.
      *
      * @param {Boolean} [options.withCredentials=false] The value for the
      * {@link @MDN_API_URI@/XMLHttpRequest/withCredentials|withCredentials} property of the
@@ -234,7 +209,7 @@ mindsmine.Ajax = class {
                 let __success;
 
                 try {
-                    __success = ((status) => {
+                    __success = (status => {
                         //
                         // Fix IE issue - IE mangles status code 204
                         // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
@@ -285,18 +260,16 @@ mindsmine.Ajax = class {
 
             options = mindsmine.Object.getNullSafe(options);
 
-            let scope = options.scope || parent.DEFAULT_SCOPE;
+            let _scope = options.scope || window;
+
+            let _timeout = (mindsmine.Number.isNumber(options.timeout) && options.timeout >= 0) ? options.timeout : parent.DEFAULT_TIMEOUT;
 
             let __proceed = true;
 
             if (mindsmine.Function.isFunction(options.beforeRequest)) {
-                let __retVal = options.beforeRequest.call(scope);
+                let __retVal = options.beforeRequest.call(_scope);
 
-                if (__retVal === null || __retVal === undefined || typeof __retVal !== "boolean") {
-                    __proceed = true;
-                } else {
-                    __proceed = __retVal;
-                }
+                __proceed = (__retVal === null || __retVal === undefined || typeof __retVal !== "boolean") ? true : __retVal;
             }
 
             if (__proceed) {
@@ -304,60 +277,51 @@ mindsmine.Ajax = class {
                     url = mindsmine.URL.appendQuery(url, "_dc", (new Date()).getTime());
                 }
 
-                let async = (options.async !== false) ? (options.async || parent.DEFAULT_ASYNC) : false;
+                let _async = (options.async !== false) ? (options.async || parent.DEFAULT_ASYNC) : false;
 
                 let __xmlHttpRequest = parent.XHRObject;
 
-                __xmlHttpRequest.open(method, url, async);
+                __xmlHttpRequest.open(method, url, _async);
 
-                if (async) {
-                    __xmlHttpRequest.timeout = parent.DEFAULT_TIMEOUT;
-                    __xmlHttpRequest.ontimeout = function () {
+                if (_async) {
+                    __xmlHttpRequest.timeout = _timeout;
+                    __xmlHttpRequest.ontimeout = () => {
                         reject(__xmlHttpRequest);
                     };
                 }
 
-                if (options.withCredentials || parent.DEFAULT_WITH_CREDENTIALS) {
+                if (mindsmine.Boolean.getNullSafe(options.withCredentials)) {
                     __xmlHttpRequest.withCredentials = true;
                 }
 
-                let headers = options.headers || {},
-                    header = null,
-                    key = null;
+                let headers = mindsmine.Object.getNullSafe(options.headers);
 
                 try {
-                    for (key in headers) {
+                    for (let key in headers) {
                         if (headers.hasOwnProperty(key)) {
-                            header = headers[key];
-                            __xmlHttpRequest.setRequestHeader(key, header);
+                            __xmlHttpRequest.setRequestHeader(key, headers[key]);
                         }
                     }
                 } catch (e) {
-                    throw new Error(`Fatal Error. Could not set the (${key}, ${header}) request header.`);
+                    throw new Error("Fatal Error. Could not set the request header(s).");
                 }
+
+                let _jsonData = options.jsonData;
+
+                let _data = (_jsonData != null) ? ((mindsmine.Object.isPrimitive(_jsonData)) ? _jsonData : JSON.stringify(_jsonData)) : null;
+
+                __xmlHttpRequest.send(_data);
 
                 let __afterRequestFunc = (mindsmine.Function.isFunction(options.afterRequest)) ? options.afterRequest : null;
 
-                if (async) {
-                    __xmlHttpRequest.onreadystatechange = function () {
+                if (_async) {
+                    __xmlHttpRequest.onreadystatechange = () => {
                         if (__xmlHttpRequest.readyState === 4) {
-                            _onRequestComplete(__xmlHttpRequest, scope, __afterRequestFunc);
+                            _onRequestComplete(__xmlHttpRequest, _scope, __afterRequestFunc);
                         }
                     };
-                }
-
-                let data = (options.jsonData != null)
-                    ? (
-                        (mindsmine.Object.isPrimitive(options.jsonData))
-                            ? options.jsonData
-                            : JSON.stringify(options.jsonData)
-                    )
-                    : null;
-
-                __xmlHttpRequest.send(data);
-
-                if (!async) {
-                    _onRequestComplete(__xmlHttpRequest, scope, __afterRequestFunc);
+                } else {
+                    _onRequestComplete(__xmlHttpRequest, _scope, __afterRequestFunc);
                 }
             }
         });

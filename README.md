@@ -10,6 +10,11 @@ others.
 
 ### Releases ###
 
+**3.5.5**
+* Updated code
+* Babel 7+ supported
+* Node 11+ supported
+
 **3.5.0**
 * Added URL support methods
 * Updated the tests code

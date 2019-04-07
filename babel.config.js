@@ -14,14 +14,17 @@
  limitations under the License.
  */
 
-const mindsmine = require("../../../dist/@REQUIRE_FILE@");
+const presets = [
+    [
+        "@babel/env",
+        {
+            "targets": {
+                "node": "current"
+            }
+        }
+    ]
+];
 
-test("mindsmine.productName should return product name", () => {
-    expect(mindsmine.productName).toBe("mindsmine-js");
-});
-
-test("mindsmine.productVersion should return product version", () => {
-    expect(mindsmine.productVersion).toBe("3.5.5");
-});
-
-//_CONCATENATED_HELPER_CODE
+module.exports = {
+    presets
+};
