@@ -23,7 +23,7 @@ import BuildProperties from "../helper/GeneralHelper";
 
 const jsdocConfJSON = {
     opts: {
-        destination: `docs/mindsmine/js/${process.env.npm_package_version}`,
+        destination: `docs/${process.env.npm_package_version}`,
         template: "./node_modules/ink-docstrap/template"
     },
     plugins: [
