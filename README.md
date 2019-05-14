@@ -10,6 +10,9 @@ others.
 
 ### Releases ###
 
+**3.5.6**
+* Node 12+ supported
+
 **3.5.5**
 * Updated code
 * Babel 7+ supported
