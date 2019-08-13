@@ -39,7 +39,7 @@
  * In case it doesn't exist already.
  *
  */
-if(!Array.isArray) {
+if (!Array.isArray) {
     Array.isArray = function (arg) {
         return Object.prototype.toString.call(arg) === "[object Array]";
     };
@@ -162,11 +162,13 @@ if (!String.prototype.trim) {
  *
  */
 if (!String.prototype.startsWith) {
-    String.prototype.startsWith = function(searchString, position) {
-        position = position || 0;
+    Object.defineProperty(String.prototype, "startsWith", {
+        value: function(search, pos) {
+            pos = !pos || pos < 0 ? 0 : +pos;
 
-        return this.substr(position, searchString.length) === searchString;
-    };
+            return this.substring(pos, pos + search.length) === search;
+        }
+    });
 }
 
 /*
@@ -174,23 +176,12 @@ if (!String.prototype.startsWith) {
  *
  */
 if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function(searchString, position) {
-        let subjectString = this.toString();
-
-        if (
-            typeof position !== "number" ||
-            !isFinite(position) ||
-            Math.floor(position) !== position ||
-            position > subjectString.length
-        ) {
-            position = subjectString.length;
+    String.prototype.endsWith = function(search, this_len) {
+        if (this_len === undefined || this_len > this.length) {
+            this_len = this.length;
         }
 
-        position -= searchString.length;
-
-        let lastIndex = subjectString.lastIndexOf(searchString, position);
-
-        return lastIndex !== -1 && lastIndex === position;
+        return this.substring(this_len - search.length, this_len) === search;
     };
 }
 
@@ -254,25 +245,64 @@ if (!String.prototype.repeat) {
             throw new RangeError("repeat count must not overflow maximum string size");
         }
 
-        let rpt = "";
+        let maxCount = str.length * count;
 
-        for (;;) {
-            if ((count & 1) === 1) {
-                rpt += str;
-            }
+        count = Math.floor(Math.log(count) / Math.log(2));
 
-            count >>>= 1;
-
-            if (count === 0) {
-                break;
-            }
-
+        while (count) {
             str += str;
+            count--;
         }
 
-        // Could we try:
-        // return Array(count + 1).join(this);
-        return rpt;
+        str += str.substring(0, maxCount - str.length);
+
+        return str;
+    };
+}
+
+/*
+ * In case it doesn't exist already
+ *
+ */
+if (!String.prototype.padStart) {
+    String.prototype.padStart = function padStart(targetLength, padString) {
+        targetLength = targetLength >> 0; //truncate if number, or convert non-number to 0;
+        padString = String(typeof padString !== "undefined" ? padString : " ");
+
+        if (this.length >= targetLength) {
+            return String(this);
+        }
+
+        targetLength = targetLength - this.length;
+
+        if (targetLength > padString.length) {
+            padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
+        }
+
+        return padString.slice(0, targetLength) + String(this);
+    };
+}
+
+/*
+ * In case it doesn't exist already
+ *
+ */
+if (!String.prototype.padEnd) {
+    String.prototype.padEnd = function padEnd(targetLength,padString) {
+        targetLength = targetLength>>0; //floor if number or convert non-number to 0;
+        padString = String((typeof padString !== "undefined" ? padString : " "));
+
+        if (this.length > targetLength) {
+            return String(this);
+        }
+
+        targetLength = targetLength-this.length;
+
+        if (targetLength > padString.length) {
+            padString += padString.repeat(targetLength/padString.length); //append to original to ensure we are longer than needed
+        }
+
+        return String(this) + padString.slice(0,targetLength);
     };
 }
 
