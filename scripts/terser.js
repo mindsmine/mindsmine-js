@@ -28,8 +28,9 @@ Console.began(__filename);
 const minifiedCode = Terser.minify(
     fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE, "utf8"),
     {
-        ecma: 5,
+        ecma: 8,
         output: {
+            beautify: false,
             comments: "/^!/"
         }
     }
