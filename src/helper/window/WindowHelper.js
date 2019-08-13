@@ -45,8 +45,8 @@ mindsmine.Window = class {
      *
      */
     static open(externalURL) {
-        if (mindsmine.String.isEmpty(externalURL)) {
-            throw new TypeError("@ERROR_PERMITTED_STRING@");
+        if (mindsmine.URL.isValidURL(externalURL)) {
+            throw new TypeError("Fatal Error. 'url'. Invalid URL.");
         }
 
         window.open(externalURL, "_blank");
