@@ -22,7 +22,7 @@
 
     "lint": "eslint scripts/**/* src/**/* test/**/*",
 
-    "preterser": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/pre/terser",
+    "preterser": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/prepare",
     "terser": "node build/scripts/terser",
 
     "pretest": "npm run terser",

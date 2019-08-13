@@ -18,9 +18,9 @@
 
 import fs from "fs";
 
-import BuildProperties from "../helper/GeneralHelper";
-import Console from "../helper/ConsoleHelper";
-import FileSystem from "../helper/FileSystemHelper";
+import BuildProperties from "./helper/GeneralHelper";
+import Console from "./helper/ConsoleHelper";
+import FileSystem from "./helper/FileSystemHelper";
 
 Console.newline();
 Console.began(__filename);

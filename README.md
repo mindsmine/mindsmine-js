@@ -12,6 +12,7 @@ others.
 
 **3.5.6**
 * Node 12+ supported
+* Replaced `uglify` dependency with `terser`
 
 **3.5.5**
 * Updated code
