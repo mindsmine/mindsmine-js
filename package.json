@@ -25,9 +25,6 @@
     "preterser": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/pre/terser",
     "terser": "node build/scripts/terser",
 
-    "preuglify": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/pre/uglify",
-    "uglify": "node build/scripts/uglify",
-
     "pretest": "npm run terser",
     "test": "jest --coverage final.test.js",
 
