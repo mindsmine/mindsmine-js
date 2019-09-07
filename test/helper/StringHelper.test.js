@@ -33,13 +33,28 @@ test("mindsmine.String.htmlDecode should decode the HTML content", () => {
     expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
 });
 
-test("mindsmine.String.isEmpty should check for string emptiness", () => {
-    expect(mindsmine.String.isEmpty(null)).toBeTruthy();
-    expect(mindsmine.String.isEmpty(undefined)).toBeTruthy();
-    expect(mindsmine.String.isEmpty(NaN)).toBeTruthy();
-    expect(mindsmine.String.isEmpty(123)).toBeTruthy();
-    expect(mindsmine.String.isEmpty("")).toBeTruthy();
-    expect(mindsmine.String.isEmpty("Some String")).toBeFalsy();
+describe("mindsmine.String.isEmpty", () => {
+    [
+        null,
+        undefined,
+        NaN,
+        123,
+        "",
+        "   "
+    ].forEach(str => {
+        test(`should check that '${str}' is empty`, () => {
+            expect(mindsmine.String.isEmpty(str)).toBeTruthy();
+        });
+    });
+
+    [
+        "Some String",
+        "例子.测试"
+    ].forEach(str => {
+        test(`should check that '${str}' is NOT empty`, () => {
+            expect(mindsmine.String.isEmpty(str)).toBeFalsy();
+        });
+    });
 });
 
 test("mindsmine.String.urlAppend should append to the URL", () => {
