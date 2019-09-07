@@ -15,63 +15,63 @@
  */
 
 describe("mindsmine.URL.isValidURL", () => {
-    test("should pass for valid URLs", () => {
-        [
-            "https://api.iextrading.com",
-            "https://api.iextrading.com/1.0/stock/market/batch",
-            "https://api.iextrading.com/1.0/stock/market/batch?types=quote",
-            "https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbols=AAPL",
-            "https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbols=AAPL#",
-            "https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbols=AAPL#tab1",
-            "http://userid:password@example.com:8080",
-            "http://userid:password@example.com:8080/",
-            "http://userid@example.com",
-            "http://userid@example.com/",
-            "http://userid@example.com:8080",
-            "http://userid@example.com:8080/",
-            "http://userid:password@example.com",
-            "http://userid:password@example.com/",
-            "http://142.42.1.1/",
-            "http://142.42.1.1:8080/",
-            "http://➡.ws/䨹",
-            "http://⌘.ws",
-            "http://⌘.ws/	",
-            "http://foo.com/blah_(wikipedia)#cite-1",
-            "http://foo.com/blah_(wikipedia)_blah#cite-1",
-            "http://foo.com/unicode_(✪)_in_parens",
-            "http://foo.com/(something)?after=parens",
-            "http://☺.damowmow.com/",
-            "http://code.google.com/events/#&product=browser",
-            "http://j.mp",
-            "ftp://foo.bar/baz",
-            "http://foo.bar/?q=Test%20URL-encoded%20stuff",
-            "http://مثال.إختبار	",
-            "http://例子.测试"
-        ].forEach(url => {
+    [
+        "https://api.iextrading.com",
+        "https://api.iextrading.com/1.0/stock/market/batch",
+        "https://api.iextrading.com/1.0/stock/market/batch?types=quote",
+        "https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbols=AAPL",
+        "https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbols=AAPL#",
+        "https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbols=AAPL#tab1",
+        "http://userid:password@example.com:8080",
+        "http://userid:password@example.com:8080/",
+        "http://userid@example.com",
+        "http://userid@example.com/",
+        "http://userid@example.com:8080",
+        "http://userid@example.com:8080/",
+        "http://userid:password@example.com",
+        "http://userid:password@example.com/",
+        "http://142.42.1.1/",
+        "http://142.42.1.1:8080/",
+        "http://➡.ws/䨹",
+        "http://⌘.ws",
+        "http://⌘.ws/	",
+        "http://foo.com/blah_(wikipedia)#cite-1",
+        "http://foo.com/blah_(wikipedia)_blah#cite-1",
+        "http://foo.com/unicode_(✪)_in_parens",
+        "http://foo.com/(something)?after=parens",
+        "http://☺.damowmow.com/",
+        "http://code.google.com/events/#&product=browser",
+        "http://j.mp",
+        "ftp://foo.bar/baz",
+        "http://foo.bar/?q=Test%20URL-encoded%20stuff",
+        "http://مثال.إختبار	",
+        "http://例子.测试"
+    ].forEach(url => {
+        test(`should pass for '${url}'`, () => {
             expect(mindsmine.URL.isValidURL(url)).toBeTruthy();
         });
     });
 
-    test("should fail for invalid URLs", () => {
-        [
-            null,
-            "",
-            "http://",
-            "http://?",
-            "http://??",
-            "http://??/",
-            "http://#",
-            "http://##",
-            "http://##/",
-            "//",
-            "//a",
-            "///a",
-            "foo.com",
-            "http:// shouldfail.com",
-            ":// should fail",
-            "/main.html",
-            "www.example.com/main.html"
-        ].forEach(url => {
+    [
+        null,
+        "",
+        "http://",
+        "http://?",
+        "http://??",
+        "http://??/",
+        "http://#",
+        "http://##",
+        "http://##/",
+        "//",
+        "//a",
+        "///a",
+        "foo.com",
+        "http:// shouldfail.com",
+        ":// should fail",
+        "/main.html",
+        "www.example.com/main.html"
+    ].forEach(url => {
+        test(`should fail for '${url}'`, () => {
             expect(mindsmine.URL.isValidURL(url)).toBeFalsy();
         });
     });
