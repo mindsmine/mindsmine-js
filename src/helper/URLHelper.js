@@ -55,8 +55,7 @@ mindsmine.URL = class {
     /**
      * Appends content to the query string of a URL, handling logic for whether to place a question mark or ampersand.
      *
-     * @see {@link @MDN_API_URI@/URL|URL}
-     * @see {@link @MDN_API_URI@/URLSearchParams|URLSearchParams}
+     * @see {@link @MDN_API_URI@/URL/searchParams|URL searchParams}
      *
      * @param {String} url The URL to append to.
      * @param {String} param The parameter key to append to the URL.
@@ -88,6 +87,8 @@ mindsmine.URL = class {
     /**
      * Returns an object containing the names of the search parameters as properties and values of the search parameters
      * as the property values.
+     *
+     * @see {@link @MDN_API_URI@/URL/search|URL search}
      *
      * @param {String} url The URL to retrieve the search parameters from.
      *
@@ -123,6 +124,8 @@ mindsmine.URL = class {
     /**
      * Retrieves the value of the query parameter.
      *
+     * @see {@link @MDN_API_URI@/URL/search|URL search}
+     *
      * @param {String} url The URL to retrieve the search parameter from.
      * @param {String} queryParam The query parameter (case-sensitive) string whose value is to be retrieved.
      *
@@ -156,6 +159,8 @@ mindsmine.URL = class {
      * as the property values.
      *
      * If a hash parameter does not have an associated value, it is provided with a <code>true</code> value.
+     *
+     * @see {@link @MDN_API_URI@/URL/hash|URL hash}
      *
      * @param {String} url The URL to retrieve the hash parameters from.
      *
@@ -194,6 +199,8 @@ mindsmine.URL = class {
 
     /**
      * Retrieves the value of the hash parameter.
+     *
+     * @see {@link @MDN_API_URI@/URL/hash|URL hash}
      *
      * @param {String} url The URL to retrieve the hash parameter from.
      * @param {String} hashParam The hash parameter (case-sensitive) string whose value is to be retrieved.
