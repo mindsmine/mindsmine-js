@@ -22,14 +22,18 @@ test("mindsmine.Object.getKey should retrieve the key from the value", () => {
     expect(mindsmine.Object.getKey(obj1, "value3")).toBeNull();
 });
 
-test("mindsmine.Object.isPrimitive should check for primitive data types", () => {
-    expect(mindsmine.Object.isPrimitive(123)).toBeTruthy();
-    expect(mindsmine.Object.isPrimitive("")).toBeTruthy();
-    expect(mindsmine.Object.isPrimitive(false)).toBeTruthy();
-    expect(mindsmine.Object.isPrimitive({})).toBeFalsy();
-    expect(mindsmine.Object.isPrimitive([])).toBeFalsy();
-    expect(mindsmine.Object.isPrimitive(undefined)).toBeTruthy();
-    expect(mindsmine.Object.isPrimitive(null)).toBeTruthy();
+describe("mindsmine.Object.isPrimitive", () => {
+    NOT_PRIMITIVE_OBJECTS.forEach(obj => {
+        test(`should test that '${obj}' is NOT Primitive`, () => {
+            expect(mindsmine.Object.isPrimitive(obj)).toBeFalsy();
+        });
+    });
+
+    PRIMITIVE_OBJECTS.forEach(obj => {
+        test(`should test that '${obj}' is Primitive`, () => {
+            expect(mindsmine.Object.isPrimitive(obj)).toBeTruthy();
+        });
+    });
 });
 
 test("mindsmine.Object.isEmpty should check for empty objects", () => {

@@ -60,59 +60,54 @@ const STRINGS = [
     "例子.测试"
 ];
 
-const NOT_ARRAYS = [
+const PRIMITIVE_OBJECTS = [
     ...NOT_OBJECTS,
     ...BOOLEANS,
-    ...FUNCTIONS,
     ...NUMBERS,
-    ...OBJECTS,
     ...STRINGS
+];
+
+const NOT_PRIMITIVE_OBJECTS = [
+    ...ARRAYS,
+    ...FUNCTIONS,
+    ...OBJECTS
+];
+
+const NOT_ARRAYS = [
+    ...PRIMITIVE_OBJECTS,
+    ...FUNCTIONS,
+    ...OBJECTS
 ];
 
 const NOT_BOOLEANS = [
     ...NOT_OBJECTS,
-    ...ARRAYS,
-    ...FUNCTIONS,
+    ...NOT_PRIMITIVE_OBJECTS,
     ...NUMBERS,
-    ...OBJECTS,
     ...STRINGS
 ];
 
 const NOT_FUNCTIONS = [
-    ...NOT_OBJECTS,
+    ...PRIMITIVE_OBJECTS,
     ...ARRAYS,
-    ...BOOLEANS,
-    ...NUMBERS,
-    ...OBJECTS,
-    ...STRINGS
+    ...OBJECTS
 ];
 
 const NOT_NUMBERS = [
     ...NOT_OBJECTS,
-    ...ARRAYS,
+    ...NOT_PRIMITIVE_OBJECTS,
     ...BOOLEANS,
-    ...FUNCTIONS,
-    ...OBJECTS,
     ...STRINGS
 ];
 
 const NOT_STRINGS = [
     ...NOT_OBJECTS,
-    ...ARRAYS,
+    ...NOT_PRIMITIVE_OBJECTS,
     ...BOOLEANS,
-    ...FUNCTIONS,
-    ...NUMBERS,
-    ...OBJECTS
+    ...NUMBERS
 ];
 
 test("To avoid eslint from crapping out", () => {
-    expect(NOT_OBJECTS).not.toBeNull();
-    expect(ARRAYS).not.toBeNull();
-    expect(BOOLEANS).not.toBeNull();
-    expect(FUNCTIONS).not.toBeNull();
-    expect(NUMBERS).not.toBeNull();
-    expect(OBJECTS).not.toBeNull();
-    expect(STRINGS).not.toBeNull();
+    expect(NOT_PRIMITIVE_OBJECTS).not.toBeNull();
     expect(NOT_ARRAYS).not.toBeNull();
     expect(NOT_BOOLEANS).not.toBeNull();
     expect(NOT_FUNCTIONS).not.toBeNull();
