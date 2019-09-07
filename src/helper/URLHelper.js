@@ -137,10 +137,6 @@ mindsmine.URL = class {
      *
      */
     static getQueryParameter(url, queryParam) {
-        if (!this.isValidURL(url)) {
-            throw new TypeError("Fatal Error. 'url'. Invalid URL.");
-        }
-
         if (mindsmine.String.isEmpty(queryParam)) {
             throw new TypeError("Fatal Error. 'queryParam'. @ERROR_PERMITTED_STRING@");
         }
@@ -213,15 +209,11 @@ mindsmine.URL = class {
      *
      */
     static getHashParameter(url, hashParam) {
-        if (!this.isValidURL(url)) {
-            throw new TypeError("Fatal Error. 'url'. Invalid URL.");
-        }
-
         if (mindsmine.String.isEmpty(hashParam)) {
             throw new TypeError("Fatal Error. 'hashParam'. @ERROR_PERMITTED_STRING@");
         }
 
-        let __hashParams = this.getAllHashParameters();
+        let __hashParams = this.getAllHashParameters(url);
 
         if (__hashParams && __hashParams.hasOwnProperty(hashParam)) {
             return __hashParams[hashParam];
