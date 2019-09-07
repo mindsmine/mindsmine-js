@@ -14,37 +14,45 @@
  limitations under the License.
  */
 
-test("mindsmine.Number.isNumber should test that the object is a Number", () => {
-    expect(mindsmine.Number.isNumber(null)).toBeFalsy();
-    expect(mindsmine.Number.isNumber(undefined)).toBeFalsy();
-    expect(mindsmine.Number.isNumber(NaN)).toBeFalsy();
-    expect(mindsmine.Number.isNumber(100)).toBeTruthy();
-    expect(mindsmine.Number.isNumber("")).toBeFalsy();
-    expect(mindsmine.Number.isNumber("hello")).toBeFalsy();
-    expect(mindsmine.Number.isNumber(true)).toBeFalsy();
-    expect(mindsmine.Number.isNumber(function() {})).toBeFalsy();
-    expect(mindsmine.Number.isNumber([])).toBeFalsy();
-    expect(mindsmine.Number.isNumber({})).toBeFalsy();
+const NOT_NUMBERS = [
+    null,
+    undefined,
+    NaN,
+    "",
+    "hello",
+    true,
+    function() {},
+    [],
+    {}
+];
+
+const NUMBERS = [
+    100,
+    -2500
+];
+
+describe("mindsmine.Number.isNumber", () => {
+    NOT_NUMBERS.forEach(num => {
+        test(`should test that '${num}' is NOT a Number`, () => {
+            expect(mindsmine.Number.isNumber(num)).toBeFalsy();
+        });
+    });
+
+    NUMBERS.forEach(num => {
+        test(`should test that '${num}' is a Number`, () => {
+            expect(mindsmine.Number.isNumber(num)).toBeTruthy();
+        });
+    });
 });
 
 describe("mindsmine.Number.getNullSafe", () => {
-    [
-        null,
-        undefined,
-        NaN,
-        "",
-        "hello",
-        true
-    ].forEach(num => {
+    NOT_NUMBERS.forEach(num => {
         test(`should get 'Number.NEGATIVE_INFINITY' for '${num}'`, () => {
             expect(mindsmine.Number.getNullSafe(num)).toBe(Number.NEGATIVE_INFINITY);
         });
     });
 
-    [
-        100,
-        -2500
-    ].forEach(num => {
+    NUMBERS.forEach(num => {
         test(`should get same number for '${num}'`, () => {
             expect(mindsmine.Number.getNullSafe(num)).toBe(num);
         });
