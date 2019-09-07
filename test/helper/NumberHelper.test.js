@@ -14,23 +14,6 @@
  limitations under the License.
  */
 
-const NOT_NUMBERS = [
-    null,
-    undefined,
-    NaN,
-    "",
-    "hello",
-    true,
-    function() {},
-    [],
-    {}
-];
-
-const NUMBERS = [
-    100,
-    -2500
-];
-
 describe("mindsmine.Number.isNumber", () => {
     NOT_NUMBERS.forEach(num => {
         test(`should test that '${num}' is NOT a Number`, () => {

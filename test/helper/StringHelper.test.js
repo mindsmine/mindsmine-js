@@ -33,23 +33,6 @@ test("mindsmine.String.htmlDecode should decode the HTML content", () => {
     expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
 });
 
-const NOT_STRINGS = [
-    null,
-    undefined,
-    NaN,
-    0,
-    -2500,
-    true,
-    function() {},
-    [],
-    {}
-];
-
-const STRINGS = [
-    "Some String",
-    "例子.测试"
-];
-
 describe("mindsmine.String.isEmpty", () => {
     [
         ...NOT_STRINGS,

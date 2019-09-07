@@ -24,4 +24,63 @@ test("mindsmine.productVersion should return product version", () => {
     expect(mindsmine.productVersion).toBe("3.6.5");
 });
 
+const NOT_OBJECTS = [
+    null,
+    undefined,
+    NaN
+];
+
+const NON_PRIMITIVE_OBJECTS = [
+    function() {},
+    [],
+    {}
+];
+
+const BOOLEANS = [
+    true,
+    false
+];
+
+const NUMBERS = [
+    100,
+    -2500
+];
+
+const STRINGS = [
+    "Some String",
+    "例子.测试"
+];
+
+const NOT_BOOLEANS = [
+    ...NOT_OBJECTS,
+    ...NON_PRIMITIVE_OBJECTS,
+    ...NUMBERS,
+    ...STRINGS
+];
+
+const NOT_NUMBERS = [
+    ...NOT_OBJECTS,
+    ...NON_PRIMITIVE_OBJECTS,
+    ...BOOLEANS,
+    ...STRINGS
+];
+
+const NOT_STRINGS = [
+    ...NOT_OBJECTS,
+    ...NON_PRIMITIVE_OBJECTS,
+    ...BOOLEANS,
+    ...NUMBERS
+];
+
+test("To avoid eslint from crapping out", () => {
+    expect(NOT_OBJECTS).not.toBeNull();
+    expect(NON_PRIMITIVE_OBJECTS).not.toBeNull();
+    expect(BOOLEANS).not.toBeNull();
+    expect(NUMBERS).not.toBeNull();
+    expect(STRINGS).not.toBeNull();
+    expect(NOT_BOOLEANS).not.toBeNull();
+    expect(NOT_NUMBERS).not.toBeNull();
+    expect(NOT_STRINGS).not.toBeNull();
+});
+
 //_CONCATENATED_HELPER_CODE

@@ -14,21 +14,8 @@
  limitations under the License.
  */
 
-const NOT_BOOLEAN = [
-    null,
-    undefined,
-    NaN,
-    0,
-    -2500,
-    "",
-    "true",
-    function() {},
-    [],
-    {}
-];
-
 describe("mindsmine.Boolean.getNullSafe", () => {
-    NOT_BOOLEAN.forEach(bool => {
+    NOT_BOOLEANS.forEach(bool => {
         test(`should get 'false' for '${bool}'`, () => {
             expect(mindsmine.Boolean.getNullSafe(bool)).toBeFalsy();
         });
