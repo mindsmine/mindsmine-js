@@ -73,6 +73,13 @@ const NOT_PRIMITIVE_OBJECTS = [
     ...OBJECTS
 ];
 
+const NOT_EMPTY_OBJECTS = [
+    ...PRIMITIVE_OBJECTS,
+    ...ARRAYS,
+    ...FUNCTIONS,
+    {hello: "world"}
+];
+
 const NOT_ARRAYS = [
     ...PRIMITIVE_OBJECTS,
     ...FUNCTIONS,
@@ -108,6 +115,7 @@ const NOT_STRINGS = [
 
 test("To avoid eslint from crapping out", () => {
     expect(NOT_PRIMITIVE_OBJECTS).not.toBeNull();
+    expect(NOT_EMPTY_OBJECTS).not.toBeNull();
     expect(NOT_ARRAYS).not.toBeNull();
     expect(NOT_BOOLEANS).not.toBeNull();
     expect(NOT_FUNCTIONS).not.toBeNull();
