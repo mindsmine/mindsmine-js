@@ -36,6 +36,11 @@ const NON_PRIMITIVE_OBJECTS = [
     {}
 ];
 
+const ARRAYS = [
+    [123],
+    [123, 456]
+];
+
 const BOOLEANS = [
     true,
     false
@@ -49,6 +54,13 @@ const NUMBERS = [
 const STRINGS = [
     "Some String",
     "例子.测试"
+];
+
+const NOT_ARRAYS = [
+    ...NOT_OBJECTS,
+    ...BOOLEANS,
+    ...NUMBERS,
+    ...STRINGS
 ];
 
 const NOT_BOOLEANS = [
@@ -75,9 +87,11 @@ const NOT_STRINGS = [
 test("To avoid eslint from crapping out", () => {
     expect(NOT_OBJECTS).not.toBeNull();
     expect(NON_PRIMITIVE_OBJECTS).not.toBeNull();
+    expect(ARRAYS).not.toBeNull();
     expect(BOOLEANS).not.toBeNull();
     expect(NUMBERS).not.toBeNull();
     expect(STRINGS).not.toBeNull();
+    expect(NOT_ARRAYS).not.toBeNull();
     expect(NOT_BOOLEANS).not.toBeNull();
     expect(NOT_NUMBERS).not.toBeNull();
     expect(NOT_STRINGS).not.toBeNull();
