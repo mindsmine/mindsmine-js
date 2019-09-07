@@ -58,23 +58,62 @@ describe("mindsmine.Number.getNumOfDigits", () => {
         });
     });
 
-    test("should count number of digits", () => {
-        expect(mindsmine.Number.getNumOfDigits(0)).toBe(1);
-        expect(mindsmine.Number.getNumOfDigits(2)).toBe(1);
-        expect(mindsmine.Number.getNumOfDigits(10)).toBe(2);
-        expect(mindsmine.Number.getNumOfDigits(-10)).toBe(2);
+    [
+        [
+            0,
+            1
+        ],
+        [
+            2,
+            1
+        ],
+        [
+            10,
+            2
+        ],
+        [
+            -12,
+            2
+        ],
+        [
+            123456,
+            6
+        ],
+        [
+            1234567890123456,
+            16
+        ]
+    ].forEach(arr => {
+        test(`should count number of digits for '${arr[0]}' to be '${arr[1]}'`, () => {
+            expect(mindsmine.Number.getNumOfDigits(arr[0])).toBe(arr[1]);
+        });
     });
 });
 
-test("mindsmine.Number.isPerfectSquare should test that the number is a Perfect Square", () => {
-    expect(mindsmine.Number.isPerfectSquare(0)).toBeTruthy();
-    expect(mindsmine.Number.isPerfectSquare(1)).toBeTruthy();
-    expect(mindsmine.Number.isPerfectSquare(81)).toBeTruthy();
-    expect(mindsmine.Number.isPerfectSquare(100)).toBeTruthy();
+describe("mindsmine.Number.isPerfectSquare", () => {
+    [
+        0,
+        1,
+        81,
+        100,
+        144
+    ].forEach(num => {
+        test(`should test that '${num}' is a perfect square`, () => {
+            expect(mindsmine.Number.isPerfectSquare(num)).toBeTruthy();
+        });
+    });
 
-    expect(mindsmine.Number.isPerfectSquare(5)).toBeFalsy();
-    expect(mindsmine.Number.isPerfectSquare(101)).toBeFalsy();
-    expect(mindsmine.Number.isPerfectSquare(250)).toBeFalsy();
+    [
+        5,
+        NaN,
+        null,
+        101,
+        1551
+    ].forEach(num => {
+        test(`should test that '${num}' is NOT a perfect square`, () => {
+            expect(mindsmine.Number.isPerfectSquare(num)).toBeFalsy();
+        });
+    });
 });
 
 describe("mindsmine.Number.getUniqueRandomNumbers", () => {
