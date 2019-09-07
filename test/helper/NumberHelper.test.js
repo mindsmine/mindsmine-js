@@ -27,14 +27,28 @@ test("mindsmine.Number.isNumber should test that the object is a Number", () => 
     expect(mindsmine.Number.isNumber({})).toBeFalsy();
 });
 
-test("mindsmine.Number.getNullSafe should get null safe numbers", () => {
-    expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe(undefined)).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe(NaN)).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe(100)).toBe(100);
-    expect(mindsmine.Number.getNullSafe("")).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe("hello")).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe(true)).toBe(Number.NEGATIVE_INFINITY);
+describe("mindsmine.Number.getNullSafe", () => {
+    [
+        null,
+        undefined,
+        NaN,
+        "",
+        "hello",
+        true
+    ].forEach(num => {
+        test(`should get 'Number.NEGATIVE_INFINITY' for '${num}'`, () => {
+            expect(mindsmine.Number.getNullSafe(num)).toBe(Number.NEGATIVE_INFINITY);
+        });
+    });
+
+    [
+        100,
+        -2500
+    ].forEach(num => {
+        test(`should get same number for '${num}'`, () => {
+            expect(mindsmine.Number.getNullSafe(num)).toBe(num);
+        });
+    });
 });
 
 describe("mindsmine.Number.getNumOfDigits", () => {
