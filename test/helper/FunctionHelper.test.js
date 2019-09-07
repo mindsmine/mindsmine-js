@@ -14,15 +14,16 @@
  limitations under the License.
  */
 
-test("mindsmine.Function.isFunction should test that the object is a Function", () => {
-    expect(mindsmine.Function.isFunction(null)).toBeFalsy();
-    expect(mindsmine.Function.isFunction(undefined)).toBeFalsy();
-    expect(mindsmine.Function.isFunction(NaN)).toBeFalsy();
-    expect(mindsmine.Function.isFunction(100)).toBeFalsy();
-    expect(mindsmine.Function.isFunction("")).toBeFalsy();
-    expect(mindsmine.Function.isFunction("hello")).toBeFalsy();
-    expect(mindsmine.Function.isFunction(true)).toBeFalsy();
-    expect(mindsmine.Function.isFunction(function() {})).toBeTruthy();
-    expect(mindsmine.Function.isFunction([])).toBeFalsy();
-    expect(mindsmine.Function.isFunction({})).toBeFalsy();
+describe("mindsmine.Function.isFunction", () => {
+    NOT_FUNCTIONS.forEach(func => {
+        test(`should test that '${func}' is NOT a function`, () => {
+            expect(mindsmine.Function.isFunction(func)).toBeFalsy();
+        });
+    });
+
+    FUNCTIONS.forEach(func => {
+        test(`should test that '${func}' is a function`, () => {
+            expect(mindsmine.Function.isFunction(func)).toBeTruthy();
+        });
+    });
 });
