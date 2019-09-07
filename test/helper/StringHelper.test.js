@@ -33,12 +33,26 @@ test("mindsmine.String.htmlDecode should decode the HTML content", () => {
     expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
 });
 
+const NOT_STRINGS = [
+    null,
+    undefined,
+    NaN,
+    0,
+    -2500,
+    true,
+    function() {},
+    [],
+    {}
+];
+
+const STRINGS = [
+    "Some String",
+    "例子.测试"
+];
+
 describe("mindsmine.String.isEmpty", () => {
     [
-        null,
-        undefined,
-        NaN,
-        123,
+        ...NOT_STRINGS,
         "",
         "   "
     ].forEach(str => {
@@ -47,12 +61,23 @@ describe("mindsmine.String.isEmpty", () => {
         });
     });
 
-    [
-        "Some String",
-        "例子.测试"
-    ].forEach(str => {
+    STRINGS.forEach(str => {
         test(`should check that '${str}' is NOT empty`, () => {
             expect(mindsmine.String.isEmpty(str)).toBeFalsy();
+        });
+    });
+});
+
+describe("mindsmine.String.getNullSafe", () => {
+    NOT_STRINGS.forEach(str => {
+        test(`should get '' for ${str}`, () => {
+            expect(mindsmine.String.getNullSafe(str)).toBe("");
+        });
+    });
+
+    STRINGS.forEach(str => {
+        test (`should get same string for '${str}'`, () => {
+            expect(mindsmine.String.getNullSafe(str)).toBe(str);
         });
     });
 });
@@ -64,16 +89,6 @@ test("mindsmine.String.urlAppend should append to the URL", () => {
 
     expect(mindsmine.String.urlAppend(url, query)).toBe("http://www.google.com?param2=value2");
     expect(mindsmine.String.urlAppend(urlQ, query)).toBe("http://www.google.com?param1=value1&param2=value2");
-});
-
-test("mindsmine.String.getNullSafe should get null safe strings", () => {
-    expect(mindsmine.String.getNullSafe(null)).toBe("");
-    expect(mindsmine.String.getNullSafe(undefined)).toBe("");
-    expect(mindsmine.String.getNullSafe(NaN)).toBe("");
-    expect(mindsmine.String.getNullSafe(100)).toBe("");
-    expect(mindsmine.String.getNullSafe("")).toBe("");
-    expect(mindsmine.String.getNullSafe("hello")).toBe("hello");
-    expect(mindsmine.String.getNullSafe(true)).toBe("");
 });
 
 describe("mindsmine.String.areEqual", () => {
