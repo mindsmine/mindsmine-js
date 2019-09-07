@@ -49,10 +49,16 @@ test("mindsmine.Object.isEmpty should check for empty objects", () => {
     expect(mindsmine.Object.isEmpty({})).toBeTruthy();
 });
 
-test("mindsmine.Object.getNullSafe should get null safe objects", () => {
-    let obj1 = { "key1" : "value1", "key2" : "value2"},
-        obj2 = null;
+describe("mindsmine.Object.getNullSafe", () => {
+    NOT_OBJECTS.forEach(obj => {
+        test(`should get '{}' for '${obj}'`, () => {
+            expect(mindsmine.Object.getNullSafe(obj)).toEqual({});
+        });
+    });
 
-    expect(mindsmine.Object.getNullSafe(obj1)).toEqual(expect.objectContaining(obj1));
-    expect(mindsmine.Object.getNullSafe(obj2)).toEqual({});
+    OBJECTS.forEach(obj => {
+        test (`should get same object for '${obj}'`, () => {
+            expect(mindsmine.Object.getNullSafe(obj)).toEqual(obj);
+        });
+    });
 });
