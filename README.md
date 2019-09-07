@@ -10,7 +10,7 @@ others.
 
 ### Releases ###
 
-**3.5.6**
+**3.6.5**
 * Added polyfill for `String#padEnd`, and `String#padStart`
 * Updated polyfill for `String#endsWith`, `String#startsWith`, and `String#repeat`
 * Node 12+ supported
