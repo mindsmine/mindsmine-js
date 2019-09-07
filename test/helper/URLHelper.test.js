@@ -77,6 +77,9 @@ describe("mindsmine.URL.isValidURL", () => {
     });
 });
 
+const url_plain = "http://www.google.com";
+const url = "http://www.google.com?param1=value1&param2=value2#hash3=value3&hash4";
+
 describe("mindsmine.URL.appendQuery", () => {
     [
         [
@@ -111,23 +114,29 @@ describe("mindsmine.URL.appendQuery", () => {
         });
     });
 
-    test("should append query params to the URL", () => {
-        const url = "http://www.google.com",
-            urlQ = `${url}?param1=value1`,
-            urlH = `${url}#hash1`,
-            urlQH = `${url}?param1=value1#hash1`,
-            param2 = "param2",
-            value2 = "value2";
-
-        expect(mindsmine.URL.appendQuery(url, param2, value2)).toBe("http://www.google.com/?param2=value2");
-        expect(mindsmine.URL.appendQuery(urlQ, param2, value2)).toBe("http://www.google.com/?param1=value1&param2=value2");
-        expect(mindsmine.URL.appendQuery(urlH, param2, value2)).toBe("http://www.google.com/?param2=value2#hash1");
-        expect(mindsmine.URL.appendQuery(urlQH, param2, value2)).toBe("http://www.google.com/?param1=value1&param2=value2#hash1");
+    [
+        [
+            url_plain,
+            "http://www.google.com/?param2=value2"
+        ],
+        [
+            `${url_plain}?param1=value1`,
+            "http://www.google.com/?param1=value1&param2=value2"
+        ],
+        [
+            `${url_plain}#hash1`,
+            "http://www.google.com/?param2=value2#hash1"
+        ],
+        [
+            `${url_plain}?param1=value1#hash1`,
+            "http://www.google.com/?param1=value1&param2=value2#hash1"
+        ]
+    ].forEach(arr => {
+        test(`should append query parameter to '${arr[0]}'`, () => {
+            expect(mindsmine.URL.appendQuery(arr[0], "param2", "value2")).toBe(arr[1]);
+        });
     });
 });
-
-const url_plain = "http://www.google.com";
-const url = "http://www.google.com?param1=value1&param2=value2#hash3=value3&hash4";
 
 describe("mindsmine.URL.getAllQueryParameters", () => {
     [
