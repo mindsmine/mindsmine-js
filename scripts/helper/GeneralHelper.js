@@ -47,6 +47,7 @@ class folderRouters {
 }
 
 export default {
+    tersedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     uglifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     folder: {
         ROOT: ROOT,

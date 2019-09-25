@@ -14,7 +14,16 @@
  limitations under the License.
  */
 
-test("mindsmine.Array.getNullSafe should get null safe arrays", () => {
-    expect(mindsmine.Array.getNullSafe([123])).toEqual([123]);
-    expect(mindsmine.Array.getNullSafe(null)).toEqual([]);
+describe("mindsmine.Array.getNullSafe", () => {
+    NOT_ARRAYS.forEach(arr => {
+        test(`should get '[]' for '${arr}'`, () => {
+            expect(mindsmine.Array.getNullSafe(arr)).toEqual([]);
+        });
+    });
+
+    ARRAYS.forEach(arr => {
+        test(`should get same array for '${arr}'`, () => {
+            expect(mindsmine.Array.getNullSafe(arr)).toEqual(arr);
+        });
+    });
 });

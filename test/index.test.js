@@ -21,7 +21,106 @@ test("mindsmine.productName should return product name", () => {
 });
 
 test("mindsmine.productVersion should return product version", () => {
-    expect(mindsmine.productVersion).toBe("3.5.5");
+    expect(mindsmine.productVersion).toBe("3.6.5");
+});
+
+const NOT_OBJECTS = [
+    null,
+    undefined,
+    NaN
+];
+
+const ARRAYS = [
+    [],
+    [123],
+    [123, 456]
+];
+
+const BOOLEANS = [
+    true,
+    false
+];
+
+const FUNCTIONS = [
+    function() {}
+];
+
+const NUMBERS = [
+    100,
+    -2500
+];
+
+const OBJECTS = [
+    {},
+    {hello: "world"}
+];
+
+const STRINGS = [
+    "Some String",
+    "例子.测试"
+];
+
+const PRIMITIVE_OBJECTS = [
+    ...NOT_OBJECTS,
+    ...BOOLEANS,
+    ...NUMBERS,
+    ...STRINGS
+];
+
+const NOT_PRIMITIVE_OBJECTS = [
+    ...ARRAYS,
+    ...FUNCTIONS,
+    ...OBJECTS
+];
+
+const NOT_EMPTY_OBJECTS = [
+    ...PRIMITIVE_OBJECTS,
+    ...ARRAYS,
+    ...FUNCTIONS,
+    {hello: "world"}
+];
+
+const NOT_ARRAYS = [
+    ...PRIMITIVE_OBJECTS,
+    ...FUNCTIONS,
+    ...OBJECTS
+];
+
+const NOT_BOOLEANS = [
+    ...NOT_OBJECTS,
+    ...NOT_PRIMITIVE_OBJECTS,
+    ...NUMBERS,
+    ...STRINGS
+];
+
+const NOT_FUNCTIONS = [
+    ...PRIMITIVE_OBJECTS,
+    ...ARRAYS,
+    ...OBJECTS
+];
+
+const NOT_NUMBERS = [
+    ...NOT_OBJECTS,
+    ...NOT_PRIMITIVE_OBJECTS,
+    ...BOOLEANS,
+    ...STRINGS
+];
+
+const NOT_STRINGS = [
+    ...NOT_OBJECTS,
+    ...NOT_PRIMITIVE_OBJECTS,
+    ...BOOLEANS,
+    ...NUMBERS
+];
+
+test("To avoid eslint from crapping out", () => {
+    expect(NOT_PRIMITIVE_OBJECTS).not.toBeNull();
+    expect(NOT_EMPTY_OBJECTS).not.toBeNull();
+    expect(NOT_ARRAYS).not.toBeNull();
+    expect(NOT_BOOLEANS).not.toBeNull();
+    expect(NOT_FUNCTIONS).not.toBeNull();
+    expect(NOT_NUMBERS).not.toBeNull();
+    expect(NOT_STRINGS).not.toBeNull();
 });
 
 //_CONCATENATED_HELPER_CODE

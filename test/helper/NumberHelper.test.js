@@ -14,27 +14,32 @@
  limitations under the License.
  */
 
-test("mindsmine.Number.isNumber should test that the object is a Number", () => {
-    expect(mindsmine.Number.isNumber(null)).toBeFalsy();
-    expect(mindsmine.Number.isNumber(undefined)).toBeFalsy();
-    expect(mindsmine.Number.isNumber(NaN)).toBeFalsy();
-    expect(mindsmine.Number.isNumber(100)).toBeTruthy();
-    expect(mindsmine.Number.isNumber("")).toBeFalsy();
-    expect(mindsmine.Number.isNumber("hello")).toBeFalsy();
-    expect(mindsmine.Number.isNumber(true)).toBeFalsy();
-    expect(mindsmine.Number.isNumber(function() {})).toBeFalsy();
-    expect(mindsmine.Number.isNumber([])).toBeFalsy();
-    expect(mindsmine.Number.isNumber({})).toBeFalsy();
+describe("mindsmine.Number.isNumber", () => {
+    NOT_NUMBERS.forEach(num => {
+        test(`should test that '${num}' is NOT a Number`, () => {
+            expect(mindsmine.Number.isNumber(num)).toBeFalsy();
+        });
+    });
+
+    NUMBERS.forEach(num => {
+        test(`should test that '${num}' is a Number`, () => {
+            expect(mindsmine.Number.isNumber(num)).toBeTruthy();
+        });
+    });
 });
 
-test("mindsmine.Number.getNullSafe should get null safe numbers", () => {
-    expect(mindsmine.Number.getNullSafe(null)).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe(undefined)).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe(NaN)).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe(100)).toBe(100);
-    expect(mindsmine.Number.getNullSafe("")).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe("hello")).toBe(Number.NEGATIVE_INFINITY);
-    expect(mindsmine.Number.getNullSafe(true)).toBe(Number.NEGATIVE_INFINITY);
+describe("mindsmine.Number.getNullSafe", () => {
+    NOT_NUMBERS.forEach(num => {
+        test(`should get 'Number.NEGATIVE_INFINITY' for '${num}'`, () => {
+            expect(mindsmine.Number.getNullSafe(num)).toBe(Number.NEGATIVE_INFINITY);
+        });
+    });
+
+    NUMBERS.forEach(num => {
+        test(`should get same number for '${num}'`, () => {
+            expect(mindsmine.Number.getNullSafe(num)).toBe(num);
+        });
+    });
 });
 
 describe("mindsmine.Number.getNumOfDigits", () => {
@@ -58,23 +63,62 @@ describe("mindsmine.Number.getNumOfDigits", () => {
         });
     });
 
-    test("should count number of digits", () => {
-        expect(mindsmine.Number.getNumOfDigits(0)).toBe(1);
-        expect(mindsmine.Number.getNumOfDigits(2)).toBe(1);
-        expect(mindsmine.Number.getNumOfDigits(10)).toBe(2);
-        expect(mindsmine.Number.getNumOfDigits(-10)).toBe(2);
+    [
+        [
+            0,
+            1
+        ],
+        [
+            2,
+            1
+        ],
+        [
+            10,
+            2
+        ],
+        [
+            -12,
+            2
+        ],
+        [
+            123456,
+            6
+        ],
+        [
+            1234567890123456,
+            16
+        ]
+    ].forEach(arr => {
+        test(`should count number of digits for '${arr[0]}' to be '${arr[1]}'`, () => {
+            expect(mindsmine.Number.getNumOfDigits(arr[0])).toBe(arr[1]);
+        });
     });
 });
 
-test("mindsmine.Number.isPerfectSquare should test that the number is a Perfect Square", () => {
-    expect(mindsmine.Number.isPerfectSquare(0)).toBeTruthy();
-    expect(mindsmine.Number.isPerfectSquare(1)).toBeTruthy();
-    expect(mindsmine.Number.isPerfectSquare(81)).toBeTruthy();
-    expect(mindsmine.Number.isPerfectSquare(100)).toBeTruthy();
+describe("mindsmine.Number.isPerfectSquare", () => {
+    [
+        0,
+        1,
+        81,
+        100,
+        144
+    ].forEach(num => {
+        test(`should test that '${num}' is a perfect square`, () => {
+            expect(mindsmine.Number.isPerfectSquare(num)).toBeTruthy();
+        });
+    });
 
-    expect(mindsmine.Number.isPerfectSquare(5)).toBeFalsy();
-    expect(mindsmine.Number.isPerfectSquare(101)).toBeFalsy();
-    expect(mindsmine.Number.isPerfectSquare(250)).toBeFalsy();
+    [
+        5,
+        NaN,
+        null,
+        101,
+        1551
+    ].forEach(num => {
+        test(`should test that '${num}' is NOT a perfect square`, () => {
+            expect(mindsmine.Number.isPerfectSquare(num)).toBeFalsy();
+        });
+    });
 });
 
 describe("mindsmine.Number.getUniqueRandomNumbers", () => {

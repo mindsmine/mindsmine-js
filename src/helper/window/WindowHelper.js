@@ -45,8 +45,8 @@ mindsmine.Window = class {
      *
      */
     static open(externalURL) {
-        if (mindsmine.String.isEmpty(externalURL)) {
-            throw new TypeError("@ERROR_PERMITTED_STRING@");
+        if (mindsmine.URL.isValidURL(externalURL)) {
+            throw new TypeError("Fatal Error. 'url'. Invalid URL.");
         }
 
         window.open(externalURL, "_blank");
@@ -142,6 +142,8 @@ mindsmine.Window = class {
      *
      * @since 1.0.0
      *
+     * @deprecated since 3.6.5, use <code>mindsmine.URL.*</code> functions instead. Will be removed in next major release.
+     *
      */
     static get Location() {
         return class {
@@ -152,6 +154,9 @@ mindsmine.Window = class {
              * @returns {Object|null} Returns <code>null</code> if no search parameters exist.
              *
              * @since 2.0.0
+             *
+             * @deprecated since 3.6.5, use <code>mindsmine.URL.getAllQueryParameters(window.location)</code> function
+             * instead. Will be removed in next major release.
              *
              * @memberOf mindsmine.Window.Location
              *
@@ -182,6 +187,9 @@ mindsmine.Window = class {
              *
              * @since 1.0.0
              *
+             * @deprecated since 3.6.5, use <code>mindsmine.URL.getQueryParameter(window.location, queryParam)</code>
+             * function instead. Will be removed in next major release.
+             *
              * @memberOf mindsmine.Window.Location
              *
              */
@@ -208,6 +216,9 @@ mindsmine.Window = class {
              * @returns {Object|null} Returns <code>null</code> if no hash parameters exist.
              *
              * @since 2.0.0
+             *
+             * @deprecated since 3.6.5, use <code>mindsmine.URL.getAllHashParameters(window.location)</code> function
+             * instead. Will be removed in next major release.
              *
              * @memberOf mindsmine.Window.Location
              *
@@ -241,6 +252,9 @@ mindsmine.Window = class {
              * @throws {TypeError} If invalid argument
              *
              * @since 1.0.0
+             *
+             * @deprecated since 3.6.5, use <code>mindsmine.URL.getHashParameter(window.location, hashParam)</code>
+             * function instead. Will be removed in next major release.
              *
              * @memberOf mindsmine.Window.Location
              *

@@ -55,8 +55,7 @@ mindsmine.URL = class {
     /**
      * Appends content to the query string of a URL, handling logic for whether to place a question mark or ampersand.
      *
-     * @see {@link @MDN_API_URI@/URL|URL}
-     * @see {@link @MDN_API_URI@/URLSearchParams|URLSearchParams}
+     * @see {@link @MDN_API_URI@/URL/searchParams|URL searchParams}
      *
      * @param {String} url The URL to append to.
      * @param {String} param The parameter key to append to the URL.
@@ -69,7 +68,7 @@ mindsmine.URL = class {
      * @since 3.5.0
      *
      */
-    static appendQuery(url, param, value) {
+    static appendQuery(url, param, value = {}) {
         if (!this.isValidURL(url)) {
             throw new TypeError("Fatal Error. 'url'. Invalid URL.");
         }
@@ -80,8 +79,146 @@ mindsmine.URL = class {
 
         let _url = new URL(url);
 
-        _url.searchParams.append(param, value);
+        _url.searchParams.append(param, encodeURIComponent(value));
 
         return _url.href;
+    }
+
+    /**
+     * Returns an object containing the names of the search parameters as properties and values of the search parameters
+     * as the property values.
+     *
+     * @see {@link @MDN_API_URI@/URL/search|URL search}
+     *
+     * @param {String} url The URL to retrieve the search parameters from.
+     *
+     * @returns {Object|null} Returns <code>null</code> if no search parameters exist.
+     *
+     * @throws {TypeError} for Invalid URL or empty arguments
+     *
+     * @since 3.6.5
+     *
+     */
+    static getAllQueryParameters(url) {
+        if (!this.isValidURL(url)) {
+            throw new TypeError("Fatal Error. 'url'. Invalid URL.");
+        }
+
+        let _url = new URL(url);
+
+        if (!mindsmine.String.isEmpty(_url.search)) {
+            let __queryParams = {};
+
+            _url.search.substr(1).split("&").forEach(p => {
+                const pairs = p.split("=");
+
+                __queryParams[pairs[0]] = decodeURIComponent(pairs[1]);
+            });
+
+            return __queryParams;
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieves the value of the query parameter.
+     *
+     * @see {@link @MDN_API_URI@/URL/search|URL search}
+     *
+     * @param {String} url The URL to retrieve the search parameter from.
+     * @param {String} queryParam The query parameter (case-sensitive) string whose value is to be retrieved.
+     *
+     * @returns {String|null} Returns <code>null</code> if unavailable.
+     *
+     * @throws {TypeError} for Invalid URL or empty arguments
+     *
+     * @since 3.6.5
+     *
+     */
+    static getQueryParameter(url, queryParam) {
+        if (mindsmine.String.isEmpty(queryParam)) {
+            throw new TypeError("Fatal Error. 'queryParam'. @ERROR_PERMITTED_STRING@");
+        }
+
+        let __queryParams = this.getAllQueryParameters(url);
+
+        if (__queryParams && __queryParams.hasOwnProperty(queryParam)) {
+            return __queryParams[queryParam];
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns an object containing the names of the hash parameters as properties and values of the hash parameters
+     * as the property values.
+     *
+     * If a hash parameter does not have an associated value, it is provided with a <code>true</code> value.
+     *
+     * @see {@link @MDN_API_URI@/URL/hash|URL hash}
+     *
+     * @param {String} url The URL to retrieve the hash parameters from.
+     *
+     * @returns {Object|null} Returns <code>null</code> if no hash parameters exist.
+     *
+     * @throws {TypeError} for Invalid URL or empty arguments
+     *
+     * @since 3.6.5
+     *
+     */
+    static getAllHashParameters(url) {
+        if (!this.isValidURL(url)) {
+            throw new TypeError("Fatal Error. 'url'. Invalid URL.");
+        }
+
+        let _url = new URL(url);
+
+        if (!mindsmine.String.isEmpty(_url.hash)) {
+            let __hashParams = {};
+
+            _url.hash.substr(1).split("&").forEach(p => {
+                const pairs = p.split("=");
+
+                if (pairs.length === 1) {
+                    __hashParams[pairs[0]] = true;
+                } else {
+                    __hashParams[pairs[0]] = decodeURIComponent(pairs[1]);
+                }
+            });
+
+            return __hashParams;
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieves the value of the hash parameter.
+     *
+     * @see {@link @MDN_API_URI@/URL/hash|URL hash}
+     *
+     * @param {String} url The URL to retrieve the hash parameter from.
+     * @param {String} hashParam The hash parameter (case-sensitive) string whose value is to be retrieved.
+     *
+     * @returns {String|null} Returns <code>null</code> if unavailable.
+     *
+     * @throws {TypeError} for Invalid URL or empty arguments
+     *
+     * @since 3.6.5
+     *
+     */
+    static getHashParameter(url, hashParam) {
+        if (mindsmine.String.isEmpty(hashParam)) {
+            throw new TypeError("Fatal Error. 'hashParam'. @ERROR_PERMITTED_STRING@");
+        }
+
+        let __hashParams = this.getAllHashParameters(url);
+
+        if (__hashParams && __hashParams.hasOwnProperty(hashParam)) {
+            return __hashParams[hashParam];
+        }
+
+        return null;
     }
 };

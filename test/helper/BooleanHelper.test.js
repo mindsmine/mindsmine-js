@@ -14,12 +14,18 @@
  limitations under the License.
  */
 
-test("mindsmine.Boolean.getNullSafe should get null safe boolean", () => {
-    expect(mindsmine.Boolean.getNullSafe(null)).toBeFalsy();
-    expect(mindsmine.Boolean.getNullSafe(undefined)).toBeFalsy();
-    expect(mindsmine.Boolean.getNullSafe(NaN)).toBeFalsy();
-    expect(mindsmine.Boolean.getNullSafe(100)).toBeFalsy();
-    expect(mindsmine.Boolean.getNullSafe("")).toBeFalsy();
-    expect(mindsmine.Boolean.getNullSafe("hello")).toBeFalsy();
-    expect(mindsmine.Boolean.getNullSafe(true)).toBeTruthy();
+describe("mindsmine.Boolean.getNullSafe", () => {
+    NOT_BOOLEANS.forEach(bool => {
+        test(`should get 'false' for '${bool}'`, () => {
+            expect(mindsmine.Boolean.getNullSafe(bool)).toBeFalsy();
+        });
+    });
+
+    test("should get same value for 'true'", () => {
+        expect(mindsmine.Boolean.getNullSafe(true)).toBeTruthy();
+    });
+
+    test("should get same value for 'false'", () => {
+        expect(mindsmine.Boolean.getNullSafe(false)).toBeFalsy();
+    });
 });

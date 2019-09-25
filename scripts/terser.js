@@ -17,7 +17,7 @@
 "use strict";
 
 import fs from "fs";
-import UglifyJS from "uglify-es";
+import Terser from "terser";
 
 import BuildProperties from "./helper/GeneralHelper";
 import Console from "./helper/ConsoleHelper";
@@ -25,24 +25,25 @@ import Console from "./helper/ConsoleHelper";
 Console.newline();
 Console.began(__filename);
 
-const minifiedCode = UglifyJS.minify(
+const minifiedCode = Terser.minify(
     fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE, "utf8"),
     {
-        ecma: 5,
+        ecma: 8,
         output: {
+            beautify: false,
             comments: "/^!/"
         }
     }
 );
 
 if (minifiedCode.error) {
-    Console.error("Uglifying the code FAILED");
+    Console.error("Tersering the code FAILED");
 
     throw minifiedCode.error;
 }
 
-fs.writeFileSync(BuildProperties.uglifiedFilename, minifiedCode.code);
+fs.writeFileSync(BuildProperties.tersedFilename, minifiedCode.code);
 
-Console.info("Uglifying the code COMPLETED");
+Console.info("Tersering the code COMPLETED");
 
 Console.ended(__filename);

@@ -1,6 +1,6 @@
 {
   "name": "mindsmine-js",
-  "version": "3.5.5",
+  "version": "3.6.5",
   "main": "src/index.js",
   "description": "mindsmine-js",
   "authors": [
@@ -14,7 +14,7 @@
     "url": "https://github.com/mindsmine/mindsmine-js.git"
   },
   "engines": {
-    "node": ">= 11.13.0"
+    "node": ">= 12.10.0"
   },
   "scripts": {
     "preclean": "node scripts/clean build coverage",
@@ -22,10 +22,10 @@
 
     "lint": "eslint scripts/**/* src/**/* test/**/*",
 
-    "preuglify": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/pre/uglify",
-    "uglify": "node build/scripts/uglify",
+    "preterser": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/prepare",
+    "terser": "node build/scripts/terser",
 
-    "pretest": "npm run uglify",
+    "pretest": "npm run terser",
     "test": "jest --coverage final.test.js",
 
     "predocs": "npm run test && node build/scripts/pre/docs",
@@ -34,13 +34,13 @@
     "package": "npm run docs && npm run preclean"
   },
   "devDependencies": {
-    "@babel/cli": "7.4.3",
-    "@babel/core": "7.4.3",
-    "@babel/preset-env": "7.4.3",
-    "eslint": "5.16.0",
+    "@babel/cli": "7.6.2",
+    "@babel/core": "7.6.2",
+    "@babel/preset-env": "7.6.2",
+    "eslint": "6.4.0",
     "ink-docstrap": "1.3.2",
-    "jest-cli": "24.7.1",
-    "jsdoc": "3.5.5",
-    "uglify-es": "3.3.9"
+    "jest-cli": "24.9.0",
+    "jsdoc": "3.6.3",
+    "terser": "4.3.2"
   }
 }

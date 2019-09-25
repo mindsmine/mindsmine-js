@@ -15,6 +15,8 @@
  */
 
 const
+    TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
+    BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
     testJSONObject = {
         param1: "something",
         param2: "something else"
@@ -69,7 +71,7 @@ describe("mindsmine.Ajax.request method", () => {
 
         return mindsmine.Ajax.request(
             "GET",
-            `https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbols=${symbols.join(",")}`
+            `${BASE_URI}&types=quote&symbols=${symbols.join(",")}`
         ).then(response => {
             expect(response).not.toBeNull();
 
@@ -88,7 +90,7 @@ describe("mindsmine.Ajax.request method", () => {
 
         return mindsmine.Ajax.request(
             "GET",
-            `https://api.iextrading.com/1.0/stock/market/batch?types=quote&symbol=${symbols.join(",")}`
+            `${BASE_URI}&types=quote&symbol=${symbols.join(",")}`
         ).catch(response => {
             expect(response).not.toBeNull();
             expect(response.status).toBe(400);
@@ -101,7 +103,7 @@ describe("mindsmine.Ajax.request method", () => {
 
             return mindsmine.Ajax.request(
                 method,
-                `https//api.iextrading.com/1.0/stock/market/batch?types=quote&symbol=${symbols.join(",")}`
+                "https//httpbin.org/anything"
             ).catch(response => {
                 expect(response).not.toBeNull();
                 expect(response.toString()).toMatch("TypeError");
