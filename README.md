@@ -13,6 +13,7 @@ others.
 **3.6.5**
 * Added polyfill for `String#padEnd`, and `String#padStart`
 * Updated polyfill for `String#endsWith`, `String#startsWith`, and `String#repeat`
+* Updated test code
 * Node 12+ supported
 * Replaced `uglify` dependency with `terser`
 
