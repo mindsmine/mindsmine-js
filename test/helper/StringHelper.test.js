@@ -65,15 +65,6 @@ describe("mindsmine.String.getNullSafe", () => {
     });
 });
 
-test("mindsmine.String.urlAppend should append to the URL", () => {
-    const url = "http://www.google.com",
-        urlQ = `${url}?param1=value1`,
-        query = "param2=value2";
-
-    expect(mindsmine.String.urlAppend(url, query)).toBe("http://www.google.com?param2=value2");
-    expect(mindsmine.String.urlAppend(urlQ, query)).toBe("http://www.google.com?param1=value1&param2=value2");
-});
-
 describe("mindsmine.String.areEqual", () => {
     test("should test string equality, leniently", () => {
         expect(mindsmine.String.areEqual(null, null, true)).toBeTruthy();
