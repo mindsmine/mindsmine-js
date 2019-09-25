@@ -120,33 +120,6 @@ mindsmine.String = class {
     }
 
     /**
-     * Appends content to the query string of a URL, handling logic for whether to place a question mark or ampersand.
-     *
-     * @param {String} url The URL to append to.
-     * @param {String} query The content to append to the URL.
-     *
-     * @returns {String} The resulting URL
-     *
-     * @since 1.0.0
-     *
-     * @deprecated since 3.5.0, use <code>mindsmine.URL.appendQuery(url, param, value)</code> instead. Will be removed
-     * in next major release.
-     *
-     * @see {@link mindsmine.URL.isValidURL}
-     *
-     */
-    static urlAppend(url, query) {
-        if (!this.isEmpty(query)) {
-            //
-            // TODO Tokenise the URL and then apply the logic
-            //
-            return url + (url.indexOf("?") === -1 ? "?" : "&") + query;
-        }
-
-        return url;
-    }
-
-    /**
      * Returns a non-null string, even if the object being passed is a null string.
      *
      * If the passed-in object is a non-null string, then it is returned as-is.
