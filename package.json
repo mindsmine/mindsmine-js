@@ -22,10 +22,10 @@
 
     "lint": "eslint scripts/**/* src/**/* test/**/*",
 
-    "preterser": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/prepare",
-    "terser": "node build/scripts/terser",
+    "preminify": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/prepare",
+    "minify": "node build/scripts/minify",
 
-    "pretest": "npm run terser",
+    "pretest": "npm run minify",
     "test": "jest --coverage final.test.js",
 
     "predocs": "npm run test && node build/scripts/pre/docs",
