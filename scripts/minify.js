@@ -37,13 +37,13 @@ const minifiedCode = Terser.minify(
 );
 
 if (minifiedCode.error) {
-    Console.error("Tersering the code FAILED");
+    Console.error("Minifying the code FAILED");
 
     throw minifiedCode.error;
 }
 
-fs.writeFileSync(BuildProperties.tersedFilename, minifiedCode.code);
+fs.writeFileSync(BuildProperties.minifiedFilename, minifiedCode.code);
 
-Console.info("Tersering the code COMPLETED");
+Console.info("Minifying the code COMPLETED");
 
 Console.ended(__filename);

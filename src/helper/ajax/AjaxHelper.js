@@ -144,6 +144,10 @@ mindsmine.Ajax = class {
      *
      *           console.log(`HTTP error code = ${response.status}`);
      *
+     *      }).finally(() => {
+     *
+     *           console.log("This function is called regardless of success or failure.");
+     *
      *      });
      *
      *
@@ -160,9 +164,6 @@ mindsmine.Ajax = class {
      *
      * @param {Object} [options.headers] Request headers to set for the request.
      *
-     * @param {Object} [options.scope=window] The scope in which to execute the callbacks (refers to the "this"
-     * parameter for the callback functions).
-     *
      * @param {Number} [options.timeout=120000] The timeout is an unsigned long representing the number of milliseconds
      * a request can take before automatically being terminated. Timeout should not be used for synchronous requests.
      *
@@ -172,13 +173,7 @@ mindsmine.Ajax = class {
      * {@link @MDN_API_URI@/XMLHttpRequest/withCredentials|withCredentials} property of the
      * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} object.
      *
-     * @param {Function} [options.beforeRequest] The function to be called before a network request is made to retrieve
-     * a data object.
-     *
-     * @param {Function} [options.afterRequest] The function to be called upon receipt of the HTTP response. This
-     * function is called regardless of success or failure. The callback is passed the following parameters:
-     * @param {XMLHttpRequest} options.afterRequest.response The XMLHttpRequest object containing the response data.
-     * See {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} for details about accessing elements of the response.
+     * @param {Function} [options.beforeRequest] The function to be called before a network request is made.
      *
      * @returns {Promise} A {@link @MDN_JS_URI@/Promise|Promise} that resolves to an
      * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} object.
@@ -197,15 +192,13 @@ mindsmine.Ajax = class {
              * Called when the request has come back from the server.
              *
              * @param {XMLHttpRequest} xhrObj
-             * @param {Object} scope The scope for the callback functions.
-             * @param {Function} [onCompleteFunc] The function to be called upon completion of the request.
              *
              * @private
              *
              * @since 1.0.0
              *
              */
-            function _onRequestComplete(xhrObj, scope, onCompleteFunc) {
+            function _onRequestComplete(xhrObj) {
                 let __success;
 
                 try {
@@ -223,10 +216,6 @@ mindsmine.Ajax = class {
                     // Some browsers do not provide access to status when request fails.
                     //
                     __success = false;
-                }
-
-                if (onCompleteFunc) {
-                    onCompleteFunc.call(scope, xhrObj);
                 }
 
                 if (__success) {
@@ -260,14 +249,12 @@ mindsmine.Ajax = class {
 
             options = mindsmine.Object.getNullSafe(options);
 
-            let _scope = options.scope || window;
-
             let _timeout = (mindsmine.Number.isNumber(options.timeout) && options.timeout >= 0) ? options.timeout : parent.DEFAULT_TIMEOUT;
 
             let __proceed = true;
 
             if (mindsmine.Function.isFunction(options.beforeRequest)) {
-                let __retVal = options.beforeRequest.call(_scope);
+                let __retVal = options.beforeRequest.call(window);
 
                 __proceed = (__retVal === null || __retVal === undefined || typeof __retVal !== "boolean") ? true : __retVal;
             }
@@ -312,16 +299,14 @@ mindsmine.Ajax = class {
 
                 __xmlHttpRequest.send(_data);
 
-                let __afterRequestFunc = (mindsmine.Function.isFunction(options.afterRequest)) ? options.afterRequest : null;
-
                 if (_async) {
                     __xmlHttpRequest.onreadystatechange = () => {
                         if (__xmlHttpRequest.readyState === 4) {
-                            _onRequestComplete(__xmlHttpRequest, _scope, __afterRequestFunc);
+                            _onRequestComplete(__xmlHttpRequest);
                         }
                     };
                 } else {
-                    _onRequestComplete(__xmlHttpRequest, _scope, __afterRequestFunc);
+                    _onRequestComplete(__xmlHttpRequest);
                 }
             }
         });

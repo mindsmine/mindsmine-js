@@ -47,8 +47,7 @@ class folderRouters {
 }
 
 export default {
-    tersedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
-    uglifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
+    minifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     folder: {
         ROOT: ROOT,
         SOURCE: new folderRouters("source", "helper", "helper.js", "index.js", "index.js"),

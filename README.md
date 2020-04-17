@@ -10,6 +10,11 @@ others.
 
 ### Releases ###
 
+**4.0.0**
+* Added DOM support methods
+* Removed deprecated functions
+* Node 13+ supported
+
 **3.6.5**
 * Added polyfill for `String#padEnd`, and `String#padStart`
 * Updated polyfill for `String#endsWith`, `String#startsWith`, and `String#repeat`
