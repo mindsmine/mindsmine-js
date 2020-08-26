@@ -22,6 +22,10 @@ import BuildProperties from "./helper/GeneralHelper.js";
 import Console from "./helper/ConsoleHelper.js";
 import FileSystem from "./helper/FileSystemHelper.js";
 
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+
 Console.newline();
 Console.began(__filename);
 
