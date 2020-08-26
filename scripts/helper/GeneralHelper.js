@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+"use strict";
+
 import path from "path";
 
 const NOW = new Date(),
