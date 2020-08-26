@@ -20,14 +20,6 @@ import fs from "fs";
 import { minify } from "terser";
 
 import BuildProperties from "./helper/GeneralHelper.js";
-import Console from "./helper/ConsoleHelper.js";
-
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-
-Console.newline();
-Console.began(__filename);
 
 minify(
     fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE, "utf8"),
@@ -40,11 +32,5 @@ minify(
 ).then(minifiedCode => {
     fs.writeFileSync(BuildProperties.minifiedFilename, minifiedCode.code);
 }).catch(minifiedCode => {
-    Console.error("Minifying the code FAILED");
-
     throw minifiedCode.error;
 });
-
-Console.info("Minifying the code COMPLETED");
-
-Console.ended(__filename);
