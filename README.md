@@ -10,6 +10,10 @@ others.
 
 ### Releases ###
 
+**4.0.3**
+* Removed `babel` dependency
+* Node 14+ supported
+
 **4.0.0**
 * Added DOM support methods
 * Removed deprecated functions
