@@ -17,32 +17,33 @@
 "use strict";
 
 import fs from "fs";
-import Terser from "terser";
+import { minify } from "terser";
 
 import BuildProperties from "./helper/GeneralHelper.js";
 import Console from "./helper/ConsoleHelper.js";
 
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+
 Console.newline();
 Console.began(__filename);
 
-const minifiedCode = Terser.minify(
+minify(
     fs.readFileSync(BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE, "utf8"),
     {
-        ecma: 8,
-        output: {
-            beautify: false,
+        ecma: 2020,
+        format: {
             comments: "/^!/"
         }
     }
-);
-
-if (minifiedCode.error) {
+).then(minifiedCode => {
+    fs.writeFileSync(BuildProperties.minifiedFilename, minifiedCode.code);
+}).catch(minifiedCode => {
     Console.error("Minifying the code FAILED");
 
     throw minifiedCode.error;
-}
-
-fs.writeFileSync(BuildProperties.minifiedFilename, minifiedCode.code);
+});
 
 Console.info("Minifying the code COMPLETED");
 
