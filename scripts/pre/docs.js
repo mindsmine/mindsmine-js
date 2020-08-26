@@ -19,8 +19,6 @@
 import fs from "fs";
 import path from "path";
 
-import BuildProperties from "../helper/GeneralHelper.js";
-
 const jsdocConfJSON = {
     opts: {
         destination: `docs/${process.env.npm_package_version}`,
@@ -56,7 +54,7 @@ const jsdocConfJSON = {
 };
 
 fs.writeFileSync(
-    path.resolve(BuildProperties.folder.ROOT.BUILD, "jsdoc.conf.json"),
+    path.resolve(process.cwd(), "build", "jsdoc.conf.json"),
     JSON.stringify(jsdocConfJSON),
     "utf8"
 );
