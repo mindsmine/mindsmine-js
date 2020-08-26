@@ -16,27 +16,25 @@
   "engines": {
     "node": ">= 14.8.0"
   },
+  "type": "module",
   "scripts": {
     "preclean": "node scripts/clean build coverage",
     "clean": "node scripts/clean dist docs",
 
     "lint": "eslint scripts/**/* src/**/* test/**/*",
 
-    "preminify": "npm run clean && npm run lint && babel scripts --out-dir build/scripts && node build/scripts/prepare",
-    "minify": "node build/scripts/minify",
+    "preminify": "npm run clean && npm run lint && node scripts/prepare",
+    "minify": "node scripts/minify",
 
     "pretest": "npm run minify",
     "test": "jest --coverage final.test.js",
 
-    "predocs": "npm run test && node build/scripts/pre/docs",
+    "predocs": "npm run test && node scripts/pre/docs",
     "docs": "jsdoc --configure build/jsdoc.conf.json",
 
     "package": "npm run docs && npm run preclean"
   },
   "devDependencies": {
-    "@babel/cli": "7.10.5",
-    "@babel/core": "7.11.1",
-    "@babel/preset-env": "7.11.0",
     "eslint": "7.6.0",
     "ink-docstrap": "1.3.2",
     "jest-cli": "26.4.0",
