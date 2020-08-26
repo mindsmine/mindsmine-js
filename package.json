@@ -35,10 +35,10 @@
     "package": "npm run docs && npm run preclean"
   },
   "devDependencies": {
-    "eslint": "7.6.0",
+    "eslint": "7.7.0",
     "ink-docstrap": "1.3.2",
-    "jest-cli": "26.4.0",
+    "jest-cli": "26.4.2",
     "jsdoc": "3.6.5",
-    "terser": "5.0.0"
+    "terser": "5.2.1"
   }
 }
