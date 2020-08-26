@@ -20,24 +20,19 @@
   "scripts": {
     "preclean": "node scripts/clean build coverage",
     "clean": "node scripts/clean dist docs",
-
     "lint": "eslint scripts/**/* src/**/* test/**/*",
-
     "preminify": "npm run clean && npm run lint && node scripts/prepare",
     "minify": "node scripts/minify",
-
     "pretest": "npm run minify",
     "test": "jest --coverage final.test.js",
-
     "predocs": "npm run test && node scripts/predocs",
     "docs": "jsdoc --configure build/jsdoc.conf.json",
-
     "package": "npm run docs && npm run preclean"
   },
   "devDependencies": {
     "eslint": "7.7.0",
     "ink-docstrap": "1.3.2",
-    "jest-cli": "26.4.2",
+    "jest": "26.4.2",
     "jsdoc": "3.6.5",
     "terser": "5.2.1"
   }
