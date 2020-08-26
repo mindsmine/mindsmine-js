@@ -20,7 +20,7 @@ const NOW = new Date(),
     TIMESTAMP = NOW.toISOString().replace(/[-:]/g, "").replace(/T/g, ".").replace(/.[0-9]+Z/g, ""),
     OUTPUT_FILE = `${process.env.npm_package_name}-${process.env.npm_package_version}.min.js`;
 
-const __ROOT = path.resolve(__dirname, "..", "..", "..");
+const __ROOT = process.cwd();
 
 const ROOT = {
     BUILD: path.resolve(__ROOT, "build"),
