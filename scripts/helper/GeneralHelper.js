@@ -28,7 +28,6 @@ const ROOT = {
     BUILD: path.resolve(__ROOT, "build"),
     DIST: path.resolve(__ROOT, "dist"),
     DOCS: path.resolve(__ROOT, "docs"),
-    SCRIPTS: path.resolve(__ROOT, "scripts"),
     SRC: path.resolve(__ROOT, "src"),
     TEST: path.resolve(__ROOT, "test")
 };
