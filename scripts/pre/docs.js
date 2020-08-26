@@ -19,7 +19,7 @@
 import fs from "fs";
 import path from "path";
 
-import BuildProperties from "../helper/GeneralHelper";
+import BuildProperties from "../helper/GeneralHelper.js";
 
 const jsdocConfJSON = {
     opts: {

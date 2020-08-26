@@ -18,9 +18,9 @@
 
 import fs from "fs";
 
-import BuildProperties from "./helper/GeneralHelper";
-import Console from "./helper/ConsoleHelper";
-import FileSystem from "./helper/FileSystemHelper";
+import BuildProperties from "./helper/GeneralHelper.js";
+import Console from "./helper/ConsoleHelper.js";
+import FileSystem from "./helper/FileSystemHelper.js";
 
 Console.newline();
 Console.began(__filename);

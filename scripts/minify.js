@@ -19,8 +19,8 @@
 import fs from "fs";
 import Terser from "terser";
 
-import BuildProperties from "./helper/GeneralHelper";
-import Console from "./helper/ConsoleHelper";
+import BuildProperties from "./helper/GeneralHelper.js";
+import Console from "./helper/ConsoleHelper.js";
 
 Console.newline();
 Console.began(__filename);
