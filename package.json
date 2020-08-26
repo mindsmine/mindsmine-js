@@ -29,7 +29,7 @@
     "pretest": "npm run minify",
     "test": "jest --coverage final.test.js",
 
-    "predocs": "npm run test && node scripts/pre/docs",
+    "predocs": "npm run test && node scripts/predocs",
     "docs": "jsdoc --configure build/jsdoc.conf.json",
 
     "package": "npm run docs && npm run preclean"
