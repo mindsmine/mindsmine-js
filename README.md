@@ -10,6 +10,9 @@ others.
 
 ### Releases ###
 
+**4.0.4**
+* Node 15+ supported
+
 **4.0.3**
 * Removed `babel` dependency
 * Node 14+ supported
