@@ -12,6 +12,7 @@ others.
 
 **4.5.0**
 * Added Duration support methods
+* Added date check
 
 **4.0.4**
 * Node 15+ supported
