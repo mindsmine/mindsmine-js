@@ -37,6 +37,7 @@ mindsmine.Number = class {
      *      mindsmine.Number.isNumber(function() {})  //  false
      *      mindsmine.Number.isNumber([])             //  false
      *      mindsmine.Number.isNumber({})             //  false
+     *      mindsmine.Number.isNumber(new Date())     //  false
      *
      * @param {Object} obj The object to test
      *

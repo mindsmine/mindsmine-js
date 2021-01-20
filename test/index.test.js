@@ -41,6 +41,11 @@ const BOOLEANS = [
     false
 ];
 
+const DATES = [
+    new Date(),
+    new Date(1990, 1, 20)
+];
+
 const FUNCTIONS = [
     function() {}
 ];
@@ -69,6 +74,7 @@ const PRIMITIVE_OBJECTS = [
 
 const NOT_PRIMITIVE_OBJECTS = [
     ...ARRAYS,
+    ...DATES,
     ...FUNCTIONS,
     ...OBJECTS
 ];
@@ -76,12 +82,14 @@ const NOT_PRIMITIVE_OBJECTS = [
 const NOT_EMPTY_OBJECTS = [
     ...PRIMITIVE_OBJECTS,
     ...ARRAYS,
+    ...DATES,
     ...FUNCTIONS,
     {hello: "world"}
 ];
 
 const NOT_ARRAYS = [
     ...PRIMITIVE_OBJECTS,
+    ...DATES,
     ...FUNCTIONS,
     ...OBJECTS
 ];
@@ -93,9 +101,17 @@ const NOT_BOOLEANS = [
     ...STRINGS
 ];
 
+const NOT_DATES = [
+    ...PRIMITIVE_OBJECTS,
+    ...ARRAYS,
+    ...FUNCTIONS,
+    ...OBJECTS
+];
+
 const NOT_FUNCTIONS = [
     ...PRIMITIVE_OBJECTS,
     ...ARRAYS,
+    ...DATES,
     ...OBJECTS
 ];
 
@@ -118,6 +134,7 @@ test("To avoid eslint from crapping out", () => {
     expect(NOT_EMPTY_OBJECTS).not.toBeNull();
     expect(NOT_ARRAYS).not.toBeNull();
     expect(NOT_BOOLEANS).not.toBeNull();
+    expect(NOT_DATES).not.toBeNull();
     expect(NOT_FUNCTIONS).not.toBeNull();
     expect(NOT_NUMBERS).not.toBeNull();
     expect(NOT_STRINGS).not.toBeNull();
