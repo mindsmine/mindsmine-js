@@ -162,7 +162,7 @@ describe("mindsmine.Duration.humanize", () => {
         ]
     ].forEach(arr => {
         test(`should return '${arr[0]}' for '${arr[1]} ${arr[2]}'`, () => {
-            expect(mindsmine.Duration.humanize(arr[1], arr[2])).toEqual(arr[0]);
+            expect(mindsmine.Duration.humanize(arr[1], arr[2]).durationString).toEqual(arr[0]);
         });
     });
 
@@ -177,16 +177,42 @@ describe("mindsmine.Duration.humanize", () => {
         ]
     ].forEach(arr => {
         test(`should return '${arr[0]}' for '${arr[1]}'`, () => {
-            expect(mindsmine.Duration.humanize(arr[1])).toEqual(arr[0]);
+            expect(mindsmine.Duration.humanize(arr[1]).durationString).toEqual(arr[0]);
         });
     });
 
     test("should return the object", () => {
-        const humanisedDuration = mindsmine.Duration.humanize(273452400000, "ms", true);
+        const humanisedDuration = mindsmine.Duration.humanize(273452400000, "ms");
 
-        expect(humanisedDuration.years).toEqual(8);
-        expect(humanisedDuration.months).toEqual(8);
-        expect(humanisedDuration.days).toEqual(4);
-        expect(humanisedDuration.hours).toEqual(23);
+        expect(humanisedDuration.durationRawObject.years).toEqual(8);
+        expect(humanisedDuration.durationRawObject.months).toEqual(8);
+        expect(humanisedDuration.durationRawObject.days).toEqual(4);
+        expect(humanisedDuration.durationRawObject.hours).toEqual(23);
     });
+});
+
+describe("mindsmine.Duration.preciseDiff", () => {
+    test("should return first date is later", () => {
+        const d1 = new Date();
+        const d2 = new Date(2021, 0, 20);
+
+        expect(mindsmine.Duration.preciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
+    });
+
+    test("should return not be first date is later", () => {
+        const d1 = new Date(2021, 0, 20);
+        const d2 = new Date();
+
+        expect(mindsmine.Duration.preciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
+    });
+
+    test("should return precise difference", () => {
+        const expectedResult = "11 years 7 months 24 days";
+
+        const d1 = new Date(2008, 6, 12); // 07/12/2008
+        const d2 = new Date(2020, 2, 7);  // 03/07/2020
+
+        expect(mindsmine.Duration.preciseDiff(d1, d2).durationString).toEqual(expectedResult);
+    });
+
 });
