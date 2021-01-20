@@ -10,6 +10,9 @@ others.
 
 ### Releases ###
 
+**4.5.0**
+* Added Duration support methods
+
 **4.0.4**
 * Node 15+ supported
 
