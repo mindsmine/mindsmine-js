@@ -178,13 +178,75 @@ mindsmine.Duration = class {
     }
     
     /**
+     * 
+     * @param {Number} years 
+     * @param {Number} months 
+     * @param {Number} days 
+     * @param {Number} hours 
+     * @param {Number} minutes 
+     * @param {Number} seconds 
+     * @param {Number} milliseconds 
+     * 
+     * @private
+     * 
+     * @since 4.5.0
+     * 
+     */
+    static _createDurationObject(years = 0, months = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0) {
+        let _firstDateIsAfter = false;
+
+        const _do = {
+            years: years,
+            months: months,
+            days: days,
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds,
+            milliseconds: milliseconds
+        };
+
+        let _dmArr = [];
+
+        if (_do.years > 0) {
+            _dmArr.push(`${_do.years} year${(_do.years > 1) ? "s" : ""}`);
+        }
+
+        if (_do.months > 0) {
+            _dmArr.push(`${_do.months} month${(_do.months > 1) ? "s" : ""}`);
+        }
+
+        if (_do.days > 0) {
+            _dmArr.push(`${_do.days} day${(_do.days > 1) ? "s" : ""}`);
+        }
+
+        if (_do.hours > 0) {
+            _dmArr.push(`${_do.hours} hour${(_do.hours > 1) ? "s" : ""}`);
+        }
+
+        if (_do.minutes > 0) {
+            _dmArr.push(`${_do.minutes} minute${(_do.minutes > 1) ? "s" : ""}`);
+        }
+
+        if (_do.seconds > 0) {
+            _dmArr.push(`${_do.seconds} second${(_do.seconds > 1) ? "s" : ""}`);
+        }
+
+        const _ds = _dmArr.join(" ");
+
+        return {
+            firstDateIsAfter: _firstDateIsAfter,
+            durationRawObject: _do,
+            durationString: _ds
+        };
+    }
+
+    /**
      * Humanises the duration.
      * 
      * @param {Number} duration to be humanised.
      * @param {String} [unit="ms"] the unit level at which to humanise the duration.
-     * @param {Boolean} [asObject=false] whether to return as object or not.
      * 
-     * @returns {Object|String|null} Returns <code>String</code> by default.
+     * @returns {Object} Returns an object with <code>durationObject</code> and string representation.
      * 
      * @throws {TypeError} for invalid arguments
      * @throws {RangeError} for invalid unit string
@@ -192,10 +254,8 @@ mindsmine.Duration = class {
      * @since 4.5.0
      * 
      */
-    static humanize(duration, unit = "ms", asObject = false) {
+    static humanize(duration, unit = "ms") {
         const parent = this;
-
-        asObject = mindsmine.Boolean.getNullSafe(asObject);
 
         /**
          * Converts the user provided unit into its normal form.
@@ -310,58 +370,116 @@ mindsmine.Duration = class {
 
         let durationInMS = _handleSpecialCase(duration, normalisedUnit);
 
-        let _do = {};
-
-        _do.years = Math.floor(durationInMS / parent.MILLISECONDS_IN_YEAR);
+        let _diffYears = Math.floor(durationInMS / parent.MILLISECONDS_IN_YEAR);
         durationInMS %= parent.MILLISECONDS_IN_YEAR;
 
-        _do.months = Math.floor(durationInMS / parent.MILLISECONDS_IN_MONTH);
+        let _diffMonths = Math.floor(durationInMS / parent.MILLISECONDS_IN_MONTH);
         durationInMS %= parent.MILLISECONDS_IN_MONTH;
 
-        _do.days = Math.floor(durationInMS / parent.MILLISECONDS_IN_DAY);
+        let _diffDates = Math.floor(durationInMS / parent.MILLISECONDS_IN_DAY);
         durationInMS %= parent.MILLISECONDS_IN_DAY;
 
-        _do.hours = Math.floor(durationInMS / parent.MILLISECONDS_IN_HOUR);
+        let _diffHours = Math.floor(durationInMS / parent.MILLISECONDS_IN_HOUR);
         durationInMS %= parent.MILLISECONDS_IN_HOUR;
 
-        _do.minutes = Math.floor(durationInMS / parent.MILLISECONDS_IN_MINUTE);
+        let _diffMinutes = Math.floor(durationInMS / parent.MILLISECONDS_IN_MINUTE);
         durationInMS %= parent.MILLISECONDS_IN_MINUTE;
 
-        _do.seconds = Math.floor(durationInMS / parent.MILLISECONDS_IN_SECOND);
+        let _diffSeconds = Math.floor(durationInMS / parent.MILLISECONDS_IN_SECOND);
         durationInMS %= parent.MILLISECONDS_IN_SECOND;
 
-        _do.milliseconds = durationInMS;
+        let _diffMilliseconds = durationInMS;
 
-        let _dmArr = [];
+        return parent._createDurationObject(
+            _diffYears,
+            _diffMonths,
+            _diffDates,
+            _diffHours,
+            _diffMinutes,
+            _diffSeconds,
+            _diffMilliseconds
+        );
+    }
 
-        if (_do.years > 0) {
-            _dmArr.push(`${_do.years} year${(_do.years > 1) ? "s" : ""}`);
+    /**
+     * 
+     * @param {Date} dateObj1 
+     * @param {Date} dateObj2 
+     */
+    static preciseDiff(dateObj1, dateObj2) {
+        const parent = this;
+
+        let firstDateIsAfter = false;
+
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        if (!mindsmine.Date.isDate(dateObj1)) {
+            throw new TypeError("Fatal Error. 'dateObj1'. @ERROR_PERMITTED_DATE@");
         }
 
-        if (_do.months > 0) {
-            _dmArr.push(`${_do.months} month${(_do.months > 1) ? "s" : ""}`);
+        if (!mindsmine.Date.isDate(dateObj2)) {
+            throw new TypeError("Fatal Error. 'dateObj2'. @ERROR_PERMITTED_DATE@");
         }
 
-        if (_do.days > 0) {
-            _dmArr.push(`${_do.days} day${(_do.days > 1) ? "s" : ""}`);
+        // Matching the timezone offset for both dates
+        dateObj1.setMinutes(dateObj1.getMinutes() - (dateObj2.getTimezoneOffset() - dateObj1.getTimezoneOffset()));
+
+        if (dateObj1.valueOf() === dateObj2.valueOf()) {
+            return parent._createDurationObject();
         }
 
-        if (_do.hours > 0) {
-            _dmArr.push(`${_do.hours} hour${(_do.hours > 1) ? "s" : ""}`);
+        if (dateObj1 > dateObj2) {
+            [dateObj1, dateObj2] = [dateObj2, dateObj1];
+            firstDateIsAfter = true;
         }
 
-        if (_do.minutes > 0) {
-            _dmArr.push(`${_do.minutes} minute${(_do.minutes > 1) ? "s" : ""}`);
+        let _diffYears = dateObj2.getFullYear() - dateObj1.getFullYear();
+        let _diffMonths = dateObj2.getMonth() - dateObj1.getMonth();
+        let _diffDates = dateObj2.getDate() - dateObj1.getDate();
+        let _diffHours = dateObj2.getHours() - dateObj1.getHours();
+        let _diffMinutes = dateObj2.getMinutes() - dateObj1.getMinutes();
+        let _diffSeconds = dateObj2.getSeconds() - dateObj1.getSeconds();
+
+        if (_diffSeconds < 0) {
+            _diffSeconds += 60;
+            _diffMinutes--;
         }
 
-        if (_do.seconds > 0) {
-            _dmArr.push(`${_do.seconds} second${(_do.seconds > 1) ? "s" : ""}`);
+        if (_diffMinutes < 0) {
+            _diffMinutes += 60;
+            _diffHours--;
         }
 
-        if (asObject) {
-            return _do;
+        if (_diffHours < 0) {
+            _diffHours += 24;
+            _diffDates--;
         }
 
-        return _dmArr.join(" ");
+        if (_diffDates < 0) {
+            const _currentMonth = new Date(dateObj2.getFullYear(), dateObj2.getMonth());
+
+            const daysInLastFullMonth = new Date(_currentMonth.getFullYear(), _currentMonth.getMonth(), 0).getDate();
+
+            if (daysInLastFullMonth < dateObj1.getDate()) {
+                _diffDates = daysInLastFullMonth + _diffDates + (dateObj1.getDate() - daysInLastFullMonth);
+            } else {
+                _diffDates = daysInLastFullMonth + _diffDates;
+            }
+
+            _diffMonths--;
+        }
+
+        if (_diffMonths < 0) {
+            _diffMonths += 12;
+            _diffYears--;
+        }
+
+        const _durationObject = parent._createDurationObject(_diffYears, _diffMonths, _diffDates, _diffHours, _diffMinutes, _diffSeconds);
+
+        _durationObject.firstDateIsAfter = firstDateIsAfter;
+
+        return _durationObject;
     }
 };

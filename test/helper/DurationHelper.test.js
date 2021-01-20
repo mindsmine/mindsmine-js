@@ -190,3 +190,29 @@ describe("mindsmine.Duration.humanize", () => {
         expect(humanisedDuration.durationRawObject.hours).toEqual(23);
     });
 });
+
+describe("mindsmine.Duration.preciseDiff", () => {
+    test("should return first date is later", () => {
+        const d1 = new Date();
+        const d2 = new Date(2021, 0, 20);
+
+        expect(mindsmine.Duration.preciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
+    });
+
+    test("should return not be first date is later", () => {
+        const d1 = new Date(2021, 0, 20);
+        const d2 = new Date();
+
+        expect(mindsmine.Duration.preciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
+    });
+
+    test("should return precise difference", () => {
+        const expectedResult = "11 years 7 months 24 days";
+
+        const d1 = new Date(2008, 6, 12); // 07/12/2008
+        const d2 = new Date(2020, 2, 7);  // 03/07/2020
+
+        expect(mindsmine.Duration.preciseDiff(d1, d2).durationString).toEqual(expectedResult);
+    });
+
+});
