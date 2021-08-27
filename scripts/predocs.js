@@ -22,7 +22,7 @@ import path from "path";
 const jsdocConfJSON = {
     opts: {
         destination: `docs/${process.env.npm_package_version}`,
-        template: "./node_modules/ink-docstrap/template"
+        encoding: "utf8"
     },
     plugins: [
         "plugins/markdown"
@@ -34,22 +34,14 @@ const jsdocConfJSON = {
         ]
     },
     templates: {
-        navType: "inline",
-        includeDate: false,
-        collapseSymbols: true,
-        theme: "flatly",
+        default: {
+            includeDate: false,
+            outputSourceFiles: false,
+            useLongnameInNav: true,
+            layoutFile: "local.layout.tmpl"
+        },
         cleverLinks: true,
-        monospaceLinks: true,
-        outputSourceFiles: false,
-        syntaxTheme: "dark",
-        systemName: process.env.npm_package_name,
-        copyright: [
-            "<div style='text-align: center;'>",
-            `Copyright &#169; 2008, ${(new Date()).getFullYear()},`,
-            "<strong><a target='_blank' href='http://www.shaiksphere.com'>Shaiksphere Inc</a></strong>.",
-            "All rights reserved.",
-            "</div>"
-        ].join(" ")
+        monospaceLinks: true
     }
 };
 
