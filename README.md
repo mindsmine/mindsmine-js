@@ -1,6 +1,6 @@
 # mindsmine-js #
 
-[![Build Status](https://travis-ci.org/mindsmine/mindsmine-js.svg?branch=master)](https://travis-ci.org/mindsmine/mindsmine-js)
+[![Build Status](https://travis-ci.com/mindsmine/mindsmine-js.svg?branch=main)](https://app.travis-ci.com/github/mindsmine/mindsmine-js)
 
 JavaScript already provides a lot of functions, yet every so often there's a need for some additional functions.
 **mindsmine JS** makes an attempt at providing utility functions such as String manipulation, Object wrappers, amongst
@@ -9,6 +9,10 @@ others.
 ---
 
 ### Releases ###
+
+**4.5.1**
+* Removed `ink-docstrap` dependency
+* Node 16+ supported
 
 **4.5.0**
 * Added Duration support methods
