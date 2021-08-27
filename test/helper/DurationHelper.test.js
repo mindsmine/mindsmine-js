@@ -207,7 +207,7 @@ describe("mindsmine.Duration.preciseDiff", () => {
     });
 
     test("should return precise difference", () => {
-        const expectedResult = "11 years 7 months 24 days";
+        const expectedResult = "11 years 7 months 24 days 1 hour";
 
         const d1 = new Date(2008, 6, 12); // 07/12/2008
         const d2 = new Date(2020, 2, 7);  // 03/07/2020
