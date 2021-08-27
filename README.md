@@ -1,5 +1,7 @@
 # mindsmine-js #
 
+[![Build Status](https://circleci.com/gh/mindsmine/mindsmine-js.svg?style=shield)](https://circleci.com/gh/mindsmine/mindsmine-js)
+
 [![Build Status](https://travis-ci.com/mindsmine/mindsmine-js.svg?branch=main)](https://app.travis-ci.com/github/mindsmine/mindsmine-js)
 
 JavaScript already provides a lot of functions, yet every so often there's a need for some additional functions.
