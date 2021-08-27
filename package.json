@@ -1,6 +1,6 @@
 {
   "name": "mindsmine-js",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "main": "src/index.js",
   "description": "mindsmine-js",
   "authors": [
@@ -27,7 +27,7 @@
     "minify": "node scripts/minify",
 
     "pretest": "npm run minify",
-    "test": "jest --coverage final.test.js",
+    "test": "jest --coverage --env=jsdom final.test.js",
 
     "predocs": "npm run test && node scripts/predocs",
     "docs": "jsdoc --configure build/jsdoc.conf.json",
