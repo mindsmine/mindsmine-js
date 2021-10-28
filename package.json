@@ -1,6 +1,6 @@
 {
   "name": "mindsmine-js",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "main": "src/index.js",
   "description": "mindsmine-js",
   "authors": [
@@ -14,7 +14,7 @@
     "url": "https://github.com/mindsmine/mindsmine-js.git"
   },
   "engines": {
-    "node": ">= 16.8.0"
+    "node": ">= 17.0.0"
   },
   "type": "module",
   "scripts": {
@@ -35,9 +35,9 @@
     "package": "npm run docs && npm run preclean"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
-    "jest": "27.0.6",
+    "eslint": "8.1.0",
+    "jest": "27.3.1",
     "jsdoc": "3.6.7",
-    "terser": "5.7.2"
+    "terser": "5.9.0"
   }
 }
