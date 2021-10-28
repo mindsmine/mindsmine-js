@@ -12,6 +12,9 @@ others.
 
 ### Releases ###
 
+**4.5.2**
+* Node 17+ supported
+
 **4.5.1**
 * Removed `ink-docstrap` dependency
 * Node 16+ supported
