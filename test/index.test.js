@@ -21,7 +21,7 @@ test("mindsmine.productName should return product name", () => {
 });
 
 test("mindsmine.productVersion should return product version", () => {
-    expect(mindsmine.productVersion).toBe("4.5.1");
+    expect(mindsmine.productVersion).toBe("4.5.2");
 });
 
 const NOT_OBJECTS = [
