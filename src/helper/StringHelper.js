@@ -43,7 +43,7 @@ mindsmine.String = class {
      *
      */
     static format(format) {
-        let args = Array.prototype.slice.call(arguments, 1);
+        const args = Array.prototype.slice.call(arguments, 1);
 
         return this.getNullSafe(format).replace(
             /{(\d+)}/g,
@@ -66,7 +66,7 @@ mindsmine.String = class {
      */
     static htmlEncode(str) {
         if (!this.isEmpty(str)) {
-            let __firstParse = document.createElement("a").appendChild(document.createTextNode(str)).parentNode.innerHTML;
+            const __firstParse = document.createElement("a").appendChild(document.createTextNode(str)).parentNode.innerHTML;
 
             return __firstParse.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
         }
@@ -86,7 +86,7 @@ mindsmine.String = class {
      */
     static htmlDecode(str) {
         if (!this.isEmpty(str)) {
-            let __parser = document.createElement("a");
+            const __parser = document.createElement("a");
             __parser.innerHTML = str;
 
             return __parser.textContent;
