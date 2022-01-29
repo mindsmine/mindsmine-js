@@ -23,70 +23,6 @@
  */
 mindsmine.http = class {
     /**
-     * Provides the default <code>timeout</code> (in milliseconds) for the HTTP calls.
-     *
-     * @constant
-     * 
-     * @since 4.6.0
-     * 
-     */
-    static #DEFAULT_TIMEOUT = 120000;
-
-    /**
-     * Provides the default <code>async</code> value for the HTTP calls.
-     *
-     * @constant
-     *
-     * @since 4.6.0
-     *
-     */
-    static #DEFAULT_ASYNC = true;
-
-    /**
-     * Returns the HTTP object based upon the browser.
-     *
-     * @constant
-     *
-     * @returns {XMLHttpRequest}
-     *
-     * @since 4.6.0
-     *
-     */
-    static get #XHRObject() {
-        let trials = [
-            () => {
-                return new XMLHttpRequest();
-            },
-            () => {
-                return new ActiveXObject("MSXML2.XMLHTTP.3.0");
-            },
-            () => {
-                return new ActiveXObject("MSXML2.XMLHTTP");
-            },
-            () => {
-                return new ActiveXObject("Microsoft.XMLHTTP");
-            }
-        ];
-
-        let xmlHttpRequest = null;
-
-        for (let i = 0; i < trials.length; i++) {
-            try {
-                xmlHttpRequest = trials[i]();
-                break;
-            } catch (e) {
-                // Do nothing
-            }
-        }
-
-        if (xmlHttpRequest == null) {
-            throw new Error("Fatal Error. XMLHttpRequest Object could not be created");
-        }
-
-        return xmlHttpRequest;
-    }
-
-    /**
      * Array of allowed HTTP methods.
      *
      * @constant
@@ -108,11 +44,43 @@ mindsmine.http = class {
      * the XMLHttpRequest object containing the response data. See {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest}
      * for details about accessing elements of the response.
      *
+     * @see {@link @MDN_API_URI@/fetch|fetch}
+     *
      * Requests made by this method are by default asynchronous, and will return immediately. No data from the server
      * will be available to the statement immediately following this call.
      *
      * Example Usage:
      *
+     *      mindsmine.http.request(
+     *           "valid URI",
+     *           {
+     *                headers: {
+     *                     "Accept" : "some value",
+     *                     "Content-Type" : "some value",
+     *                     "Authorization" : "some value"
+     *                }
+     *           }
+     *      ).then((response) => {
+     *
+     *           response.json().then(responseJSON => {
+     *                console.log(responseJSON);
+     *           });
+     *
+     *      }).catch((response) => {
+     *
+     *           console.log(`HTTP error code = ${response.status}`);
+     *
+     *      }).finally(() => {
+     *
+     *           console.log("This function is called regardless of success or failure.");
+     *
+     *      });
+     *
+     * 
+     * 
+     * 
+     * 
+     * 
      *      mindsmine.http.request(
      *           "GET",
      *           "valid URI",
@@ -140,26 +108,23 @@ mindsmine.http = class {
      *      });
      *
      *
-     * @param {String} method The HTTP method to use for the request.
      *
      * @param {String} url The destination URL where to send the request.
      *
      * @param {Object} options An object which may contain the following properties:
      *
-     * @param {Boolean} [options.async=true] <code>true</code> if this request should run asynchronously.
-     * <code>false</code> if this request should run synchronously (it will cause the UI to be blocked, the user won't
-     * be able to interact with the browser until the request completes).
+     * @param {String} [options.method=GET] The HTTP method to use for the request.
      *
-     * @param {Object} [options.headers] Request headers to set for the request.
+     * @param {Object} [options.headers] Any headers to add to the request, contained in an object literal with String values.
      *
-     * @param {Number} [options.timeout=120000] The timeout is an unsigned long representing the number of milliseconds
-     * a request can take before automatically being terminated. Timeout should not be used for synchronous requests.
+     * @param {Object|String} [options.body] Any body to add to the request. Note that a request using the <code>GET</code> or
+     * <code>HEAD</code> method cannot have a body.
      *
-     * @param {Object|String} [options.jsonData] JSON data to be used in the request body.
+     * @param {String} [options.mode=cors] The mode to use for the request: <code>cors</code>, <code>no-cors</code>,
+     * <code>same-origin</code> or <code>navigate</code>.
      *
-     * @param {Boolean} [options.withCredentials=false] The value for the
-     * {@link @MDN_API_URI@/XMLHttpRequest/withCredentials|withCredentials} property of the
-     * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} object.
+     * @param {String} [options.credentials=same-origin] The request credentials to use for the request: <code>omit</code>,
+     * <code>same-origin</code> or <code>include</code>.
      *
      * @param {Function} [options.beforeRequest] The function to be called before a network request is made.
      *
@@ -171,132 +136,86 @@ mindsmine.http = class {
      * @since 4.6.0
      *
      */
-    static request(method, url, options) {
+    static request(url, options) {
         const parent = this;
 
-        return new Promise((resolve, reject) => {
+        if (mindsmine.String.isEmpty(url)) {
+            throw new TypeError("Fatal Error. 'url'. @ERROR_PERMITTED_STRING@");
+        }
 
-            /**
-             * Called when the request has come back from the server.
-             *
-             * @param {XMLHttpRequest} xhrObj
-             *
-             * @private
-             *
-             * @since 4.6.0
-             *
-             */
-            function _onRequestComplete(xhrObj) {
-                let __success;
+        if (!mindsmine.URL.isValidURL(url)) {
+            throw new TypeError("Fatal Error. 'url'. Invalid URL.");
+        }
 
-                try {
-                    __success = (status => {
-                        //
-                        // Fix IE issue - IE mangles status code 204
-                        // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
-                        //
-                        status = (status === 1223) ? 204 : status;
+        options = mindsmine.Object.getNullSafe(options);
 
-                        return (status >= 200 && status < 300) || status === 304;
-                    })(xhrObj.status);
-                } catch (e) {
+        let _method = mindsmine.String.getNullSafe(options.method).toUpperCase();
+
+        if (mindsmine.String.isEmpty(_method)) {
+            _method = "GET";
+        }
+
+        if (!parent.#ALLOWED_METHODS.includes(_method)) {
+            throw new TypeError(`Fatal Error. 'method'. Allowed values are ${parent.#ALLOWED_METHODS.join(", ")}.`);
+        }
+
+        let __proceed = true;
+
+        if (mindsmine.Function.isFunction(options.beforeRequest)) {
+            const __retVal = options.beforeRequest.call(window);
+
+            __proceed = (__retVal === null || __retVal === undefined || typeof __retVal !== "boolean") ? true : __retVal;
+        }
+
+        if (__proceed) {
+            if (_method === "GET") {
+                url = mindsmine.URL.appendQuery(url, "_dc", (new Date()).getTime());
+            }
+
+            const initObj = {};
+
+            initObj.method = _method;
+
+            if (options.headers) {
+                initObj.headers = options.headers;
+            }
+
+            if (options.body) {
+                initObj.body = options.body;
+            }
+
+            if (options.mode) {
+                initObj.mode = options.mode;
+            }
+
+            if (options.credentials) {
+                initObj.credentials = options.credentials;
+            }
+
+            return new Promise((resolve, reject) => {
+                fetch(
+                    url,
+                    initObj
+                ).then(response => {
                     //
-                    // Some browsers do not provide access to status when request fails.
+                    // Fix IE issue - IE mangles status code 204
+                    // https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
                     //
-                    __success = false;
-                }
-
-                if (__success) {
-                    resolve(xhrObj);
-                } else {
-                    reject(xhrObj);
-                }
-            }
-
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-            if (mindsmine.String.isEmpty(method)) {
-                throw new TypeError("Fatal Error. 'method'. @ERROR_PERMITTED_STRING@");
-            }
-
-            method = method.toUpperCase();
-
-            if (!parent.#ALLOWED_METHODS.includes(method)) {
-                throw new TypeError(`Fatal Error. 'method'. Allowed values are ${parent.#ALLOWED_METHODS.join(", ")}.`);
-            }
-
-            if (mindsmine.String.isEmpty(url)) {
-                throw new TypeError("Fatal Error. 'url'. @ERROR_PERMITTED_STRING@");
-            }
-
-            if (!mindsmine.URL.isValidURL(url)) {
-                throw new TypeError("Fatal Error. 'url'. Invalid URL.");
-            }
-
-            options = mindsmine.Object.getNullSafe(options);
-
-            const _timeout = (mindsmine.Number.isNumber(options.timeout) && options.timeout >= 0) ? options.timeout : parent.#DEFAULT_TIMEOUT;
-
-            let __proceed = true;
-
-            if (mindsmine.Function.isFunction(options.beforeRequest)) {
-                const __retVal = options.beforeRequest.call(window);
-
-                __proceed = (__retVal === null || __retVal === undefined || typeof __retVal !== "boolean") ? true : __retVal;
-            }
-
-            if (__proceed) {
-                if (method === "GET") {
-                    url = mindsmine.URL.appendQuery(url, "_dc", (new Date()).getTime());
-                }
-
-                const _async = (options.async !== false) ? (options.async || parent.#DEFAULT_ASYNC) : false;
-
-                const __xmlHttpRequest = parent.#XHRObject;
-
-                __xmlHttpRequest.open(method, url, _async);
-
-                if (_async) {
-                    __xmlHttpRequest.timeout = _timeout;
-                    __xmlHttpRequest.ontimeout = () => {
-                        reject(__xmlHttpRequest);
-                    };
-                }
-
-                if (mindsmine.Boolean.getNullSafe(options.withCredentials)) {
-                    __xmlHttpRequest.withCredentials = true;
-                }
-
-                const headers = mindsmine.Object.getNullSafe(options.headers);
-
-                try {
-                    for (let key in headers) {
-                        if (headers.hasOwnProperty(key)) {
-                            __xmlHttpRequest.setRequestHeader(key, headers[key]);
-                        }
+                    if (response.ok || response.status === 1223 || response.status === 304) {
+                        resolve(response);
+                    } else {
+                        reject(response);
                     }
-                } catch (e) {
-                    throw new Error("Fatal Error. Could not set the request header(s).");
-                }
-
-                const _jsonData = options.jsonData;
-
-                const _data = (_jsonData != null) ? ((mindsmine.Object.isPrimitive(_jsonData)) ? _jsonData : JSON.stringify(_jsonData)) : null;
-
-                __xmlHttpRequest.send(_data);
-
-                if (_async) {
-                    __xmlHttpRequest.onreadystatechange = () => {
-                        if (__xmlHttpRequest.readyState === 4) {
-                            _onRequestComplete(__xmlHttpRequest);
+                }).catch(error => {
+                    reject(new Response(
+                        error,
+                        {
+                            status: 500,
+                            statusText: "Internal Server Error"
                         }
-                    };
-                } else {
-                    _onRequestComplete(__xmlHttpRequest);
-                }
-            }
-        });
+                    ));
+                });
+            });
+        }
     }
 };
