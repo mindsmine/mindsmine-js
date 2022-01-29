@@ -37,18 +37,6 @@ const
         "ALBO"
     ];
 
-test("mindsmine.http.DEFAULT_TIMEOUT should be fixed to two minutes", () => {
-    expect(mindsmine.http.DEFAULT_TIMEOUT).toEqual(120000);
-});
-
-test("mindsmine.http.DEFAULT_ASYNC should be true", () => {
-    expect(mindsmine.http.DEFAULT_ASYNC).toBeTruthy();
-});
-
-test("mindsmine.http.ALLOWED_METHODS should match the expected array of HTTP methods", () => {
-    expect(mindsmine.http.ALLOWED_METHODS).toEqual(expect.arrayContaining(expected));
-});
-
 describe("mindsmine.http.request method", () => {
     test("basic auth must work", () => {
         expect.assertions(2);
