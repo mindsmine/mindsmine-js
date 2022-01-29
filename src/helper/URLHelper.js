@@ -53,13 +53,15 @@ mindsmine.URL = class {
     }
 
     /**
-     * Appends content to the query string of a URL, handling logic for whether to place a question mark or ampersand.
+     * Appends a specified key/value pair as a new search parameter.
+     * 
+     * If the same key is appended multiple times it will appear in the parameter string multiple times for each value.
      *
-     * @see {@link @MDN_API_URI@/URL/searchParams|URL searchParams}
+     * @see {@link @MDN_API_URI@/URLSearchParams/append|URLSearchParams append}
      *
      * @param {String} url The URL to append to.
-     * @param {String} param The parameter key to append to the URL.
-     * @param {Object} value The parameter value to append to the URL.
+     * @param {String} name The name of the parameter to append.
+     * @param {Object} value The value of the parameter to append.
      *
      * @returns {String} The resulting URL
      *
@@ -68,18 +70,18 @@ mindsmine.URL = class {
      * @since 3.5.0
      *
      */
-    static appendQuery(url, param, value = {}) {
+    static appendQuery(url, name, value = {}) {
         if (!this.isValidURL(url)) {
             throw new TypeError("Fatal Error. 'url'. Invalid URL.");
         }
 
-        if (mindsmine.String.isEmpty(param)) {
-            throw new TypeError("Fatal Error. 'param'. @ERROR_PERMITTED_STRING@");
+        if (mindsmine.String.isEmpty(name)) {
+            throw new TypeError("Fatal Error. 'name'. @ERROR_PERMITTED_STRING@");
         }
 
-        let _url = new URL(url);
+        const _url = new URL(url);
 
-        _url.searchParams.append(param, encodeURIComponent(value));
+        _url.searchParams.append(name, encodeURIComponent(value));
 
         return _url.href;
     }
@@ -88,7 +90,10 @@ mindsmine.URL = class {
      * Returns an object containing the names of the search parameters as properties and values of the search parameters
      * as the property values.
      *
+     * If the same parameter name exists multiple times, only the last parameter value will be returned.
+     *
      * @see {@link @MDN_API_URI@/URL/search|URL search}
+     * @see {@link @MDN_API_URI@/URLSearchParams/forEach|URLSearchParams forEach}
      *
      * @param {String} url The URL to retrieve the search parameters from.
      *
@@ -104,15 +109,13 @@ mindsmine.URL = class {
             throw new TypeError("Fatal Error. 'url'. Invalid URL.");
         }
 
-        let _url = new URL(url);
+        const _url = new URL(url);
 
         if (!mindsmine.String.isEmpty(_url.search)) {
-            let __queryParams = {};
+            const __queryParams = {};
 
-            _url.search.substr(1).split("&").forEach(p => {
-                const pairs = p.split("=");
-
-                __queryParams[pairs[0]] = decodeURIComponent(pairs[1]);
+            _url.searchParams.forEach((value, key) => {
+                __queryParams[key] = decodeURIComponent(value);
             });
 
             return __queryParams;
@@ -122,32 +125,32 @@ mindsmine.URL = class {
     }
 
     /**
-     * Retrieves the value of the query parameter.
+     * Retrieves the first value associated to the given search parameter.
      *
-     * @see {@link @MDN_API_URI@/URL/search|URL search}
+     * @see {@link @MDN_API_URI@/URLSearchParams/get|URLSearchParams get}
      *
      * @param {String} url The URL to retrieve the search parameter from.
-     * @param {String} queryParam The query parameter (case-sensitive) string whose value is to be retrieved.
+     * @param {String} name The name of the parameter to return.
      *
-     * @returns {String|null} Returns <code>null</code> if unavailable.
+     * @returns {String|null} Returns the first value associated to the given search parameter.
      *
      * @throws {TypeError} for Invalid URL or empty arguments
      *
      * @since 3.6.5
      *
      */
-    static getQueryParameter(url, queryParam) {
-        if (mindsmine.String.isEmpty(queryParam)) {
-            throw new TypeError("Fatal Error. 'queryParam'. @ERROR_PERMITTED_STRING@");
+    static getQueryParameter(url, name) {
+        if (!this.isValidURL(url)) {
+            throw new TypeError("Fatal Error. 'url'. Invalid URL.");
         }
 
-        let __queryParams = this.getAllQueryParameters(url);
-
-        if (__queryParams && __queryParams.hasOwnProperty(queryParam)) {
-            return __queryParams[queryParam];
+        if (mindsmine.String.isEmpty(name)) {
+            throw new TypeError("Fatal Error. 'name'. @ERROR_PERMITTED_STRING@");
         }
 
-        return null;
+        const _url = new URL(url);
+
+        return _url.searchParams.get(name);
     }
 
     /**
@@ -155,6 +158,8 @@ mindsmine.URL = class {
      * as the property values.
      *
      * If a hash parameter does not have an associated value, it is provided with a <code>true</code> value.
+     *
+     * If the same parameter name exists multiple times, only the last parameter value will be returned.
      *
      * @see {@link @MDN_API_URI@/URL/hash|URL hash}
      *
@@ -172,12 +177,12 @@ mindsmine.URL = class {
             throw new TypeError("Fatal Error. 'url'. Invalid URL.");
         }
 
-        let _url = new URL(url);
+        const _url = new URL(url);
 
         if (!mindsmine.String.isEmpty(_url.hash)) {
-            let __hashParams = {};
+            const __hashParams = {};
 
-            _url.hash.substr(1).split("&").forEach(p => {
+            _url.hash.substring(1).split("&").forEach(p => {
                 const pairs = p.split("=");
 
                 if (pairs.length === 1) {
