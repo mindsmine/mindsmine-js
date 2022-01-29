@@ -12,6 +12,11 @@ others.
 
 ### Releases ###
 
+**4.6.0**
+* Added an updated `mindsmine.http` class
+* Deprecated `mindsmine.Ajax` class. Support will be removed in the major release
+* Updated internal mechanism of URL methods
+
 **4.5.2**
 * Node 17+ supported
 
