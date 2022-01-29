@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+/*
 const
     TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
     BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
@@ -35,6 +36,7 @@ const
         "AAPL",
         "ALBO"
     ];
+//*/
 
 test("mindsmine.Ajax.DEFAULT_TIMEOUT should be fixed to two minutes", () => {
     expect(mindsmine.Ajax.DEFAULT_TIMEOUT).toEqual(120000);
