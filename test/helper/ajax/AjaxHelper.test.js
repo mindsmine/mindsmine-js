@@ -15,23 +15,23 @@
  */
 
 const
-    TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
-    BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
-    testJSONObject = {
+    DEPRECATED_TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
+    DEPRECATED_BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${DEPRECATED_TOKEN}`,
+    DEPRECATED_testJSONObject = {
         param1: "something",
         param2: "something else"
     },
-    expected = [
+    DEPRECATED_expected = [
         "GET",
         "POST",
         "PUT",
         "PATCH",
         "DELETE"
     ],
-    code = 215,
-    username = "username",
-    password = "password",
-    symbols = [
+    DEPRECATED_code = 215,
+    DEPRECATED_username = "username",
+    DEPRECATED_password = "password",
+    DEPRECATED_symbols = [
         "AAPL",
         "ALBO"
     ];
@@ -45,7 +45,7 @@ test("mindsmine.Ajax.DEFAULT_ASYNC should be true", () => {
 });
 
 test("mindsmine.Ajax.ALLOWED_METHODS should match the expected array of HTTP methods", () => {
-    expect(mindsmine.Ajax.ALLOWED_METHODS).toEqual(expect.arrayContaining(expected));
+    expect(mindsmine.Ajax.ALLOWED_METHODS).toEqual(expect.arrayContaining(DEPRECATED_expected));
 });
 
 describe("mindsmine.Ajax.request method", () => {
@@ -54,10 +54,10 @@ describe("mindsmine.Ajax.request method", () => {
 
         return mindsmine.Ajax.request(
             "GET",
-            `http://httpbin.org/basic-auth/${username}/${password}`,
+            `http://httpbin.org/basic-auth/${DEPRECATED_username}/${DEPRECATED_password}`,
             {
                 headers: {
-                    "Authorization": "Basic " + window.btoa(`${username}:${password}`)
+                    "Authorization": "Basic " + window.btoa(`${DEPRECATED_username}:${DEPRECATED_password}`)
                 }
             }
         ).then(response => {
@@ -67,11 +67,11 @@ describe("mindsmine.Ajax.request method", () => {
     });
 
     test("GET JSON must work", () => {
-        expect.assertions(symbols.length + 1);
+        expect.assertions(DEPRECATED_symbols.length + 1);
 
         return mindsmine.Ajax.request(
             "GET",
-            `${BASE_URI}&types=quote&symbols=${symbols.join(",")}`
+            `${DEPRECATED_BASE_URI}&types=quote&symbols=${DEPRECATED_symbols.join(",")}`
         ).then(response => {
             expect(response).not.toBeNull();
 
@@ -79,7 +79,7 @@ describe("mindsmine.Ajax.request method", () => {
 
             for (let __stock in __responseJSON) {
                 if (__responseJSON.hasOwnProperty(__stock)) {
-                    expect(symbols).toContain(__responseJSON[__stock]["quote"]["symbol"]);
+                    expect(DEPRECATED_symbols).toContain(__responseJSON[__stock]["quote"]["symbol"]);
                 }
             }
         });
@@ -90,14 +90,14 @@ describe("mindsmine.Ajax.request method", () => {
 
         return mindsmine.Ajax.request(
             "GET",
-            `${BASE_URI}&types=quote&symbol=${symbols.join(",")}`
+            `${DEPRECATED_BASE_URI}&types=quote&symbol=${DEPRECATED_symbols.join(",")}`
         ).catch(response => {
             expect(response).not.toBeNull();
             expect(response.status).toBe(400);
         });
     });
 
-    expected.forEach(method => {
+    DEPRECATED_expected.forEach(method => {
         test(`${method} must break with TypeError`, () => {
             expect.assertions(2);
 
@@ -111,16 +111,16 @@ describe("mindsmine.Ajax.request method", () => {
         });
     });
 
-    expected.forEach(method => {
+    DEPRECATED_expected.forEach(method => {
         test(`${method} must work`, () => {
             expect.assertions(2);
 
             return mindsmine.Ajax.request(
                 method,
-                `http://httpbin.org/status/${code}`
+                `http://httpbin.org/status/${DEPRECATED_code}`
             ).then(response => {
                 expect(response).not.toBeNull();
-                expect(response.status).toBe(code);
+                expect(response.status).toBe(DEPRECATED_code);
             });
         });
     });
@@ -132,14 +132,14 @@ describe("mindsmine.Ajax.request method", () => {
             "POST",
             "http://httpbin.org/anything",
             {
-                jsonData: testJSONObject
+                jsonData: DEPRECATED_testJSONObject
             }
         ).then(response => {
             expect(response).not.toBeNull();
 
             let __responseJSON = JSON.parse(response.responseText);
 
-            expect(__responseJSON["json"]).toEqual(expect.objectContaining(testJSONObject));
+            expect(__responseJSON["json"]).toEqual(expect.objectContaining(DEPRECATED_testJSONObject));
         });
     });
 });
