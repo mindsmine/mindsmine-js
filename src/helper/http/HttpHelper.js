@@ -87,25 +87,21 @@ mindsmine.http = class {
     }
 
     /**
-     * Provides an array of allowed HTTP methods.
+     * Array of allowed HTTP methods.
      *
      * @constant
-     *
-     * @returns {String[]}
      *
      * @since 4.6.0
      *
      */
-    static get #ALLOWED_METHODS() {
-        return [
-            "GET",
-            "HEAD",
-            "POST",
-            "PUT",
-            "PATCH",
-            "DELETE"
-        ];
-    }
+    static #ALLOWED_METHODS = [
+        "GET",
+        "HEAD",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ];
 
     /**
      * Sends an HTTP request to a remote server and returns a Promise object. The Promise callback functions are passed
@@ -228,7 +224,7 @@ mindsmine.http = class {
             method = method.toUpperCase();
 
             if (!parent.#ALLOWED_METHODS.includes(method)) {
-                throw new TypeError(`Fatal Error. 'method'. Allowed values are ${parent.ALLOWED_METHODS.join(", ")}.`);
+                throw new TypeError(`Fatal Error. 'method'. Allowed values are ${parent.#ALLOWED_METHODS.join(", ")}.`);
             }
 
             if (mindsmine.String.isEmpty(url)) {
