@@ -105,37 +105,117 @@ mindsmine.Duration = class {
     // Utility Functions
 
     /**
-     * Array of supported units
+     * Supported units
      *
      * @since 4.5.3
      *
      */
-    static #SUPPORTED_UNITS = [
-        "ms",
-        "millisecond",
-        "milliseconds",
-        "s",
-        "second",
-        "seconds",
-        "m",
-        "minute",
-        "minutes",
-        "h",
-        "hour",
-        "hours",
-        "d",
-        "day",
-        "days",
-        "w",
-        "week",
-        "weeks",
-        "M",
-        "month",
-        "months",
-        "y",
-        "year",
-        "years"
-    ];
+    static #SUPPORTED_UNITS = {
+        ms: "ms",
+        millisecond: "ms",
+        milliseconds: "ms",
+        s: "s",
+        second: "s",
+        seconds: "s",
+        m: "m",
+        minute: "m",
+        minutes: "m",
+        h: "h",
+        hour: "h",
+        hours: "h",
+        d: "d",
+        day: "d",
+        days: "d",
+        w: "w",
+        week: "w",
+        weeks: "w",
+        M: "M",
+        month: "M",
+        months: "M",
+        y: "y",
+        year: "y",
+        years: "y"
+    };
+
+    /**
+     * Checks if the unit is supported.
+     *
+     * @param {String} unit To verify
+     *
+     * @returns {Boolean}
+     *
+     * @since 4.5.3
+     * 
+     */
+    static #isSupportedUnit(unit) {
+        if (mindsmine.String.isEmpty(unit)) {
+            throw new TypeError("Fatal Error. 'unit'. @ERROR_PERMITTED_STRING@");
+        }
+
+        return this.#SUPPORTED_UNITS.hasOwnProperty(unit);
+    }
+
+    /**
+     * Normalises the unit for usage in the class.
+     *
+     * @param {String} unit To be normalised
+     *
+     * @returns {String}
+     *
+     * @since 4.5.3
+     * 
+     */
+    static #normaliseUnit(unit) {
+        if (!this.#isSupportedUnit(unit)) {
+            throw new RangeError(`Fatal Error. 'unit'. Allowed values are ${Object.keys(this.#SUPPORTED_UNITS)}.`);
+        }
+
+        return this.#SUPPORTED_UNITS[unit];
+    }
+    
+    /**
+     * Converts the length of duration into milliseconds. Also handles the special cases.
+     *
+     * @param {Number} length to be humanised
+     * @param {String} unit level at which to humanise the duration
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static #convertToMS(length, unit) {
+        const parent = this;
+
+        switch (parent.#normaliseUnit(unit)) {
+            case "d":
+                if (length === 31) {
+                    return parent.MILLISECONDS_IN_MONTH;
+                }
+
+                if (length === 366) {
+                    return parent.MILLISECONDS_IN_YEAR;
+                }
+
+                break;
+            
+            case "w":
+                if (length === 52) {
+                    return parent.MILLISECONDS_IN_YEAR;
+                }
+
+                break;
+            
+            case "M":
+                if (length === 12) {
+                    return parent.MILLISECONDS_IN_YEAR;
+                }
+
+                break;
+        }
+
+        return length * parent.#getMillisecondsInAUnit(unit);
+    }
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -157,49 +237,29 @@ mindsmine.Duration = class {
             return 1;
         }
 
-        if (!this.#SUPPORTED_UNITS.includes(unit)) {
-            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
-        }
-
-        switch (unit) {
+        switch (this.#normaliseUnit(unit)) {
             case "ms":
-            case "millisecond":
-            case "milliseconds":
                 return 1;
             
             case "s":
-            case "second":
-            case "seconds":
                 return this.MILLISECONDS_IN_SECOND;
             
             case "m":
-            case "minute":
-            case "minutes":
                 return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE;
             
             case "h":
-            case "hour":
-            case "hours":
                 return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR;
             
             case "d":
-            case "day":
-            case "days":
                 return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
             
             case "w":
-            case "week":
-            case "weeks":
                 return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
             
             case "M":
-            case "month":
-            case "months":
                 return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * 30;
             
             case "y":
-            case "year":
-            case "years":
                 return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * 365;
     
             default:
@@ -311,34 +371,20 @@ mindsmine.Duration = class {
             return 1;
         }
 
-        if (!this.#SUPPORTED_UNITS.includes(unit)) {
-            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
-        }
-
-        switch (unit) {
+        switch (this.#normaliseUnit(unit)) {
             case "s":
-            case "second":
-            case "seconds":
                 return 1;
             
             case "m":
-            case "minute":
-            case "minutes":
                 return this.SECONDS_IN_MINUTE;
             
             case "h":
-            case "hour":
-            case "hours":
                 return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR;
             
             case "d":
-            case "day":
-            case "days":
                 return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
             
             case "w":
-            case "week":
-            case "weeks":
                 return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
             
             default:
@@ -408,29 +454,17 @@ mindsmine.Duration = class {
             return 1;
         }
 
-        if (!this.#SUPPORTED_UNITS.includes(unit)) {
-            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
-        }
-
-        switch (unit) {
+        switch (this.#normaliseUnit(unit)) {
             case "m":
-            case "minute":
-            case "minutes":
                 return 1;
             
             case "h":
-            case "hour":
-            case "hours":
                 return this.MINUTES_IN_HOUR;
             
             case "d":
-            case "day":
-            case "days":
                 return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
             
             case "w":
-            case "week":
-            case "weeks":
                 return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
             
             default:
@@ -573,70 +607,6 @@ mindsmine.Duration = class {
     static humanize(duration, unit = "ms") {
         const parent = this;
 
-        /**
-         * Converts the user provided unit into its normal form.
-         * 
-         * @param {String} enteredUnit Provided by the user
-         * 
-         * @returns {String}
-         * 
-         * @private
-         * 
-         * @since 4.5.0
-         * 
-         */
-        function _normaliseUnit(enteredUnit) {
-            const SHORT_UNIT_NAME = {
-                ms: "millisecond",
-                s: "second",
-                m: "minute",
-                h: "hour",
-                d: "day",
-                w: "week",
-                M: "month",
-                y: "year"
-            };
-
-            return SHORT_UNIT_NAME[enteredUnit] || mindsmine.String.getNullSafe(enteredUnit).toLowerCase().replace(/s$/, "");
-        }
-
-        /**
-         * Handles the special case and returns the duration in milliseconds.
-         * 
-         * @param {Number} duration to be humanised.
-         * @param {String} normalisedUnit Normalised unit
-         * 
-         * @returns {Number}
-         * 
-         * @private
-         * 
-         * @since 4.5.0
-         * 
-         */
-        function _handleSpecialCase(duration, normalisedUnit) {
-            if (duration === 12 && mindsmine.String.areEqual(normalisedUnit, "month")) {
-                return parent.MILLISECONDS_IN_YEAR;
-            }
-
-            if (duration === 52 && mindsmine.String.areEqual(normalisedUnit, "week")) {
-                return parent.MILLISECONDS_IN_YEAR;
-            }
-
-            if (duration === 366 && mindsmine.String.areEqual(normalisedUnit, "day")) {
-                return parent.MILLISECONDS_IN_YEAR;
-            }
-
-            if (duration === 31 && mindsmine.String.areEqual(normalisedUnit, "day")) {
-                return parent.MILLISECONDS_IN_MONTH;
-            }
-
-            return duration * parent.#getMillisecondsInAUnit(normalisedUnit);
-        }
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
         if (!mindsmine.Number.isNumber(duration)) {
             throw new TypeError("Fatal Error. 'duration'. @ERROR_PERMITTED_NUMBER@");
         }
@@ -649,19 +619,11 @@ mindsmine.Duration = class {
             throw new TypeError("Fatal Error. 'unit'. @ERROR_PERMITTED_STRING@");
         }
 
-        if (!this.#SUPPORTED_UNITS.includes(unit)) {
+        if (!this.#isSupportedUnit(unit)) {
             throw new TypeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
         }
 
-        const normalisedUnit = _normaliseUnit(unit);
-
-        const msInUnit = parent.#getMillisecondsInAUnit(normalisedUnit);
-
-        if (!mindsmine.Number.isNumber(msInUnit)) {
-            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
-        }
-
-        let durationInMS = _handleSpecialCase(duration, normalisedUnit);
+        let durationInMS = parent.#convertToMS(duration, unit);
 
         let _diffYears = Math.floor(durationInMS / parent.MILLISECONDS_IN_YEAR);
         durationInMS %= parent.MILLISECONDS_IN_YEAR;
