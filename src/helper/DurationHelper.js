@@ -64,7 +64,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static get MINUTES_IN_HOUR() {
@@ -78,7 +78,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static get HOURS_IN_DAY() {
@@ -92,7 +92,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static get DAYS_IN_WEEK() {
@@ -106,7 +106,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static get MONTHS_IN_YEAR() {
@@ -121,7 +121,7 @@ mindsmine.Duration = class {
     /**
      * Supported units
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static #SUPPORTED_UNITS = {
@@ -158,7 +158,7 @@ mindsmine.Duration = class {
      *
      * @returns {Boolean}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      * 
      */
     static #isSupportedUnit(unit) {
@@ -176,7 +176,7 @@ mindsmine.Duration = class {
      *
      * @returns {String}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      * 
      */
     static #normaliseUnit(unit) {
@@ -199,7 +199,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static #getMillisecondsInAUnit(unit = "ms") {
@@ -380,7 +380,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static get MINUTES_IN_DAY() {
@@ -394,7 +394,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static get MINUTES_IN_WEEK() {
@@ -413,7 +413,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static get HOURS_IN_WEEK() {
@@ -497,7 +497,7 @@ mindsmine.Duration = class {
      * @throws {TypeError} for invalid arguments
      * @throws {RangeError} for invalid unit level
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static humanreadable(duration, unit = "ms", json = false) {
@@ -611,7 +611,7 @@ mindsmine.Duration = class {
      *
      * @returns {Number}
      *
-     * @since 4.5.3
+     * @since 4.6.0
      *
      */
     static #getPreciseDays(refDate, change) {
@@ -631,7 +631,7 @@ mindsmine.Duration = class {
      * @since 4.5.0
      *
      */
-    static newPreciseDiff(startDate, endDate) {
+    static preciseDiff(startDate, endDate) {
         const parent = this;
 
         let _startIsAfterEnd = false;
@@ -740,7 +740,7 @@ mindsmine.Duration = class {
      * @param {Date} endDate 
      * @returns 
      */
-    static anotherPreciseDiff(startDate, endDate) {
+    static simplePreciseDiff(startDate, endDate) {
         const parent = this;
 
         let _startIsAfterEnd = false;
@@ -773,156 +773,10 @@ mindsmine.Duration = class {
         _dO.minutes = diff.getUTCMinutes();
         _dO.seconds = diff.getUTCSeconds();
         _dO.milliseconds = diff.getMilliseconds();
-    
-        /*
-        let _multiplier;
-
-        if (_dO.seconds < 0) {
-
-            _multiplier = Math.ceil(-_dO.seconds / parent.SECONDS_IN_MINUTE);
-
-            _dO.minutes -= _multiplier;
-            _dO.seconds += _multiplier * parent.SECONDS_IN_MINUTE;
-
-        } else if (_dO.seconds >= parent.SECONDS_IN_MINUTE) {
-
-            _dO.minutes += Math.floor(_dO.seconds / parent.SECONDS_IN_MINUTE);
-            _dO.seconds %= parent.SECONDS_IN_MINUTE;
-
-        }
-
-        if (_dO.minutes < 0) {
-
-            _multiplier = Math.ceil(-_dO.minutes / parent.MINUTES_IN_HOUR);
-
-            _dO.hours -= _multiplier;
-            _dO.minutes += _multiplier * parent.MINUTES_IN_HOUR;
-
-        } else if (_dO.minutes >= parent.MINUTES_IN_HOUR) {
-
-            _dO.hours += Math.floor(_dO.minutes / parent.MINUTES_IN_HOUR);
-            _dO.minutes %= parent.MINUTES_IN_HOUR;
-
-        }
-
-        if (_dO.hours < 0) {
-
-            _multiplier = Math.ceil(-_dO.hours / parent.HOURS_IN_DAY);
-
-            _dO.days -= _multiplier;
-            _dO.hours += _multiplier * parent.HOURS_IN_DAY;
-
-        } else if (_dO.hours >= parent.HOURS_IN_DAY) {
-
-            _dO.days += Math.floor(_dO.hours / parent.HOURS_IN_DAY);
-            _dO.hours %= parent.HOURS_IN_DAY;
-        }
-
-        while (_dO.days < 0) {
-            _dO.months--;
-            _dO.days += parent.#getPreciseDays(_dO.refDate, 1);
-        }
-
-        if (_dO.months < 0) {
-
-            _multiplier = Math.ceil(-_dO.months / parent.MONTHS_IN_YEAR);
-
-            _dO.years -= _multiplier;
-            _dO.months += _multiplier * parent.MONTHS_IN_YEAR;
-
-        } else if (_dO.months >= parent.MONTHS_IN_YEAR) {
-
-            _dO.years += Math.floor(_dO.months / parent.MONTHS_IN_YEAR);
-            _dO.months %= parent.MONTHS_IN_YEAR;
-
-        }
-        //*/
 
         const _durationObject = parent.#createDurationObject(_dO.years, _dO.months, _dO.days, _dO.hours, _dO.minutes, _dO.seconds);
 
         _durationObject.firstDateIsAfter = _startIsAfterEnd;
-
-        return _durationObject;
-    }
-
-    /**
-     * 
-     * @param {Date} dateObj1 
-     * @param {Date} dateObj2 
-     */
-    static preciseDiff(dateObj1, dateObj2) {
-        const parent = this;
-
-        let firstDateIsAfter = false;
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        if (!mindsmine.Date.isDate(dateObj1)) {
-            throw new TypeError("Fatal Error. 'dateObj1'. @ERROR_PERMITTED_DATE@");
-        }
-
-        if (!mindsmine.Date.isDate(dateObj2)) {
-            throw new TypeError("Fatal Error. 'dateObj2'. @ERROR_PERMITTED_DATE@");
-        }
-
-        // Matching the timezone offset for both dates
-        dateObj1.setMinutes(dateObj1.getMinutes() - (dateObj2.getTimezoneOffset() - dateObj1.getTimezoneOffset()));
-
-        if (dateObj1.valueOf() === dateObj2.valueOf()) {
-            return parent.#createDurationObject();
-        }
-
-        if (dateObj1 > dateObj2) {
-            [dateObj1, dateObj2] = [dateObj2, dateObj1];
-            firstDateIsAfter = true;
-        }
-
-        let _diffYears = dateObj2.getFullYear() - dateObj1.getFullYear();
-        let _diffMonths = dateObj2.getMonth() - dateObj1.getMonth();
-        let _diffDays = dateObj2.getDate() - dateObj1.getDate();
-        let _diffHours = dateObj2.getHours() - dateObj1.getHours();
-        let _diffMinutes = dateObj2.getMinutes() - dateObj1.getMinutes();
-        let _diffSeconds = dateObj2.getSeconds() - dateObj1.getSeconds();
-
-        if (_diffSeconds < 0) {
-            _diffSeconds += 60;
-            _diffMinutes--;
-        }
-
-        if (_diffMinutes < 0) {
-            _diffMinutes += 60;
-            _diffHours--;
-        }
-
-        if (_diffHours < 0) {
-            _diffHours += 24;
-            _diffDays--;
-        }
-
-        if (_diffDays < 0) {
-            const _currentMonth = new Date(dateObj2.getFullYear(), dateObj2.getMonth());
-
-            const daysInLastFullMonth = new Date(_currentMonth.getFullYear(), _currentMonth.getMonth(), 0).getDate();
-
-            if (daysInLastFullMonth < dateObj1.getDate()) {
-                _diffDays = daysInLastFullMonth + _diffDays + (dateObj1.getDate() - daysInLastFullMonth);
-            } else {
-                _diffDays = daysInLastFullMonth + _diffDays;
-            }
-
-            _diffMonths--;
-        }
-
-        if (_diffMonths < 0) {
-            _diffMonths += 12;
-            _diffYears--;
-        }
-
-        const _durationObject = parent.#createDurationObject(_diffYears, _diffMonths, _diffDays, _diffHours, _diffMinutes, _diffSeconds);
-
-        _durationObject.firstDateIsAfter = firstDateIsAfter;
 
         return _durationObject;
     }

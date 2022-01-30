@@ -290,6 +290,24 @@ describe("mindsmine.Duration.humanreadable", () => {
 });
 
 describe("mindsmine.Duration.preciseDiff", () => {
+    test("should throw TypeError due to null start date", () => {
+        function callFunction() {
+            mindsmine.Duration.preciseDiff(null, new Date());
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'startDate'. @ERROR_PERMITTED_DATE@");
+    });
+
+    test("should throw TypeError due to null end date", () => {
+        function callFunction() {
+            mindsmine.Duration.preciseDiff(new Date(), null);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'endDate'. @ERROR_PERMITTED_DATE@");
+    });
+
     test("should return first date is later", () => {
         const d1 = new Date();
         const d2 = new Date(2021, 0, 20);
@@ -304,101 +322,57 @@ describe("mindsmine.Duration.preciseDiff", () => {
         expect(mindsmine.Duration.preciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
     });
 
-    /*
     test("should return precise difference", () => {
-        const expectedResult = "11 years 7 months 24 days";
+        const expectedResult = "11 years 7 months 26 days";
 
         const d1 = new Date(2008, 6, 12); // 07/12/2008
         const d2 = new Date(2020, 2, 7);  // 03/07/2020
 
         expect(mindsmine.Duration.preciseDiff(d1, d2).durationString).toEqual(expectedResult);
     });
+});
+
+describe("mindsmine.Duration.simplePreciseDiff", () => {
+    test("should throw TypeError due to null start date", () => {
+        function callFunction() {
+            mindsmine.Duration.simplePreciseDiff(null, new Date());
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'startDate'. @ERROR_PERMITTED_DATE@");
+    });
+
+    test("should throw TypeError due to null end date", () => {
+        function callFunction() {
+            mindsmine.Duration.simplePreciseDiff(new Date(), null);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'endDate'. @ERROR_PERMITTED_DATE@");
+    });
+
+    test("should return first date is later", () => {
+        const d1 = new Date();
+        const d2 = new Date(2021, 0, 20);
+
+        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
+    });
+
+    test("should return not be first date is later", () => {
+        const d1 = new Date(2021, 0, 20);
+        const d2 = new Date();
+
+        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
+    });
+
+    /*
+    test("should return precise difference", () => {
+        const expectedResult = "11 years 7 months 26 days";
+
+        const d1 = new Date(2008, 6, 12); // 07/12/2008
+        const d2 = new Date(2020, 2, 7);  // 03/07/2020
+
+        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).durationString).toEqual(expectedResult);
+    });
     //*/
-
-});
-
-describe("mindsmine.Duration.newPreciseDiff", () => {
-    test("should throw TypeError due to null start date", () => {
-        function callFunction() {
-            mindsmine.Duration.newPreciseDiff(null, new Date());
-        }
-
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("Fatal Error. 'startDate'. @ERROR_PERMITTED_DATE@");
-    });
-
-    test("should throw TypeError due to null end date", () => {
-        function callFunction() {
-            mindsmine.Duration.newPreciseDiff(new Date(), null);
-        }
-
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("Fatal Error. 'endDate'. @ERROR_PERMITTED_DATE@");
-    });
-
-    test("should return first date is later", () => {
-        const d1 = new Date();
-        const d2 = new Date(2021, 0, 20);
-
-        expect(mindsmine.Duration.newPreciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
-    });
-
-    test("should return not be first date is later", () => {
-        const d1 = new Date(2021, 0, 20);
-        const d2 = new Date();
-
-        expect(mindsmine.Duration.newPreciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
-    });
-
-    test("should return precise difference", () => {
-        const expectedResult = "11 years 7 months 26 days";
-
-        const d1 = new Date(2008, 6, 12); // 07/12/2008
-        const d2 = new Date(2020, 2, 7);  // 03/07/2020
-
-        expect(mindsmine.Duration.newPreciseDiff(d1, d2).durationString).toEqual(expectedResult);
-    });
-});
-
-describe("mindsmine.Duration.anotherPreciseDiff", () => {
-    test("should throw TypeError due to null start date", () => {
-        function callFunction() {
-            mindsmine.Duration.anotherPreciseDiff(null, new Date());
-        }
-
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("Fatal Error. 'startDate'. @ERROR_PERMITTED_DATE@");
-    });
-
-    test("should throw TypeError due to null end date", () => {
-        function callFunction() {
-            mindsmine.Duration.anotherPreciseDiff(new Date(), null);
-        }
-
-        expect(callFunction).toThrow(TypeError);
-        expect(callFunction).toThrow("Fatal Error. 'endDate'. @ERROR_PERMITTED_DATE@");
-    });
-
-    test("should return first date is later", () => {
-        const d1 = new Date();
-        const d2 = new Date(2021, 0, 20);
-
-        expect(mindsmine.Duration.anotherPreciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
-    });
-
-    test("should return not be first date is later", () => {
-        const d1 = new Date(2021, 0, 20);
-        const d2 = new Date();
-
-        expect(mindsmine.Duration.anotherPreciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
-    });
-
-    test("should return precise difference", () => {
-        const expectedResult = "11 years 7 months 26 days";
-
-        const d1 = new Date(2008, 6, 12); // 07/12/2008
-        const d2 = new Date(2020, 2, 7);  // 03/07/2020
-
-        expect(mindsmine.Duration.anotherPreciseDiff(d1, d2).durationString).toEqual(expectedResult);
-    });
 });
