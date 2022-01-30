@@ -135,11 +135,11 @@ describe("mindsmine.Duration.humanize", () => {
         });
     });
 
-    test("should throw TypeError due to unsupported unit", () => {
+    test("should throw RangeError due to unsupported unit", () => {
         function callFunction() {
             mindsmine.Duration.humanize(100, "hello");
         }
-        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow(RangeError);
         expect(callFunction).toThrow("Fatal Error. 'unit'. Unsupported 'hello' argument");
     });
 

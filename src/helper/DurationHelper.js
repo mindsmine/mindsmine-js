@@ -591,10 +591,12 @@ mindsmine.Duration = class {
     }
 
     /**
-     * Humanises the duration.
+     * Humanises the duration, approximately.
      *
-     * @param {Number} duration to be humanised.
-     * @param {String} [unit="ms"] the unit level at which to humanise the duration.
+     * Note: This function assumes a year of 365 days and a month of 30 days.
+     *
+     * @param {Number} duration to be humanised
+     * @param {String} [unit="ms"] the unit level of the duration to be humanised
      *
      * @returns {Object} Returns an object with <code>durationObject</code> and string representation.
      *
@@ -616,7 +618,7 @@ mindsmine.Duration = class {
         }
 
         if (!this.#isSupportedUnit(unit)) {
-            throw new TypeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
+            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
         }
 
         let durationInMS = parent.#convertToMS(duration, unit);
