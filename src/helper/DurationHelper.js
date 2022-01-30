@@ -23,61 +23,11 @@
  * 
  */
 mindsmine.Duration = class {
-    /**
-     * Number of seconds in a minute.
-     * 
-     * @constant
-     * 
-     * @returns {Number}
-     * 
-     * @since 4.5.0
-     * 
-     */
-    static get SECONDS_IN_MINUTE() {
-        return 60;
-    }
 
-    /**
-     * Number of seconds in an hour.
-     * 
-     * @constant
-     * 
-     * @returns {Number}
-     * 
-     * @since 4.5.0
-     * 
-     */
-    static get SECONDS_IN_HOUR() {
-        return this.SECONDS_IN_MINUTE * 60;
-    }
-
-    /**
-     * Number of seconds in a day.
-     * 
-     * @constant
-     * 
-     * @returns {Number}
-     * 
-     * @since 4.5.0
-     * 
-     */
-    static get SECONDS_IN_DAY() {
-        return this.SECONDS_IN_HOUR * 24;
-    }
-
-    /**
-     * Number of seconds in a week.
-     * 
-     * @constant
-     * 
-     * @returns {Number}
-     * 
-     * @since 4.5.0
-     * 
-     */
-    static get SECONDS_IN_WEEK() {
-        return this.SECONDS_IN_DAY * 7;
-    }
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Basic Constants
 
     /**
      * Number of milliseconds in a second.
@@ -94,6 +44,170 @@ mindsmine.Duration = class {
     }
 
     /**
+     * Number of seconds in a minute.
+     * 
+     * @constant
+     * 
+     * @returns {Number}
+     * 
+     * @since 4.5.0
+     * 
+     */
+    static get SECONDS_IN_MINUTE() {
+        return 60;
+    }
+
+    /**
+     * Number of minutes in an hour.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static get MINUTES_IN_HOUR() {
+        return 60;
+    }
+
+    /**
+     * Number of hours in a day.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static get HOURS_IN_DAY() {
+        return 24;
+    }
+
+    /**
+     * Number of days in a week.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static get DAYS_IN_WEEK() {
+        return 7;
+    }
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Utility Functions
+
+    /**
+     * Array of supported units
+     *
+     * @since 4.5.3
+     *
+     */
+    static #SUPPORTED_UNITS = [
+        "ms",
+        "millisecond",
+        "milliseconds",
+        "s",
+        "second",
+        "seconds",
+        "m",
+        "minute",
+        "minutes",
+        "h",
+        "hour",
+        "hours",
+        "d",
+        "day",
+        "days",
+        "w",
+        "week",
+        "weeks",
+        "M",
+        "month",
+        "months",
+        "y",
+        "year",
+        "years"
+    ];
+
+    /**
+     * Convenience function to return the number of milliseconds in a given unit.
+     *
+     * @param {String} unit
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static #getMillisecondsInAUnit(unit = "ms") {
+        if (mindsmine.String.isEmpty(unit)) {
+            return 1;
+        }
+
+        if (!this.#SUPPORTED_UNITS.includes(unit)) {
+            throw new TypeError(`Fatal Error. 'unit'. Allowed values are ${this.#SUPPORTED_UNITS.join(", ")}.`);
+        }
+
+        switch (unit) {
+            case "ms":
+            case "millisecond":
+            case "milliseconds":
+                return 1;
+            
+            case "s":
+            case "second":
+            case "seconds":
+                return this.MILLISECONDS_IN_SECOND;
+            
+            case "m":
+            case "minute":
+            case "minutes":
+                return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE;
+            
+            case "h":
+            case "hour":
+            case "hours":
+                return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR;
+            
+            case "d":
+            case "day":
+            case "days":
+                return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
+            
+            case "w":
+            case "week":
+            case "weeks":
+                return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
+            
+            case "M":
+            case "month":
+            case "months":
+                return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * 30;
+            
+            case "y":
+            case "year":
+            case "years":
+                return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * 365;
+    
+            default:
+                throw new TypeError(`Fatal Error. 'unit'. Allowed values are ${this.#SUPPORTED_UNITS.join(", ")}.`);
+        }
+    }
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Milliseconds
+
+    /**
      * Number of milliseconds in a minute.
      * 
      * @constant
@@ -104,7 +218,7 @@ mindsmine.Duration = class {
      * 
      */
     static get MILLISECONDS_IN_MINUTE() {
-        return this.SECONDS_IN_MINUTE * this.MILLISECONDS_IN_SECOND;
+        return this.#getMillisecondsInAUnit("m");
     }
 
     /**
@@ -118,7 +232,7 @@ mindsmine.Duration = class {
      * 
      */
     static get MILLISECONDS_IN_HOUR() {
-        return this.SECONDS_IN_HOUR * this.MILLISECONDS_IN_SECOND;
+        return this.#getMillisecondsInAUnit("h");
     }
 
     /**
@@ -132,7 +246,7 @@ mindsmine.Duration = class {
      * 
      */
     static get MILLISECONDS_IN_DAY() {
-        return this.SECONDS_IN_DAY * this.MILLISECONDS_IN_SECOND;
+        return this.#getMillisecondsInAUnit("d");
     }
 
     /**
@@ -146,7 +260,7 @@ mindsmine.Duration = class {
      * 
      */
     static get MILLISECONDS_IN_WEEK() {
-        return this.SECONDS_IN_WEEK * this.MILLISECONDS_IN_SECOND;
+        return this.#getMillisecondsInAUnit("w");
     }
 
     /**
@@ -160,7 +274,7 @@ mindsmine.Duration = class {
      * 
      */
     static get MILLISECONDS_IN_MONTH() {
-        return this.MILLISECONDS_IN_DAY * 30;
+        return this.#getMillisecondsInAUnit("M");
     }
 
     /**
@@ -174,9 +288,118 @@ mindsmine.Duration = class {
      * 
      */
     static get MILLISECONDS_IN_YEAR() {
-        return this.MILLISECONDS_IN_DAY * 365;
+        return this.#getMillisecondsInAUnit("y");
     }
-    
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Seconds
+
+    /**
+     * Number of seconds in an hour.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.0
+     *
+     */
+    static get SECONDS_IN_HOUR() {
+        return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR;
+    }
+
+    /**
+     * Number of seconds in a day.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.0
+     *
+     */
+    static get SECONDS_IN_DAY() {
+        return this.SECONDS_IN_HOUR * this.HOURS_IN_DAY;
+    }
+
+    /**
+     * Number of seconds in a week.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.0
+     *
+     */
+    static get SECONDS_IN_WEEK() {
+        return this.SECONDS_IN_DAY * this.DAYS_IN_WEEK;
+    }
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Minutes
+
+    /**
+     * Number of minutes in a day.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static get MINUTES_IN_DAY() {
+        return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
+    }
+
+    /**
+     * Number of minutes in a week.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static get MINUTES_IN_WEEK() {
+        return this.MINUTES_IN_DAY * this.DAYS_IN_WEEK;
+    }
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Hours
+
+    /**
+     * Number of hours in a week.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static get HOURS_IN_WEEK() {
+        return this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
+    }
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     /**
      * 
      * @param {Number} years 
@@ -192,17 +415,17 @@ mindsmine.Duration = class {
      * @since 4.5.0
      * 
      */
-    static _createDurationObject(years = 0, months = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0) {
+    static #createDurationObject(years = 0, months = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0) {
         let _firstDateIsAfter = false;
 
         const _do = {
-            years: years,
-            months: months,
-            days: days,
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds,
-            milliseconds: milliseconds
+            years,
+            months,
+            days,
+            hours,
+            minutes,
+            seconds,
+            milliseconds
         };
 
         let _dmArr = [];
@@ -231,12 +454,10 @@ mindsmine.Duration = class {
             _dmArr.push(`${_do.seconds} second${(_do.seconds > 1) ? "s" : ""}`);
         }
 
-        const _ds = _dmArr.join(" ");
-
         return {
             firstDateIsAfter: _firstDateIsAfter,
             durationRawObject: _do,
-            durationString: _ds
+            durationString: _dmArr.join(" ")
         };
     }
 
@@ -285,33 +506,6 @@ mindsmine.Duration = class {
         }
 
         /**
-         * Returns the milliseconds in the normalised unit.
-         * 
-         * @param {String} normalisedUnit Normalised unit
-         * 
-         * @returns {Number|null}
-         * 
-         * @private
-         * 
-         * @since 4.5.0
-         * 
-         */
-        function _convertUnitToMilliseconds(normalisedUnit) {
-            const MILLISECONDS_IN_UNIT = {
-                millisecond: 1,
-                second: parent.MILLISECONDS_IN_SECOND,
-                minute: parent.MILLISECONDS_IN_MINUTE,
-                hour: parent.MILLISECONDS_IN_HOUR,
-                day: parent.MILLISECONDS_IN_DAY,
-                week: parent.MILLISECONDS_IN_WEEK,
-                month: parent.MILLISECONDS_IN_MONTH,
-                year: parent.MILLISECONDS_IN_YEAR
-            };
-
-            return MILLISECONDS_IN_UNIT[normalisedUnit];
-        }
-
-        /**
          * Handles the special case and returns the duration in milliseconds.
          * 
          * @param {Number} duration to be humanised.
@@ -341,7 +535,7 @@ mindsmine.Duration = class {
                 return parent.MILLISECONDS_IN_MONTH;
             }
 
-            return duration * _convertUnitToMilliseconds(normalisedUnit);
+            return duration * parent.#getMillisecondsInAUnit(normalisedUnit);
         }
 
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -360,9 +554,13 @@ mindsmine.Duration = class {
             throw new TypeError("Fatal Error. 'unit'. @ERROR_PERMITTED_STRING@");
         }
 
+        if (!this.#SUPPORTED_UNITS.includes(unit)) {
+            throw new TypeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
+        }
+
         const normalisedUnit = _normaliseUnit(unit);
 
-        const msInUnit = _convertUnitToMilliseconds(normalisedUnit);
+        const msInUnit = parent.#getMillisecondsInAUnit(normalisedUnit);
 
         if (!mindsmine.Number.isNumber(msInUnit)) {
             throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
@@ -390,7 +588,7 @@ mindsmine.Duration = class {
 
         let _diffMilliseconds = durationInMS;
 
-        return parent._createDurationObject(
+        return parent.#createDurationObject(
             _diffYears,
             _diffMonths,
             _diffDates,
@@ -427,7 +625,7 @@ mindsmine.Duration = class {
         dateObj1.setMinutes(dateObj1.getMinutes() - (dateObj2.getTimezoneOffset() - dateObj1.getTimezoneOffset()));
 
         if (dateObj1.valueOf() === dateObj2.valueOf()) {
-            return parent._createDurationObject();
+            return parent.#createDurationObject();
         }
 
         if (dateObj1 > dateObj2) {
@@ -476,7 +674,7 @@ mindsmine.Duration = class {
             _diffYears--;
         }
 
-        const _durationObject = parent._createDurationObject(_diffYears, _diffMonths, _diffDates, _diffHours, _diffMinutes, _diffSeconds);
+        const _durationObject = parent.#createDurationObject(_diffYears, _diffMonths, _diffDates, _diffHours, _diffMinutes, _diffSeconds);
 
         _durationObject.firstDateIsAfter = firstDateIsAfter;
 
