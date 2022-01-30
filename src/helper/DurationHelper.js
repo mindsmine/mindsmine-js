@@ -521,70 +521,11 @@ mindsmine.Duration = class {
     };
 
     /**
-     * 
-     * @param {Number} years 
-     * @param {Number} months 
-     * @param {Number} days 
-     * @param {Number} hours 
-     * @param {Number} minutes 
-     * @param {Number} seconds 
-     * @param {Number} milliseconds 
-     * 
-     * @private
-     * 
-     * @since 4.5.0
-     * 
-     */
-    static #createDurationObject(years = 0, months = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0) {
-        const _do = {
-            years,
-            months,
-            days,
-            hours,
-            minutes,
-            seconds,
-            milliseconds
-        };
-
-        let _dmArr = [];
-
-        if (_do.years > 0) {
-            _dmArr.push(`${_do.years} year${(_do.years > 1) ? "s" : ""}`);
-        }
-
-        if (_do.months > 0) {
-            _dmArr.push(`${_do.months} month${(_do.months > 1) ? "s" : ""}`);
-        }
-
-        if (_do.days > 0) {
-            _dmArr.push(`${_do.days} day${(_do.days > 1) ? "s" : ""}`);
-        }
-
-        if (_do.hours > 0) {
-            _dmArr.push(`${_do.hours} hour${(_do.hours > 1) ? "s" : ""}`);
-        }
-
-        if (_do.minutes > 0) {
-            _dmArr.push(`${_do.minutes} minute${(_do.minutes > 1) ? "s" : ""}`);
-        }
-
-        if (_do.seconds > 0) {
-            _dmArr.push(`${_do.seconds} second${(_do.seconds > 1) ? "s" : ""}`);
-        }
-
-        return {
-            firstDateIsAfter: false,
-            durationRawObject: _do,
-            durationString: _dmArr.join(" ")
-        };
-    }
-
-    /**
-     * Approximately converts the length of duration into a human readable string.
+     * Approximately converts the length of duration into a human readable information.
      *
      * Note: This is <strong>not</strong> an accurate representation. This function assumes a year of 365 days and a month of 30 days.
      *
-     * @param {Number} duration to be converted into a human readable string
+     * @param {Number} duration to be converted into a human readable information
      * @param {String} [unit="ms"] the unit level of the duration to be converted
      *
      * @returns {Object} An instance of the <code>DurationHolder</code> object.
@@ -665,100 +606,6 @@ mindsmine.Duration = class {
     }
 
     /**
-     * Humanises the duration, approximately. This is <strong>not</strong> an accurate representation.
-     *
-     * Note: This function assumes a year of 365 days and a month of 30 days.
-     *
-     * @param {Number} duration to be humanised
-     * @param {String} [unit="ms"] the unit level of the duration to be humanised
-     *
-     * @returns {Object} Returns an object with <code>durationObject</code> and string representation.
-     *
-     * @throws {TypeError} for invalid arguments
-     * @throws {RangeError} for invalid unit string
-     *
-     * @since 4.5.0
-     *
-     * @deprecated Use {@link mindsmine.Duration#humanreadable}
-     *
-     */
-    static humanize(duration, unit = "ms") {
-        const parent = this;
-
-        if (!mindsmine.Number.isNumber(duration)) {
-            throw new TypeError("Fatal Error. 'duration'. @ERROR_PERMITTED_NUMBER@");
-        }
-
-        if (duration <= 0) {
-            throw new RangeError("Fatal Error. 'duration'. Duration should be a non-zero positive number.");
-        }
-
-        if (!parent.#isSupportedUnit(unit)) {
-            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
-        }
-
-        switch (parent.#normaliseUnit(unit)) {
-            case "d":
-                if (duration === 31) {
-                    return parent.#createDurationObject(0, 1);
-                }
-
-                if (duration === 366) {
-                    return parent.#createDurationObject(1);
-                }
-
-                break;
-            
-            case "w":
-                if (duration === 52) {
-                    return parent.#createDurationObject(1);
-                }
-
-                break;
-            
-            case "M":
-                if (duration === 12) {
-                    return parent.#createDurationObject(1);
-                }
-
-                break;
-        }
-
-        let durationInMS = duration * parent.#getMillisecondsInAUnit(unit);
-
-        let _diffYears = Math.floor(durationInMS / parent.MILLISECONDS_IN_YEAR);
-        durationInMS %= parent.MILLISECONDS_IN_YEAR;
-
-        let _diffMonths = Math.floor(durationInMS / parent.MILLISECONDS_IN_MONTH);
-        durationInMS %= parent.MILLISECONDS_IN_MONTH;
-
-        let _diffDays = Math.floor(durationInMS / parent.MILLISECONDS_IN_DAY);
-        durationInMS %= parent.MILLISECONDS_IN_DAY;
-
-        let _diffHours = Math.floor(durationInMS / parent.MILLISECONDS_IN_HOUR);
-        durationInMS %= parent.MILLISECONDS_IN_HOUR;
-
-        let _diffMinutes = Math.floor(durationInMS / parent.MILLISECONDS_IN_MINUTE);
-        durationInMS %= parent.MILLISECONDS_IN_MINUTE;
-
-        let _diffSeconds = Math.floor(durationInMS / parent.MILLISECONDS_IN_SECOND);
-        durationInMS %= parent.MILLISECONDS_IN_SECOND;
-
-        let _diffMilliseconds = durationInMS;
-
-        return parent.#createDurationObject(
-            _diffYears,
-            _diffMonths,
-            _diffDays,
-            _diffHours,
-            _diffMinutes,
-            _diffSeconds,
-            _diffMilliseconds
-        );
-    }
-
-
-    /**
      * 
      * @param {Date} refDate 
      * @param {Number} change 
@@ -777,10 +624,14 @@ mindsmine.Duration = class {
     }
 
     /**
-     * 
-     * @param {Date} startDate 
-     * @param {Date} endDate 
-     * @param {Boolean} json 
+     * Converts the length of duration into inituitive human readable information.
+     *
+     * @param {Date} startDate Start Date
+     * @param {Date} endDate End Date
+     *
+     * @returns {Object} An instance of the <code>DurationHolder</code> object.
+     *
+     * @throws {TypeError} for invalid arguments
      *
      * @since 4.5.0
      *
@@ -889,12 +740,19 @@ mindsmine.Duration = class {
     }
 
     /**
-     * 
-     * @param {Date} startDate 
-     * @param {Date} endDate 
-     * @returns 
+     * Converts the length of duration into crude human readable information.
+     *
+     * @param {Date} startDate Start Date
+     * @param {Date} endDate End Date
+     *
+     * @returns {Object} An instance of the <code>DurationHolder</code> object.
+     *
+     * @throws {TypeError} for invalid arguments
+     *
+     * @since 4.6.0
+     *
      */
-    static simplePreciseDiff(startDate, endDate) {
+    static crudeDiff(startDate, endDate) {
         const parent = this;
 
         let _startIsAfterEnd = false;

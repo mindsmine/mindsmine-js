@@ -332,10 +332,10 @@ describe("mindsmine.Duration.preciseDiff", () => {
     });
 });
 
-describe("mindsmine.Duration.simplePreciseDiff", () => {
+describe("mindsmine.Duration.crudeDiff", () => {
     test("should throw TypeError due to null start date", () => {
         function callFunction() {
-            mindsmine.Duration.simplePreciseDiff(null, new Date());
+            mindsmine.Duration.crudeDiff(null, new Date());
         }
 
         expect(callFunction).toThrow(TypeError);
@@ -344,7 +344,7 @@ describe("mindsmine.Duration.simplePreciseDiff", () => {
 
     test("should throw TypeError due to null end date", () => {
         function callFunction() {
-            mindsmine.Duration.simplePreciseDiff(new Date(), null);
+            mindsmine.Duration.crudeDiff(new Date(), null);
         }
 
         expect(callFunction).toThrow(TypeError);
@@ -355,14 +355,14 @@ describe("mindsmine.Duration.simplePreciseDiff", () => {
         const d1 = new Date();
         const d2 = new Date(2021, 0, 20);
 
-        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).startAfterEnd).toBeTruthy();
+        expect(mindsmine.Duration.crudeDiff(d1, d2).startAfterEnd).toBeTruthy();
     });
 
     test("should return not be first date is later", () => {
         const d1 = new Date(2021, 0, 20);
         const d2 = new Date();
 
-        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).startAfterEnd).toBeFalsy();
+        expect(mindsmine.Duration.crudeDiff(d1, d2).startAfterEnd).toBeFalsy();
     });
 
     /*
@@ -372,7 +372,7 @@ describe("mindsmine.Duration.simplePreciseDiff", () => {
         const d1 = new Date(2008, 6, 12); // 07/12/2008
         const d2 = new Date(2020, 2, 7);  // 03/07/2020
 
-        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).durationString).toEqual(expectedResult);
+        expect(mindsmine.Duration.crudeDiff(d1, d2).displayString).toEqual(expectedResult);
     });
     //*/
 });
