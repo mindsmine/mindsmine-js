@@ -751,6 +751,8 @@ mindsmine.Duration = class {
      *
      * @since 4.6.0
      *
+     * @deprecated
+     *
      */
     static crudeDiff(startDate, endDate) {
         const parent = this;
