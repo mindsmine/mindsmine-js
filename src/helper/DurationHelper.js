@@ -99,6 +99,20 @@ mindsmine.Duration = class {
         return 7;
     }
 
+    /**
+     * Number of months in a year.
+     *
+     * @constant
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static get MONTHS_IN_YEAR() {
+        return 12;
+    }
+
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -587,6 +601,248 @@ mindsmine.Duration = class {
             _diffSeconds,
             _diffMilliseconds
         );
+    }
+
+
+    /**
+     * 
+     * @param {Date} refDate 
+     * @param {Number} change 
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static #getPreciseDays(refDate, change) {
+        let prevTime = refDate.getTime();
+
+        refDate.setMonth(refDate.getMonth() + change);
+
+        return Math.round((refDate.getTime() - prevTime) / this.MILLISECONDS_IN_DAY);
+    }
+
+    /**
+     * 
+     * @param {Date} startDate 
+     * @param {Date} endDate 
+     * @param {Boolean} json 
+     *
+     * @since 4.5.0
+     *
+     */
+    static newPreciseDiff(startDate, endDate) {
+        const parent = this;
+
+        let _startIsAfterEnd = false;
+
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        if (!mindsmine.Date.isDate(startDate)) {
+            throw new TypeError("Fatal Error. 'startDate'. @ERROR_PERMITTED_DATE@");
+        }
+
+        if (!mindsmine.Date.isDate(endDate)) {
+            throw new TypeError("Fatal Error. 'endDate'. @ERROR_PERMITTED_DATE@");
+        }
+
+        if (startDate > endDate) {
+            [startDate, endDate] = [endDate, startDate];
+            _startIsAfterEnd = true;
+        }
+
+        const _dO = {};
+
+        _dO.refDate = new Date(startDate.getFullYear(), startDate.getMonth(), 15, 12, 0, 0);
+
+        _dO.years = endDate.getFullYear() - startDate.getFullYear();
+        _dO.months = endDate.getMonth() - startDate.getMonth();
+        _dO.days = endDate.getDate() - startDate.getDate();
+        _dO.hours = endDate.getHours() - startDate.getHours();
+        _dO.minutes = endDate.getMinutes() - startDate.getMinutes();
+        _dO.seconds = endDate.getSeconds() - startDate.getSeconds();
+        _dO.milliseconds = endDate.getMilliseconds() - startDate.getMilliseconds();
+
+        let _multiplier;
+
+        if (_dO.seconds < 0) {
+
+            _multiplier = Math.ceil(-_dO.seconds / parent.SECONDS_IN_MINUTE);
+
+            _dO.minutes -= _multiplier;
+            _dO.seconds += _multiplier * parent.SECONDS_IN_MINUTE;
+
+        } else if (_dO.seconds >= parent.SECONDS_IN_MINUTE) {
+
+            _dO.minutes += Math.floor(_dO.seconds / parent.SECONDS_IN_MINUTE);
+            _dO.seconds %= parent.SECONDS_IN_MINUTE;
+
+        }
+
+        if (_dO.minutes < 0) {
+
+            _multiplier = Math.ceil(-_dO.minutes / parent.MINUTES_IN_HOUR);
+
+            _dO.hours -= _multiplier;
+            _dO.minutes += _multiplier * parent.MINUTES_IN_HOUR;
+
+        } else if (_dO.minutes >= parent.MINUTES_IN_HOUR) {
+
+            _dO.hours += Math.floor(_dO.minutes / parent.MINUTES_IN_HOUR);
+            _dO.minutes %= parent.MINUTES_IN_HOUR;
+
+        }
+
+        if (_dO.hours < 0) {
+
+            _multiplier = Math.ceil(-_dO.hours / parent.HOURS_IN_DAY);
+
+            _dO.days -= _multiplier;
+            _dO.hours += _multiplier * parent.HOURS_IN_DAY;
+
+        } else if (_dO.hours >= parent.HOURS_IN_DAY) {
+
+            _dO.days += Math.floor(_dO.hours / parent.HOURS_IN_DAY);
+            _dO.hours %= parent.HOURS_IN_DAY;
+        }
+
+        while (_dO.days < 0) {
+            _dO.months--;
+            _dO.days += parent.#getPreciseDays(_dO.refDate, 1);
+        }
+
+        if (_dO.months < 0) {
+
+            _multiplier = Math.ceil(-_dO.months / parent.MONTHS_IN_YEAR);
+
+            _dO.years -= _multiplier;
+            _dO.months += _multiplier * parent.MONTHS_IN_YEAR;
+
+        } else if (_dO.months >= parent.MONTHS_IN_YEAR) {
+
+            _dO.years += Math.floor(_dO.months / parent.MONTHS_IN_YEAR);
+            _dO.months %= parent.MONTHS_IN_YEAR;
+
+        }
+
+        const _durationObject = parent.#createDurationObject(_dO.years, _dO.months, _dO.days, _dO.hours, _dO.minutes, _dO.seconds);
+
+        _durationObject.firstDateIsAfter = _startIsAfterEnd;
+
+        return _durationObject;
+    }
+
+    /**
+     * 
+     * @param {Date} startDate 
+     * @param {Date} endDate 
+     * @returns 
+     */
+    static anotherPreciseDiff(startDate, endDate) {
+        const parent = this;
+
+        let _startIsAfterEnd = false;
+
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        if (!mindsmine.Date.isDate(startDate)) {
+            throw new TypeError("Fatal Error. 'startDate'. @ERROR_PERMITTED_DATE@");
+        }
+
+        if (!mindsmine.Date.isDate(endDate)) {
+            throw new TypeError("Fatal Error. 'endDate'. @ERROR_PERMITTED_DATE@");
+        }
+
+        if (startDate > endDate) {
+            [startDate, endDate] = [endDate, startDate];
+            _startIsAfterEnd = true;
+        }
+
+        const diff = new Date(endDate.getTime() - startDate.getTime());
+
+        const _dO = {};
+
+        _dO.years = diff.getUTCFullYear() - 1970;
+        _dO.months = diff.getUTCMonth();
+        _dO.days = diff.getUTCDate() - 1;
+        _dO.hours = diff.getUTCHours();
+        _dO.minutes = diff.getUTCMinutes();
+        _dO.seconds = diff.getUTCSeconds();
+        _dO.milliseconds = diff.getMilliseconds();
+    
+        /*
+        let _multiplier;
+
+        if (_dO.seconds < 0) {
+
+            _multiplier = Math.ceil(-_dO.seconds / parent.SECONDS_IN_MINUTE);
+
+            _dO.minutes -= _multiplier;
+            _dO.seconds += _multiplier * parent.SECONDS_IN_MINUTE;
+
+        } else if (_dO.seconds >= parent.SECONDS_IN_MINUTE) {
+
+            _dO.minutes += Math.floor(_dO.seconds / parent.SECONDS_IN_MINUTE);
+            _dO.seconds %= parent.SECONDS_IN_MINUTE;
+
+        }
+
+        if (_dO.minutes < 0) {
+
+            _multiplier = Math.ceil(-_dO.minutes / parent.MINUTES_IN_HOUR);
+
+            _dO.hours -= _multiplier;
+            _dO.minutes += _multiplier * parent.MINUTES_IN_HOUR;
+
+        } else if (_dO.minutes >= parent.MINUTES_IN_HOUR) {
+
+            _dO.hours += Math.floor(_dO.minutes / parent.MINUTES_IN_HOUR);
+            _dO.minutes %= parent.MINUTES_IN_HOUR;
+
+        }
+
+        if (_dO.hours < 0) {
+
+            _multiplier = Math.ceil(-_dO.hours / parent.HOURS_IN_DAY);
+
+            _dO.days -= _multiplier;
+            _dO.hours += _multiplier * parent.HOURS_IN_DAY;
+
+        } else if (_dO.hours >= parent.HOURS_IN_DAY) {
+
+            _dO.days += Math.floor(_dO.hours / parent.HOURS_IN_DAY);
+            _dO.hours %= parent.HOURS_IN_DAY;
+        }
+
+        while (_dO.days < 0) {
+            _dO.months--;
+            _dO.days += parent.#getPreciseDays(_dO.refDate, 1);
+        }
+
+        if (_dO.months < 0) {
+
+            _multiplier = Math.ceil(-_dO.months / parent.MONTHS_IN_YEAR);
+
+            _dO.years -= _multiplier;
+            _dO.months += _multiplier * parent.MONTHS_IN_YEAR;
+
+        } else if (_dO.months >= parent.MONTHS_IN_YEAR) {
+
+            _dO.years += Math.floor(_dO.months / parent.MONTHS_IN_YEAR);
+            _dO.months %= parent.MONTHS_IN_YEAR;
+
+        }
+        //*/
+
+        const _durationObject = parent.#createDurationObject(_dO.years, _dO.months, _dO.days, _dO.hours, _dO.minutes, _dO.seconds);
+
+        _durationObject.firstDateIsAfter = _startIsAfterEnd;
+
+        return _durationObject;
     }
 
     /**

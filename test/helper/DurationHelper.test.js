@@ -82,6 +82,10 @@ test("mindsmine.Duration.DAYS_IN_WEEK should be 7", () => {
     expect(mindsmine.Duration.DAYS_IN_WEEK).toEqual(7);
 });
 
+test("mindsmine.Duration.MONTHS_IN_YEAR should be 12", () => {
+    expect(mindsmine.Duration.MONTHS_IN_YEAR).toEqual(12);
+});
+
 describe("mindsmine.Duration.humanreadable", () => {
     [
         [
@@ -311,4 +315,90 @@ describe("mindsmine.Duration.preciseDiff", () => {
     });
     //*/
 
+});
+
+describe("mindsmine.Duration.newPreciseDiff", () => {
+    test("should throw TypeError due to null start date", () => {
+        function callFunction() {
+            mindsmine.Duration.newPreciseDiff(null, new Date());
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'startDate'. @ERROR_PERMITTED_DATE@");
+    });
+
+    test("should throw TypeError due to null end date", () => {
+        function callFunction() {
+            mindsmine.Duration.newPreciseDiff(new Date(), null);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'endDate'. @ERROR_PERMITTED_DATE@");
+    });
+
+    test("should return first date is later", () => {
+        const d1 = new Date();
+        const d2 = new Date(2021, 0, 20);
+
+        expect(mindsmine.Duration.newPreciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
+    });
+
+    test("should return not be first date is later", () => {
+        const d1 = new Date(2021, 0, 20);
+        const d2 = new Date();
+
+        expect(mindsmine.Duration.newPreciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
+    });
+
+    test("should return precise difference", () => {
+        const expectedResult = "11 years 7 months 26 days";
+
+        const d1 = new Date(2008, 6, 12); // 07/12/2008
+        const d2 = new Date(2020, 2, 7);  // 03/07/2020
+
+        expect(mindsmine.Duration.newPreciseDiff(d1, d2).durationString).toEqual(expectedResult);
+    });
+});
+
+describe("mindsmine.Duration.anotherPreciseDiff", () => {
+    test("should throw TypeError due to null start date", () => {
+        function callFunction() {
+            mindsmine.Duration.anotherPreciseDiff(null, new Date());
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'startDate'. @ERROR_PERMITTED_DATE@");
+    });
+
+    test("should throw TypeError due to null end date", () => {
+        function callFunction() {
+            mindsmine.Duration.anotherPreciseDiff(new Date(), null);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'endDate'. @ERROR_PERMITTED_DATE@");
+    });
+
+    test("should return first date is later", () => {
+        const d1 = new Date();
+        const d2 = new Date(2021, 0, 20);
+
+        expect(mindsmine.Duration.anotherPreciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
+    });
+
+    test("should return not be first date is later", () => {
+        const d1 = new Date(2021, 0, 20);
+        const d2 = new Date();
+
+        expect(mindsmine.Duration.anotherPreciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
+    });
+
+    test("should return precise difference", () => {
+        const expectedResult = "11 years 7 months 26 days";
+
+        const d1 = new Date(2008, 6, 12); // 07/12/2008
+        const d2 = new Date(2020, 2, 7);  // 03/07/2020
+
+        expect(mindsmine.Duration.anotherPreciseDiff(d1, d2).durationString).toEqual(expectedResult);
+    });
 });
