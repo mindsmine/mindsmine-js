@@ -195,6 +195,36 @@ describe("mindsmine.Duration.humanize", () => {
             "weeks"
         ],
         [
+            "1 second",
+            1,
+            "s"
+        ],
+        [
+            "1 minute",
+            1,
+            "m"
+        ],
+        [
+            "1 hour",
+            1,
+            "h"
+        ],
+        [
+            "1 day",
+            1,
+            "d"
+        ],
+        [
+            "7 days",
+            1,
+            "w"
+        ],
+        [
+            "1 month",
+            1,
+            "M"
+        ],
+        [
             "1 year",
             1,
             "y"

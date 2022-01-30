@@ -173,50 +173,6 @@ mindsmine.Duration = class {
         return this.#SUPPORTED_UNITS[unit];
     }
     
-    /**
-     * Converts the length of duration into milliseconds. Also handles the special cases.
-     *
-     * @param {Number} length to be humanised
-     * @param {String} unit level at which to humanise the duration
-     *
-     * @returns {Number}
-     *
-     * @since 4.5.3
-     *
-     */
-    static #convertToMS(length, unit) {
-        const parent = this;
-
-        switch (parent.#normaliseUnit(unit)) {
-            case "d":
-                if (length === 31) {
-                    return parent.MILLISECONDS_IN_MONTH;
-                }
-
-                if (length === 366) {
-                    return parent.MILLISECONDS_IN_YEAR;
-                }
-
-                break;
-            
-            case "w":
-                if (length === 52) {
-                    return parent.MILLISECONDS_IN_YEAR;
-                }
-
-                break;
-            
-            case "M":
-                if (length === 12) {
-                    return parent.MILLISECONDS_IN_YEAR;
-                }
-
-                break;
-        }
-
-        return length * parent.#getMillisecondsInAUnit(unit);
-    }
-
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -545,8 +501,6 @@ mindsmine.Duration = class {
      * 
      */
     static #createDurationObject(years = 0, months = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0) {
-        let _firstDateIsAfter = false;
-
         const _do = {
             years,
             months,
@@ -584,7 +538,7 @@ mindsmine.Duration = class {
         }
 
         return {
-            firstDateIsAfter: _firstDateIsAfter,
+            firstDateIsAfter: false,
             durationRawObject: _do,
             durationString: _dmArr.join(" ")
         };
@@ -617,11 +571,38 @@ mindsmine.Duration = class {
             throw new RangeError("Fatal Error. 'duration'. Duration should be a non-zero positive number.");
         }
 
-        if (!this.#isSupportedUnit(unit)) {
+        if (!parent.#isSupportedUnit(unit)) {
             throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
         }
 
-        let durationInMS = parent.#convertToMS(duration, unit);
+        switch (parent.#normaliseUnit(unit)) {
+            case "d":
+                if (duration === 31) {
+                    return parent.#createDurationObject(0, 1);
+                }
+
+                if (duration === 366) {
+                    return parent.#createDurationObject(1);
+                }
+
+                break;
+            
+            case "w":
+                if (duration === 52) {
+                    return parent.#createDurationObject(1);
+                }
+
+                break;
+            
+            case "M":
+                if (duration === 12) {
+                    return parent.#createDurationObject(1);
+                }
+
+                break;
+        }
+
+        let durationInMS = duration * parent.#getMillisecondsInAUnit(unit);
 
         let _diffYears = Math.floor(durationInMS / parent.MILLISECONDS_IN_YEAR);
         durationInMS %= parent.MILLISECONDS_IN_YEAR;
