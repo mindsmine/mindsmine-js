@@ -12,9 +12,10 @@ others.
 
 ### Releases ###
 
-**4.5.3**
+**4.6.0**
 * Deprecated `mindsmine.Ajax` class in lieu of the `fetch` function. Support will be removed in the next major release.
 * Updated internal mechanism of URL methods
+* Updated accuracy of Duration support methods
 
 **4.5.2**
 * Node 17+ supported
