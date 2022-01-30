@@ -470,6 +470,32 @@ mindsmine.Duration = class {
     }
 
     /**
+     * Approximately converts the length of duration into a human readable string.
+     *
+     * Note: This is <strong>not</strong> an accurate representation. This function assumes a year of 365 days and a month of 30 days.
+     *
+     * @param {Number} duration to be converted into a human readable string
+     * @param {String} [unit="ms"] the unit level of the duration to be converted
+     * @param {Boolean} [json=false] whether to return JSON object instead of string
+     *
+     * @returns {String|Object} Human readable string for the duration, by default. JSON representation when flag is set.
+     *
+     * @throws {TypeError} for invalid arguments
+     * @throws {RangeError} for invalid unit level
+     *
+     * @since 4.5.3
+     *
+     */
+    static humanreadable(duration, unit = "ms", json = false) {
+        const _humanise = this.humanize(duration, unit);
+        if (json) {
+            return _humanise.durationRawObject;
+        }
+
+        return _humanise.durationString;
+    }
+
+    /**
      * Humanises the duration, approximately. This is <strong>not</strong> an accurate representation.
      *
      * Note: This function assumes a year of 365 days and a month of 30 days.
@@ -483,6 +509,8 @@ mindsmine.Duration = class {
      * @throws {RangeError} for invalid unit string
      *
      * @since 4.5.0
+     *
+     * @deprecated Use {@link mindsmine.Duration#humanreadable}
      *
      */
     static humanize(duration, unit = "ms") {

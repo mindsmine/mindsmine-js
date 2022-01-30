@@ -82,7 +82,7 @@ test("mindsmine.Duration.DAYS_IN_WEEK should be 7", () => {
     expect(mindsmine.Duration.DAYS_IN_WEEK).toEqual(7);
 });
 
-describe("mindsmine.Duration.humanize", () => {
+describe("mindsmine.Duration.humanreadable", () => {
     [
         [
             "null duration",
@@ -105,7 +105,7 @@ describe("mindsmine.Duration.humanize", () => {
     ].forEach(arr => {
         test(`should throw TypeError due to ${arr[0]}`, () => {
             function callFunction() {
-                mindsmine.Duration.humanize(arr[1], arr[2]);
+                mindsmine.Duration.humanreadable(arr[1], arr[2]);
             }
 
             expect(callFunction).toThrow(TypeError);
@@ -127,7 +127,7 @@ describe("mindsmine.Duration.humanize", () => {
     ].forEach(arr => {
         test(`should throw RangeError due to ${arr[0]}`, () => {
             function callFunction() {
-                mindsmine.Duration.humanize(arr[1], arr[2]);
+                mindsmine.Duration.humanreadable(arr[1], arr[2]);
             }
 
             expect(callFunction).toThrow(RangeError);
@@ -137,7 +137,7 @@ describe("mindsmine.Duration.humanize", () => {
 
     test("should throw RangeError due to unsupported unit", () => {
         function callFunction() {
-            mindsmine.Duration.humanize(100, "hello");
+            mindsmine.Duration.humanreadable(100, "hello");
         }
         expect(callFunction).toThrow(RangeError);
         expect(callFunction).toThrow("Fatal Error. 'unit'. Unsupported 'hello' argument");
@@ -256,7 +256,7 @@ describe("mindsmine.Duration.humanize", () => {
         ]
     ].forEach(arr => {
         test(`should return '${arr[0]}' for '${arr[1]} ${arr[2]}'`, () => {
-            expect(mindsmine.Duration.humanize(arr[1], arr[2]).durationString).toEqual(arr[0]);
+            expect(mindsmine.Duration.humanreadable(arr[1], arr[2])).toEqual(arr[0]);
         });
     });
 
@@ -271,17 +271,17 @@ describe("mindsmine.Duration.humanize", () => {
         ]
     ].forEach(arr => {
         test(`should return '${arr[0]}' for '${arr[1]}'`, () => {
-            expect(mindsmine.Duration.humanize(arr[1]).durationString).toEqual(arr[0]);
+            expect(mindsmine.Duration.humanreadable(arr[1])).toEqual(arr[0]);
         });
     });
 
     test("should return the object", () => {
-        const humanisedDuration = mindsmine.Duration.humanize(273452400000, "ms");
+        const humanisedDurationJSON = mindsmine.Duration.humanreadable(273452400000, "ms", true);
 
-        expect(humanisedDuration.durationRawObject.years).toEqual(8);
-        expect(humanisedDuration.durationRawObject.months).toEqual(8);
-        expect(humanisedDuration.durationRawObject.days).toEqual(4);
-        expect(humanisedDuration.durationRawObject.hours).toEqual(23);
+        expect(humanisedDurationJSON.years).toEqual(8);
+        expect(humanisedDurationJSON.months).toEqual(8);
+        expect(humanisedDurationJSON.days).toEqual(4);
+        expect(humanisedDurationJSON.hours).toEqual(23);
     });
 });
 
