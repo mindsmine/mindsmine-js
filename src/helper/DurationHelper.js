@@ -487,7 +487,7 @@ mindsmine.Duration = class {
      *
      */
     static humanreadable(duration, unit = "ms", json = false) {
-        const _humanise = this.humanize(duration, unit);
+        const _humanise = this.#humanize(duration, unit);
 
         if (json) {
             return _humanise.durationRawObject;
@@ -514,7 +514,7 @@ mindsmine.Duration = class {
      * @deprecated Use {@link mindsmine.Duration#humanreadable}
      *
      */
-    static humanize(duration, unit = "ms") {
+    static #humanize(duration, unit = "ms") {
         const parent = this;
 
         if (!mindsmine.Number.isNumber(duration)) {
