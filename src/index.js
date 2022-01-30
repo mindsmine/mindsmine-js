@@ -360,6 +360,8 @@ class mindsmine {
     }
 }
 
+//_CONCATENATED_HOLDER_CODE
+
 //_CONCATENATED_HELPER_CODE
 
 mindsmine = mindsmine.Object.freeze(mindsmine, true);

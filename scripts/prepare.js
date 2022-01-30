@@ -38,39 +38,53 @@ FileSystem.copy(
     BuildProperties.folder.ROOT.SRC,
     BuildProperties.folder.SOURCE.CODE.ROOT
 );
-Console.info("Copied source code into build folder");
+Console.info("Source: Copied code into build folder");
 
 FileSystem.copy(
     BuildProperties.folder.ROOT.TEST,
     BuildProperties.folder.TEST.CODE.ROOT
 );
-Console.info("Copied test code into build folder");
+Console.info("Test: Copied code into build folder");
 
 FileSystem.concat(
     BuildProperties.folder.SOURCE.CODE.HELPER,
     BuildProperties.folder.SOURCE.CONCATENATED.HELPER,
     FileSystem.Filter.JS
 );
-Console.info("Concatenated all source helper files");
+Console.info("Source: Concatenated all helper files");
+
+FileSystem.concat(
+    BuildProperties.folder.SOURCE.CODE.HOLDER,
+    BuildProperties.folder.SOURCE.CONCATENATED.HOLDER,
+    FileSystem.Filter.JS
+);
+Console.info("Source: Concatenated all holder files");
 
 FileSystem.concat(
     BuildProperties.folder.TEST.CODE.HELPER,
     BuildProperties.folder.TEST.CONCATENATED.HELPER,
     FileSystem.Filter.JS
 );
-Console.info("Concatenated all test helper files");
+Console.info("Test: Concatenated all helper files");
+
+FileSystem.concat(
+    BuildProperties.folder.TEST.CODE.HOLDER,
+    BuildProperties.folder.TEST.CONCATENATED.HOLDER,
+    FileSystem.Filter.JS
+);
+Console.info("Test: Concatenated all holder files");
 
 FileSystem.copy(
     BuildProperties.folder.SOURCE.CODE.INDEX_FILE,
     BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE
 );
-Console.info("Copied source index file to concat folder");
+Console.info("Source: Copied index file to concat folder");
 
 FileSystem.copy(
     BuildProperties.folder.TEST.CODE.INDEX_FILE,
     BuildProperties.folder.TEST.CONCATENATED.INDEX_FILE
 );
-Console.info("Copied test index file to concat folder");
+Console.info("Test: Copied index file to concat folder");
 
 FileSystem.replace(
     BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE,
@@ -80,6 +94,17 @@ FileSystem.replace(
         "utf8"
     )
 );
+Console.info("Source: Replaced helper token with helper code");
+
+FileSystem.replace(
+    BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE,
+    BuildProperties.replaceToken.HOLDER_CODE,
+    fs.readFileSync(
+        BuildProperties.folder.SOURCE.CONCATENATED.HOLDER,
+        "utf8"
+    )
+);
+Console.info("Source: Replaced holder token with holder code");
 
 FileSystem.replace(
     BuildProperties.folder.TEST.CONCATENATED.INDEX_FILE,
@@ -89,6 +114,17 @@ FileSystem.replace(
         "utf8"
     )
 );
+Console.info("Test: Replaced helper token with helper code");
+
+FileSystem.replace(
+    BuildProperties.folder.TEST.CONCATENATED.INDEX_FILE,
+    BuildProperties.replaceToken.HOLDER_CODE,
+    fs.readFileSync(
+        BuildProperties.folder.TEST.CONCATENATED.HOLDER,
+        "utf8"
+    )
+);
+Console.info("Test: Replaced holder token with holder code");
 
 BuildProperties.replaceArray.forEach(arr => {
     FileSystem.replace(

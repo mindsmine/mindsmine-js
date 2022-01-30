@@ -107,7 +107,7 @@ mindsmine.Number = class {
             return false;
         }
 
-        let sqrt = Math.floor(Math.sqrt(num));
+        const sqrt = Math.floor(Math.sqrt(num));
 
         return Math.pow(sqrt, 2) === num;
     }

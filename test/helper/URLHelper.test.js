@@ -101,7 +101,7 @@ describe("mindsmine.URL.appendQuery", () => {
             "http://www.google.com",
             null,
             null,
-            "Fatal Error. 'param'. @ERROR_PERMITTED_STRING@"
+            "Fatal Error. 'name'. @ERROR_PERMITTED_STRING@"
         ]
     ].forEach(arr => {
         test(`should throw TypeError due to ${arr[0]}`, () => {
@@ -198,7 +198,7 @@ describe("mindsmine.URL.getQueryParameter", () => {
             "empty parameter key",
             "http://www.google.com",
             null,
-            "Fatal Error. 'queryParam'. @ERROR_PERMITTED_STRING@"
+            "Fatal Error. 'name'. @ERROR_PERMITTED_STRING@"
         ]
     ].forEach(arr => {
         test(`should throw TypeError due to ${arr[0]}`, () => {

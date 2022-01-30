@@ -20,30 +20,31 @@ import path from "path";
 
 const NOW = new Date(),
     TIMESTAMP = NOW.toISOString().replace(/[-:]/g, "").replace(/T/g, ".").replace(/.[0-9]+Z/g, ""),
-    OUTPUT_FILE = `${process.env.npm_package_name}-${process.env.npm_package_version}.min.js`;
+    OUTPUT_FILE = `${process.env.npm_package_name}-${process.env.npm_package_version}.min.js`,
 
-const __ROOT = process.cwd();
+    __ROOT = process.cwd(),
 
-const ROOT = {
-    BUILD: path.resolve(__ROOT, "build"),
-    DIST: path.resolve(__ROOT, "dist"),
-    DOCS: path.resolve(__ROOT, "docs"),
-    SRC: path.resolve(__ROOT, "src"),
-    TEST: path.resolve(__ROOT, "test")
-};
+    ROOT = {
+        BUILD: path.resolve(__ROOT, "build"),
+        DIST: path.resolve(__ROOT, "dist"),
+        DOCS: path.resolve(__ROOT, "docs"),
+        SRC: path.resolve(__ROOT, "src"),
+        TEST: path.resolve(__ROOT, "test")
+    };
 
 class folderRouters {
-    constructor(rootFolder, codeHelperName, concatenatedHelperName, codeIndexFileName, concatenatedIndexFileName) {
+    constructor(rootFolder, concatenatedHelperName, concatenatedHolderName, codeIndexFileName, concatenatedIndexFileName) {
         class innerClass {
-            constructor(rootFolder, rootInnerFolder, helperName, indexFileName) {
+            constructor(rootFolder, rootInnerFolder, helperName, holderName, indexFileName) {
                 this.ROOT = path.resolve(ROOT.BUILD, rootFolder, rootInnerFolder);
                 this.HELPER = path.resolve(this.ROOT, helperName);
+                this.HOLDER = path.resolve(this.ROOT, holderName);
                 this.INDEX_FILE = path.resolve(this.ROOT, indexFileName);
             }
         }
 
-        this.CODE = new innerClass(rootFolder, "code", codeHelperName, codeIndexFileName);
-        this.CONCATENATED = new innerClass(rootFolder, "concatenated", concatenatedHelperName, concatenatedIndexFileName);
+        this.CODE = new innerClass(rootFolder, "code", "helper", "holder", codeIndexFileName);
+        this.CONCATENATED = new innerClass(rootFolder, "concatenated", concatenatedHelperName, concatenatedHolderName, concatenatedIndexFileName);
     }
 }
 
@@ -51,10 +52,11 @@ export default {
     minifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     folder: {
         ROOT: ROOT,
-        SOURCE: new folderRouters("source", "helper", "helper.js", "index.js", "index.js"),
-        TEST: new folderRouters("test", "helper", "helper.test.js", "index.test.js", "final.test.js")
+        SOURCE: new folderRouters("source", "helper.js", "holder.js", "index.js", "index.js"),
+        TEST: new folderRouters("test", "helper.test.js", "holder.test.js", "index.test.js", "final.test.js")
     },
     replaceToken: {
+        HOLDER_CODE: "//_CONCATENATED_HOLDER_CODE",
         HELPER_CODE: "//_CONCATENATED_HELPER_CODE"
     },
     replaceArray: [

@@ -21,7 +21,7 @@ test("mindsmine.productName should return product name", () => {
 });
 
 test("mindsmine.productVersion should return product version", () => {
-    expect(mindsmine.productVersion).toBe("4.5.2");
+    expect(mindsmine.productVersion).toBe("4.6.0");
 });
 
 const NOT_OBJECTS = [
@@ -139,5 +139,7 @@ test("To avoid eslint from crapping out", () => {
     expect(NOT_NUMBERS).not.toBeNull();
     expect(NOT_STRINGS).not.toBeNull();
 });
+
+//_CONCATENATED_HOLDER_CODE
 
 //_CONCATENATED_HELPER_CODE

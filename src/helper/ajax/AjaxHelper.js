@@ -18,6 +18,8 @@
  * The Ajax class encapsulates an HTTP connection to the page's originating domain, allowing requests to be made to a
  * URL specified at request time.
  *
+ * @deprecated See {@link @MDN_API_URI@/fetch|fetch} for the in-built Promise based solution.
+ *
  * @since 1.0.0
  *
  */
@@ -28,6 +30,8 @@ mindsmine.Ajax = class {
      * @constant
      *
      * @returns {Number}
+     *
+     * @deprecated See {@link @MDN_API_URI@/fetch|fetch} for the in-built Promise based solution.
      *
      * @since 1.0.0
      *
@@ -43,6 +47,8 @@ mindsmine.Ajax = class {
      *
      * @returns {Boolean}
      *
+     * @deprecated See {@link @MDN_API_URI@/fetch|fetch} for the in-built Promise based solution.
+     *
      * @since 1.0.0
      *
      */
@@ -56,6 +62,8 @@ mindsmine.Ajax = class {
      * @constant
      *
      * @returns {XMLHttpRequest}
+     *
+     * @deprecated See {@link @MDN_API_URI@/fetch|fetch} for the in-built Promise based solution.
      *
      * @since 1.0.0
      *
@@ -100,6 +108,8 @@ mindsmine.Ajax = class {
      * @constant
      *
      * @returns {String[]}
+     *
+     * @deprecated See {@link @MDN_API_URI@/fetch|fetch} for the in-built Promise based solution.
      *
      * @since 1.0.0
      *
@@ -179,6 +189,8 @@ mindsmine.Ajax = class {
      * {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest} object.
      *
      * @throws {TypeError} If invalid arguments.
+     *
+     * @deprecated See {@link @MDN_API_URI@/fetch|fetch} for the in-built Promise based solution.
      *
      * @since 1.0.0
      *
