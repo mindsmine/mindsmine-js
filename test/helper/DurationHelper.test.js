@@ -260,7 +260,7 @@ describe("mindsmine.Duration.humanreadable", () => {
         ]
     ].forEach(arr => {
         test(`should return '${arr[0]}' for '${arr[1]} ${arr[2]}'`, () => {
-            expect(mindsmine.Duration.humanreadable(arr[1], arr[2])).toEqual(arr[0]);
+            expect(mindsmine.Duration.humanreadable(arr[1], arr[2]).displayString).toEqual(arr[0]);
         });
     });
 
@@ -275,17 +275,17 @@ describe("mindsmine.Duration.humanreadable", () => {
         ]
     ].forEach(arr => {
         test(`should return '${arr[0]}' for '${arr[1]}'`, () => {
-            expect(mindsmine.Duration.humanreadable(arr[1])).toEqual(arr[0]);
+            expect(mindsmine.Duration.humanreadable(arr[1]).displayString).toEqual(arr[0]);
         });
     });
 
     test("should return the object", () => {
-        const humanisedDurationJSON = mindsmine.Duration.humanreadable(273452400000, "ms", true);
+        const _durationHolder = mindsmine.Duration.humanreadable(273452400000, "ms");
 
-        expect(humanisedDurationJSON.years).toEqual(8);
-        expect(humanisedDurationJSON.months).toEqual(8);
-        expect(humanisedDurationJSON.days).toEqual(4);
-        expect(humanisedDurationJSON.hours).toEqual(23);
+        expect(_durationHolder.years).toEqual(8);
+        expect(_durationHolder.months).toEqual(8);
+        expect(_durationHolder.days).toEqual(4);
+        expect(_durationHolder.hours).toEqual(23);
     });
 });
 

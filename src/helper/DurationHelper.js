@@ -586,9 +586,8 @@ mindsmine.Duration = class {
      *
      * @param {Number} duration to be converted into a human readable string
      * @param {String} [unit="ms"] the unit level of the duration to be converted
-     * @param {Boolean} [json=false] whether to return JSON object instead of string
      *
-     * @returns {String|Object} Human readable string for the duration, by default. JSON representation when flag is set.
+     * @returns {Object} An instance of the <code>DurationHolder</code> object.
      *
      * @throws {TypeError} for invalid arguments
      * @throws {RangeError} for invalid unit level
@@ -596,14 +595,73 @@ mindsmine.Duration = class {
      * @since 4.6.0
      *
      */
-    static humanreadable(duration, unit = "ms", json = false) {
-        const _humanise = this.humanize(duration, unit);
+    static humanreadable(duration, unit = "ms") {
+        const parent = this;
 
-        if (json) {
-            return _humanise.durationRawObject;
+        if (!mindsmine.Number.isNumber(duration)) {
+            throw new TypeError("Fatal Error. 'duration'. @ERROR_PERMITTED_NUMBER@");
         }
 
-        return _humanise.durationString;
+        if (duration <= 0) {
+            throw new RangeError("Fatal Error. 'duration'. Duration should be a non-zero positive number.");
+        }
+
+        if (!parent.#isSupportedUnit(unit)) {
+            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
+        }
+
+        switch (parent.#normaliseUnit(unit)) {
+            case "d":
+                if (duration === 31) {
+                    return new parent.DurationHolder(0, 1);
+                }
+
+                if (duration === 366) {
+                    return new parent.DurationHolder(1);
+                }
+
+                break;
+            
+            case "w":
+                if (duration === 52) {
+                    return new parent.DurationHolder(1);
+                }
+
+                break;
+            
+            case "M":
+                if (duration === 12) {
+                    return new parent.DurationHolder(1);
+                }
+
+                break;
+        }
+
+        let durationInMS = duration * parent.#getMillisecondsInAUnit(unit);
+
+        const _dO = {};
+
+        _dO.years = Math.floor(durationInMS / parent.MILLISECONDS_IN_YEAR);
+        durationInMS %= parent.MILLISECONDS_IN_YEAR;
+
+        _dO.months = Math.floor(durationInMS / parent.MILLISECONDS_IN_MONTH);
+        durationInMS %= parent.MILLISECONDS_IN_MONTH;
+
+        _dO.days = Math.floor(durationInMS / parent.MILLISECONDS_IN_DAY);
+        durationInMS %= parent.MILLISECONDS_IN_DAY;
+
+        _dO.hours = Math.floor(durationInMS / parent.MILLISECONDS_IN_HOUR);
+        durationInMS %= parent.MILLISECONDS_IN_HOUR;
+
+        _dO.minutes = Math.floor(durationInMS / parent.MILLISECONDS_IN_MINUTE);
+        durationInMS %= parent.MILLISECONDS_IN_MINUTE;
+
+        _dO.seconds = Math.floor(durationInMS / parent.MILLISECONDS_IN_SECOND);
+        durationInMS %= parent.MILLISECONDS_IN_SECOND;
+
+        _dO.milliseconds = durationInMS;
+
+        return new parent.DurationHolder(_dO.years, _dO.months, _dO.days, _dO.hours, _dO.minutes, _dO.seconds, _dO.milliseconds);
     }
 
     /**
