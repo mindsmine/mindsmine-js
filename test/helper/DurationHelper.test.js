@@ -147,6 +147,16 @@ describe("mindsmine.Duration.humanize", () => {
         [
             "2 years",
             730,
+            "d"
+        ],
+        [
+            "2 years",
+            730,
+            "day"
+        ],
+        [
+            "2 years",
+            730,
             "days"
         ],
         [
@@ -157,12 +167,37 @@ describe("mindsmine.Duration.humanize", () => {
         [
             "1 year",
             12,
+            "M"
+        ],
+        [
+            "1 year",
+            12,
+            "month"
+        ],
+        [
+            "1 year",
+            12,
             "months"
         ],
         [
             "1 year",
             52,
+            "w"
+        ],
+        [
+            "1 year",
+            52,
+            "week"
+        ],
+        [
+            "1 year",
+            52,
             "weeks"
+        ],
+        [
+            "1 year",
+            1,
+            "y"
         ],
         [
             "1 month",
