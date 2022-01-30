@@ -137,6 +137,11 @@ mindsmine.Duration = class {
         "years"
     ];
 
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Milliseconds
+
     /**
      * Convenience function to return the number of milliseconds in a given unit.
      *
@@ -153,7 +158,7 @@ mindsmine.Duration = class {
         }
 
         if (!this.#SUPPORTED_UNITS.includes(unit)) {
-            throw new TypeError(`Fatal Error. 'unit'. Allowed values are ${this.#SUPPORTED_UNITS.join(", ")}.`);
+            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
         }
 
         switch (unit) {
@@ -198,14 +203,9 @@ mindsmine.Duration = class {
                 return this.MILLISECONDS_IN_SECOND * this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * 365;
     
             default:
-                throw new TypeError(`Fatal Error. 'unit'. Allowed values are ${this.#SUPPORTED_UNITS.join(", ")}.`);
+                throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
         }
     }
-
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // Milliseconds
 
     /**
      * Number of milliseconds in a minute.
@@ -297,6 +297,56 @@ mindsmine.Duration = class {
     // Seconds
 
     /**
+     * Convenience function to return the number of seconds in a given unit.
+     *
+     * @param {String} unit
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static #getSecondsInAUnit(unit = "s") {
+        if (mindsmine.String.isEmpty(unit)) {
+            return 1;
+        }
+
+        if (!this.#SUPPORTED_UNITS.includes(unit)) {
+            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
+        }
+
+        switch (unit) {
+            case "s":
+            case "second":
+            case "seconds":
+                return 1;
+            
+            case "m":
+            case "minute":
+            case "minutes":
+                return this.SECONDS_IN_MINUTE;
+            
+            case "h":
+            case "hour":
+            case "hours":
+                return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR;
+            
+            case "d":
+            case "day":
+            case "days":
+                return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
+            
+            case "w":
+            case "week":
+            case "weeks":
+                return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
+            
+            default:
+                throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
+        }
+    }
+
+    /**
      * Number of seconds in an hour.
      *
      * @constant
@@ -307,7 +357,7 @@ mindsmine.Duration = class {
      *
      */
     static get SECONDS_IN_HOUR() {
-        return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR;
+        return this.#getSecondsInAUnit("h");
     }
 
     /**
@@ -321,7 +371,7 @@ mindsmine.Duration = class {
      *
      */
     static get SECONDS_IN_DAY() {
-        return this.SECONDS_IN_HOUR * this.HOURS_IN_DAY;
+        return this.#getSecondsInAUnit("d");
     }
 
     /**
@@ -335,13 +385,58 @@ mindsmine.Duration = class {
      *
      */
     static get SECONDS_IN_WEEK() {
-        return this.SECONDS_IN_DAY * this.DAYS_IN_WEEK;
+        return this.#getSecondsInAUnit("w");
     }
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Minutes
+
+    /**
+     * Convenience function to return the number of minutes in a given unit.
+     *
+     * @param {String} unit
+     *
+     * @returns {Number}
+     *
+     * @since 4.5.3
+     *
+     */
+    static #getMinutesInAUnit(unit = "m") {
+        if (mindsmine.String.isEmpty(unit)) {
+            return 1;
+        }
+
+        if (!this.#SUPPORTED_UNITS.includes(unit)) {
+            throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
+        }
+
+        switch (unit) {
+            case "m":
+            case "minute":
+            case "minutes":
+                return 1;
+            
+            case "h":
+            case "hour":
+            case "hours":
+                return this.MINUTES_IN_HOUR;
+            
+            case "d":
+            case "day":
+            case "days":
+                return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
+            
+            case "w":
+            case "week":
+            case "weeks":
+                return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
+            
+            default:
+                throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
+        }
+    }
 
     /**
      * Number of minutes in a day.
@@ -354,7 +449,7 @@ mindsmine.Duration = class {
      *
      */
     static get MINUTES_IN_DAY() {
-        return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
+        return this.#getMinutesInAUnit("d");
     }
 
     /**
@@ -368,7 +463,7 @@ mindsmine.Duration = class {
      *
      */
     static get MINUTES_IN_WEEK() {
-        return this.MINUTES_IN_DAY * this.DAYS_IN_WEEK;
+        return this.#getMinutesInAUnit("w");
     }
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
