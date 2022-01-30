@@ -33,7 +33,7 @@ describe("mindsmine.DurationHolder", () => {
         expect(_durationHolderTest.hours).toEqual(23);
     });
 
-    test("should return 8 for minutes", () => {
+    test("should return 0 for minutes", () => {
         expect(_durationHolderTest.minutes).toEqual(0);
     });
 
