@@ -312,14 +312,14 @@ describe("mindsmine.Duration.preciseDiff", () => {
         const d1 = new Date();
         const d2 = new Date(2021, 0, 20);
 
-        expect(mindsmine.Duration.preciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
+        expect(mindsmine.Duration.preciseDiff(d1, d2).startAfterEnd).toBeTruthy();
     });
 
     test("should return not be first date is later", () => {
         const d1 = new Date(2021, 0, 20);
         const d2 = new Date();
 
-        expect(mindsmine.Duration.preciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
+        expect(mindsmine.Duration.preciseDiff(d1, d2).startAfterEnd).toBeFalsy();
     });
 
     test("should return precise difference", () => {
@@ -328,7 +328,7 @@ describe("mindsmine.Duration.preciseDiff", () => {
         const d1 = new Date(2008, 6, 12); // 07/12/2008
         const d2 = new Date(2020, 2, 7);  // 03/07/2020
 
-        expect(mindsmine.Duration.preciseDiff(d1, d2).durationString).toEqual(expectedResult);
+        expect(mindsmine.Duration.preciseDiff(d1, d2).displayString).toEqual(expectedResult);
     });
 });
 
@@ -355,14 +355,14 @@ describe("mindsmine.Duration.simplePreciseDiff", () => {
         const d1 = new Date();
         const d2 = new Date(2021, 0, 20);
 
-        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).firstDateIsAfter).toBeTruthy();
+        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).startAfterEnd).toBeTruthy();
     });
 
     test("should return not be first date is later", () => {
         const d1 = new Date(2021, 0, 20);
         const d2 = new Date();
 
-        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).firstDateIsAfter).toBeFalsy();
+        expect(mindsmine.Duration.simplePreciseDiff(d1, d2).startAfterEnd).toBeFalsy();
     });
 
     /*

@@ -425,6 +425,102 @@ mindsmine.Duration = class {
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     /**
+     * Class to hold the duration details
+     *
+     * @since 4.6.0
+     *
+     */
+    static DurationHolder = class {
+        #years;
+        #months;
+        #days;
+        #hours;
+        #minutes;
+        #seconds;
+        #milliseconds;
+        #startAfterEnd;
+
+        constructor(years = 0, months = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0) {
+            this.#years = years;
+            this.#months = months;
+            this.#days = days;
+            this.#hours = hours;
+            this.#minutes = minutes;
+            this.#seconds = seconds;
+            this.#milliseconds = milliseconds;
+        }
+        
+        /**
+         * @param {Boolean} startAfterEnd
+         */
+        set startAfterEnd(startAfterEnd) {
+            this.#startAfterEnd = startAfterEnd;
+        }
+
+        get startAfterEnd() {
+            return this.#startAfterEnd;
+        }
+
+        get years() {
+            return this.#years;
+        }
+
+        get months() {
+            return this.#months;
+        }
+
+        get days() {
+            return this.#days;
+        }
+
+        get hours() {
+            return this.#hours;
+        }
+
+        get minutes() {
+            return this.#minutes;
+        }
+
+        get seconds() {
+            return this.#seconds;
+        }
+
+        get milliseconds() {
+            return this.#milliseconds;
+        }
+
+        get displayString() {
+            const _dmArr = [];
+
+            if (this.#years > 0) {
+                _dmArr.push(`${this.#years} year${(this.#years > 1) ? "s" : ""}`);
+            }
+    
+            if (this.#months > 0) {
+                _dmArr.push(`${this.#months} month${(this.#months > 1) ? "s" : ""}`);
+            }
+    
+            if (this.#days > 0) {
+                _dmArr.push(`${this.#days} day${(this.#days > 1) ? "s" : ""}`);
+            }
+    
+            if (this.#hours > 0) {
+                _dmArr.push(`${this.#hours} hour${(this.#hours > 1) ? "s" : ""}`);
+            }
+    
+            if (this.#minutes > 0) {
+                _dmArr.push(`${this.#minutes} minute${(this.#minutes > 1) ? "s" : ""}`);
+            }
+    
+            if (this.#seconds > 0) {
+                _dmArr.push(`${this.#seconds} second${(this.#seconds > 1) ? "s" : ""}`);
+            }
+
+            return _dmArr.join(" ");
+        }
+    };
+
+    /**
      * 
      * @param {Number} years 
      * @param {Number} months 
@@ -727,11 +823,11 @@ mindsmine.Duration = class {
 
         }
 
-        const _durationObject = parent.#createDurationObject(_dO.years, _dO.months, _dO.days, _dO.hours, _dO.minutes, _dO.seconds);
+        const _durationHolder = new parent.DurationHolder(_dO.years, _dO.months, _dO.days, _dO.hours, _dO.minutes, _dO.seconds);
 
-        _durationObject.firstDateIsAfter = _startIsAfterEnd;
+        _durationHolder.startAfterEnd = _startIsAfterEnd;
 
-        return _durationObject;
+        return _durationHolder;
     }
 
     /**
@@ -774,10 +870,10 @@ mindsmine.Duration = class {
         _dO.seconds = diff.getUTCSeconds();
         _dO.milliseconds = diff.getMilliseconds();
 
-        const _durationObject = parent.#createDurationObject(_dO.years, _dO.months, _dO.days, _dO.hours, _dO.minutes, _dO.seconds);
+        const _durationHolder = new parent.DurationHolder(_dO.years, _dO.months, _dO.days, _dO.hours, _dO.minutes, _dO.seconds);
 
-        _durationObject.firstDateIsAfter = _startIsAfterEnd;
+        _durationHolder.startAfterEnd = _startIsAfterEnd;
 
-        return _durationObject;
+        return _durationHolder;
     }
 };
