@@ -615,10 +615,6 @@ mindsmine.Duration = class {
             throw new RangeError("Fatal Error. 'duration'. Duration should be a non-zero positive number.");
         }
 
-        if (mindsmine.String.isEmpty(unit)) {
-            throw new TypeError("Fatal Error. 'unit'. @ERROR_PERMITTED_STRING@");
-        }
-
         if (!this.#isSupportedUnit(unit)) {
             throw new TypeError(`Fatal Error. 'unit'. Unsupported '${unit}' argument`);
         }
@@ -631,7 +627,7 @@ mindsmine.Duration = class {
         let _diffMonths = Math.floor(durationInMS / parent.MILLISECONDS_IN_MONTH);
         durationInMS %= parent.MILLISECONDS_IN_MONTH;
 
-        let _diffDates = Math.floor(durationInMS / parent.MILLISECONDS_IN_DAY);
+        let _diffDays = Math.floor(durationInMS / parent.MILLISECONDS_IN_DAY);
         durationInMS %= parent.MILLISECONDS_IN_DAY;
 
         let _diffHours = Math.floor(durationInMS / parent.MILLISECONDS_IN_HOUR);
@@ -648,7 +644,7 @@ mindsmine.Duration = class {
         return parent.#createDurationObject(
             _diffYears,
             _diffMonths,
-            _diffDates,
+            _diffDays,
             _diffHours,
             _diffMinutes,
             _diffSeconds,
@@ -692,7 +688,7 @@ mindsmine.Duration = class {
 
         let _diffYears = dateObj2.getFullYear() - dateObj1.getFullYear();
         let _diffMonths = dateObj2.getMonth() - dateObj1.getMonth();
-        let _diffDates = dateObj2.getDate() - dateObj1.getDate();
+        let _diffDays = dateObj2.getDate() - dateObj1.getDate();
         let _diffHours = dateObj2.getHours() - dateObj1.getHours();
         let _diffMinutes = dateObj2.getMinutes() - dateObj1.getMinutes();
         let _diffSeconds = dateObj2.getSeconds() - dateObj1.getSeconds();
@@ -709,18 +705,18 @@ mindsmine.Duration = class {
 
         if (_diffHours < 0) {
             _diffHours += 24;
-            _diffDates--;
+            _diffDays--;
         }
 
-        if (_diffDates < 0) {
+        if (_diffDays < 0) {
             const _currentMonth = new Date(dateObj2.getFullYear(), dateObj2.getMonth());
 
             const daysInLastFullMonth = new Date(_currentMonth.getFullYear(), _currentMonth.getMonth(), 0).getDate();
 
             if (daysInLastFullMonth < dateObj1.getDate()) {
-                _diffDates = daysInLastFullMonth + _diffDates + (dateObj1.getDate() - daysInLastFullMonth);
+                _diffDays = daysInLastFullMonth + _diffDays + (dateObj1.getDate() - daysInLastFullMonth);
             } else {
-                _diffDates = daysInLastFullMonth + _diffDates;
+                _diffDays = daysInLastFullMonth + _diffDays;
             }
 
             _diffMonths--;
@@ -731,7 +727,7 @@ mindsmine.Duration = class {
             _diffYears--;
         }
 
-        const _durationObject = parent.#createDurationObject(_diffYears, _diffMonths, _diffDates, _diffHours, _diffMinutes, _diffSeconds);
+        const _durationObject = parent.#createDurationObject(_diffYears, _diffMonths, _diffDays, _diffHours, _diffMinutes, _diffSeconds);
 
         _durationObject.firstDateIsAfter = firstDateIsAfter;
 
