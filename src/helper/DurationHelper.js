@@ -432,7 +432,7 @@ mindsmine.Duration = class {
      * @param {Number} duration to be converted into a human readable information
      * @param {String} [unit="ms"] the unit level of the duration to be converted
      *
-     * @returns {Object} An instance of the <code>DurationHolder</code> object.
+     * @returns {Object} An instance of the {@link mindsmine.DurationHolder} object.
      *
      * @throws {TypeError} for invalid arguments
      * @throws {RangeError} for invalid unit level
@@ -533,7 +533,7 @@ mindsmine.Duration = class {
      * @param {Date} startDate Start Date
      * @param {Date} endDate End Date
      *
-     * @returns {Object} An instance of the <code>DurationHolder</code> object.
+     * @returns {Object} An instance of the {@link mindsmine.DurationHolder} object.
      *
      * @throws {TypeError} for invalid arguments
      *
@@ -649,7 +649,7 @@ mindsmine.Duration = class {
      * @param {Date} startDate Start Date
      * @param {Date} endDate End Date
      *
-     * @returns {Object} An instance of the <code>DurationHolder</code> object.
+     * @returns {Object} An instance of the {@link mindsmine.DurationHolder} object.
      *
      * @throws {TypeError} for invalid arguments
      *

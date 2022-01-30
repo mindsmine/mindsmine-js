@@ -30,6 +30,22 @@ mindsmine.DurationHolder = class {
     #milliseconds;
     #startAfterEnd;
 
+    /**
+     * Constructor to create the duration holder object.
+     *
+     * @constructor
+     *
+     * @param {Number} [years=0] Number of years
+     * @param {Number} [months=0] Number of months
+     * @param {Number} [days=0] Number of days
+     * @param {Number} [hours=0] Number of hours
+     * @param {Number} [minutes=0] Number of minutes
+     * @param {Number} [seconds=0] Number of seconds
+     * @param {Number} [milliseconds=0] Number of milliseconds
+     *
+     * @since 4.6.0
+     * 
+     */
     constructor(years = 0, months = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0) {
         this.#years = years;
         this.#months = months;
@@ -40,45 +56,114 @@ mindsmine.DurationHolder = class {
         this.#milliseconds = milliseconds;
     }
     
-    /**
-     * @param {Boolean} startAfterEnd
-     */
     set startAfterEnd(startAfterEnd) {
         this.#startAfterEnd = startAfterEnd;
     }
 
+    /**
+     * Flag for start date occuring after end date.
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get startAfterEnd() {
         return this.#startAfterEnd;
     }
 
+    /**
+     * Years
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get years() {
         return this.#years;
     }
 
+    /**
+     * Months
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get months() {
         return this.#months;
     }
 
+    /**
+     * Days
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get days() {
         return this.#days;
     }
 
+    /**
+     * Hours
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get hours() {
         return this.#hours;
     }
 
+    /**
+     * Minutes
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get minutes() {
         return this.#minutes;
     }
 
+    /**
+     * Seconds
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get seconds() {
         return this.#seconds;
     }
 
+    /**
+     * Milliseconds
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get milliseconds() {
         return this.#milliseconds;
     }
 
+    /**
+     * Display String for the object.
+     *
+     * @type {Boolean}
+     *
+     * @since 4.6.0
+     *
+     */
     get displayString() {
         const _dmArr = [];
 
