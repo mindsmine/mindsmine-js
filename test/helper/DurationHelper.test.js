@@ -240,6 +240,11 @@ describe("mindsmine.Duration.humanize", () => {
             "days"
         ],
         [
+            "14 days",
+            2,
+            "w"
+        ],
+        [
             "1 year",
             366,
             "days"

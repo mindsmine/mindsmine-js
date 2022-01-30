@@ -313,42 +313,6 @@ mindsmine.Duration = class {
     // Seconds
 
     /**
-     * Convenience function to return the number of seconds in a given unit.
-     *
-     * @param {String} unit
-     *
-     * @returns {Number}
-     *
-     * @since 4.5.3
-     *
-     */
-    static #getSecondsInAUnit(unit = "s") {
-        if (mindsmine.String.isEmpty(unit)) {
-            return 1;
-        }
-
-        switch (this.#normaliseUnit(unit)) {
-            case "s":
-                return 1;
-            
-            case "m":
-                return this.SECONDS_IN_MINUTE;
-            
-            case "h":
-                return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR;
-            
-            case "d":
-                return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
-            
-            case "w":
-                return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
-            
-            default:
-                throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
-        }
-    }
-
-    /**
      * Number of seconds in an hour.
      *
      * @constant
@@ -359,7 +323,7 @@ mindsmine.Duration = class {
      *
      */
     static get SECONDS_IN_HOUR() {
-        return this.#getSecondsInAUnit("h");
+        return this.SECONDS_IN_MINUTE * this.MINUTES_IN_HOUR;
     }
 
     /**
@@ -373,7 +337,7 @@ mindsmine.Duration = class {
      *
      */
     static get SECONDS_IN_DAY() {
-        return this.#getSecondsInAUnit("d");
+        return this.SECONDS_IN_HOUR * this.HOURS_IN_DAY;
     }
 
     /**
@@ -387,46 +351,13 @@ mindsmine.Duration = class {
      *
      */
     static get SECONDS_IN_WEEK() {
-        return this.#getSecondsInAUnit("w");
+        return this.SECONDS_IN_DAY * this.DAYS_IN_WEEK;
     }
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Minutes
-
-    /**
-     * Convenience function to return the number of minutes in a given unit.
-     *
-     * @param {String} unit
-     *
-     * @returns {Number}
-     *
-     * @since 4.5.3
-     *
-     */
-    static #getMinutesInAUnit(unit = "m") {
-        if (mindsmine.String.isEmpty(unit)) {
-            return 1;
-        }
-
-        switch (this.#normaliseUnit(unit)) {
-            case "m":
-                return 1;
-            
-            case "h":
-                return this.MINUTES_IN_HOUR;
-            
-            case "d":
-                return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
-            
-            case "w":
-                return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
-            
-            default:
-                throw new RangeError(`Fatal Error. 'unit'. Unsupported '${unit}'.`);
-        }
-    }
 
     /**
      * Number of minutes in a day.
@@ -439,7 +370,7 @@ mindsmine.Duration = class {
      *
      */
     static get MINUTES_IN_DAY() {
-        return this.#getMinutesInAUnit("d");
+        return this.MINUTES_IN_HOUR * this.HOURS_IN_DAY;
     }
 
     /**
@@ -453,7 +384,7 @@ mindsmine.Duration = class {
      *
      */
     static get MINUTES_IN_WEEK() {
-        return this.#getMinutesInAUnit("w");
+        return this.MINUTES_IN_DAY * this.DAYS_IN_WEEK;
     }
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -474,12 +405,6 @@ mindsmine.Duration = class {
     static get HOURS_IN_WEEK() {
         return this.HOURS_IN_DAY * this.DAYS_IN_WEEK;
     }
-
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -545,7 +470,7 @@ mindsmine.Duration = class {
     }
 
     /**
-     * Humanises the duration, approximately.
+     * Humanises the duration, approximately. This is <strong>not</strong> an accurate representation.
      *
      * Note: This function assumes a year of 365 days and a month of 30 days.
      *
