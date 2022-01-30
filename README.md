@@ -16,6 +16,7 @@ others.
 * Deprecated `mindsmine.Ajax` class in lieu of the `fetch` function. Support will be removed in the next major release.
 * Updated internal mechanism of URL methods
 * Updated accuracy of Duration support methods
+* Added `mindsmine.DurationHolder` class to help with the Duration methods
 
 **4.5.2**
 * Node 17+ supported
