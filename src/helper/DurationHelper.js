@@ -488,6 +488,7 @@ mindsmine.Duration = class {
      */
     static humanreadable(duration, unit = "ms", json = false) {
         const _humanise = this.humanize(duration, unit);
+
         if (json) {
             return _humanise.durationRawObject;
         }
