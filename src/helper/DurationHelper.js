@@ -592,17 +592,17 @@ mindsmine.Duration = class {
 
     /**
      * Humanises the duration.
-     * 
+     *
      * @param {Number} duration to be humanised.
      * @param {String} [unit="ms"] the unit level at which to humanise the duration.
-     * 
+     *
      * @returns {Object} Returns an object with <code>durationObject</code> and string representation.
-     * 
+     *
      * @throws {TypeError} for invalid arguments
      * @throws {RangeError} for invalid unit string
-     * 
+     *
      * @since 4.5.0
-     * 
+     *
      */
     static humanize(duration, unit = "ms") {
         const parent = this;
