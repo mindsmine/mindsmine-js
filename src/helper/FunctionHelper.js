@@ -25,7 +25,7 @@ mindsmine.Function = class {
      * Returns <code>true</code> if object is a Function
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.Function.isFunction(null)           //  false
      *      mindsmine.Function.isFunction(undefined)      //  false
      *      mindsmine.Function.isFunction(NaN)            //  false
@@ -37,6 +37,7 @@ mindsmine.Function = class {
      *      mindsmine.Function.isFunction([])             //  false
      *      mindsmine.Function.isFunction({})             //  false
      *      mindsmine.Function.isFunction(new Date())     //  false
+     * ```
      *
      * @param {Object} obj The object to test
      *
