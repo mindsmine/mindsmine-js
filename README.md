@@ -16,6 +16,7 @@ others.
 * `mindsmine` is now compatable with ESM Modules
 * Added HTTP support methods to wrap the `fetch` function
 * Using `node-fetch` library to allow for Unit Testing
+* Cleaned up documentation for better readability
 
 **4.6.0**
 * Deprecated `mindsmine.Ajax` class in lieu of the `fetch` function. Support will be removed in the next major release.
