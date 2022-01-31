@@ -146,7 +146,7 @@ describe("mindsmine.Http.request method", () => {
         });
     });
 
-    test("should work for 'POST' HTTP method with JSON data", () => {
+    test("should work for 'POST' HTTP method with JSON data", async () => {
         const testJSONObject = {
             param1: "something",
             param2: "something else"
@@ -154,20 +154,20 @@ describe("mindsmine.Http.request method", () => {
 
         expect.assertions(3);
 
-        return mindsmine.Http.request(
+        const response = await mindsmine.Http.request(
             "https://httpbin.org/anything",
             {
                 method: "POST",
                 jsonData: testJSONObject
             }
-        ).then(response => {
-            expect(response).not.toBeNull();
-            expect(response.ok).toBeTruthy();
-            expect(response.status).toBe(200);
+        );
 
-            response.json().then(data => {
-                expect(data["json"]).toEqual(expect.objectContaining(testJSONObject));
-            });
+        expect(response).not.toBeNull();
+        expect(response.ok).toBeTruthy();
+        expect(response.status).toBe(200);
+
+        response.json().then(data => {
+            expect(data["json"]).toEqual(expect.objectContaining(testJSONObject));
         });
     });
 });
