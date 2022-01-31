@@ -26,13 +26,14 @@ mindsmine.String = class {
      * token must be unique, and must increment in the format <code>{0}</code>, <code>{1}</code>, etc.
      *
      * Example usage:
-     *
+     * ```javascript
      *      var str1 = "Hello";
      *      var str2 = "World";
      *
      *      var str3 = mindsmine.String.format("Let us combine {0} and {1} together.", str1, str2);
      *
      *      // str3 now contains the string: "Let us combine Hello and World together."
+     * ```
      *
      * @param {String} string The tokenised string to be formatted.
      * @param {...String} values The values to replace tokens <code>{0}</code>, <code>{1}</code>, etc. in order.
@@ -125,7 +126,7 @@ mindsmine.String = class {
      * If the passed-in object is a non-null string, then it is returned as-is.
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.String.getNullSafe(null)       //  ""
      *      mindsmine.String.getNullSafe(undefined)  //  ""
      *      mindsmine.String.getNullSafe(NaN)        //  ""
@@ -133,6 +134,7 @@ mindsmine.String = class {
      *      mindsmine.String.getNullSafe("")         //  ""
      *      mindsmine.String.getNullSafe("hello")    //  hello
      *      mindsmine.String.getNullSafe(true)       //  ""
+     * ```
      *
      * @param {String} str The string to safeguard against <code>null</code>.
      *
@@ -174,7 +176,7 @@ mindsmine.String = class {
      * </ul>
      *
      * Example usage:
-     * 
+     * ```javascript
      *      mindsmine.String.areEqual(null, null, true)       //  true
      *      mindsmine.String.areEqual(null, "", true)         //  true
      *      mindsmine.String.areEqual("", null, true)         //  true
@@ -207,6 +209,7 @@ mindsmine.String = class {
      *      mindsmine.String.areEqual("ab c", "abc", false)   //  false
      *      mindsmine.String.areEqual("ABC", "abc", false)    //  false
      *      mindsmine.String.areEqual("abc", "abc", false)    //  true
+     * ```
      *
      * @param {String} str1 to compare
      * @param {String} str2 to compare
@@ -236,7 +239,7 @@ mindsmine.String = class {
      * Convenience method equivalent to <code>mindsmine.String.areEqual(string, string.reverse, flag)</code>
      * 
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.String.isPalindrome(null, true)      //  true
      *      mindsmine.String.isPalindrome("", true)        //  true
      *      mindsmine.String.isPalindrome("   ", true)     //  true
@@ -269,6 +272,7 @@ mindsmine.String = class {
      *      mindsmine.String.isPalindrome("madam", false)  //  true
      *      mindsmine.String.isPalindrome("Madam", false)  //  false
      *      mindsmine.String.isPalindrome("hello", false)  //  false
+     * ```
      *
      * @see {@link mindsmine.String.areEqual}
      * @see {@link @WIKI_URI@/Palindrome|Palindrome (Wikipedia)}

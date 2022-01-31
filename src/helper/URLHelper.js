@@ -25,9 +25,10 @@ mindsmine.URL = class {
      * Returns <code>true</code> if the passed string is a valid URL, <code>false</code> otherwise.
      *
      * Example Usage:
-     *
+     * ```javascript
      *      mindsmine.URL.isValidURL("http://userid@example.com")       //  true
      *      mindsmine.URL.isValidURL("www.example.com/main.html")       //  false
+     * ```
      *
      * @see {@link @MDN_API_URI@/URL|URL}
      *
