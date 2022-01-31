@@ -98,6 +98,8 @@ describe("mindsmine.Http.request method", () => {
     });
 
     test("should work for 'GET' HTTP method", async () => {
+        expect.assertions(1);
+
         const response = await mindsmine.Http.request(`${BASE_URI}&types=quote&symbols=${stockSymbols.join(",")}`);
 
         expect(response).not.toBeNull();
@@ -111,16 +113,18 @@ describe("mindsmine.Http.request method", () => {
         });
     });
 
-    /*
-    test("should break with status code 400", () => {
-        expect.assertions(2);
+    test("should break with status code 400", async () => {
+        expect.assertions(4);
 
-        return mindsmine.Http.request(`${BASE_URI}&types=quote&symbol=${stockSymbols.join(",")}`).catch(response => {
+        try {
+            return await mindsmine.Http.request(`${BASE_URI}&types=quote&symbol=${stockSymbols.join(",")}`);
+        } catch (response) {
             expect(response).not.toBeNull();
             expect(response.status).toBe(400);
-        });
+        }
     });
 
+    /*
     supportedMethods.forEach(method => {
         test(`should throw TypeError for '${method}' HTTP method`, () => {
             expect.assertions(2);
