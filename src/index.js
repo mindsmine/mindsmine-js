@@ -313,16 +313,20 @@ if (!String.prototype.padEnd) {
  * Common utility functions (such as extensions to native JavaScript objects) are provided as direct properties of the
  * mindsmine namespace.
  *
+ * @namespace mindsmine
+ *
  * @since 1.0
  *
  */
-class mindsmine {
+export default class mindsmine {
     /**
      * Name of the product.
      *
      * @constant
      *
      * @returns {String} Name of the product.
+     *
+     * @memberof mindsmine
      *
      * @since 1.0.0
      *
@@ -338,6 +342,8 @@ class mindsmine {
      *
      * @returns {String} Version of the product.
      *
+     * @memberof mindsmine
+     *
      * @since 1.0.0
      *
      */
@@ -351,6 +357,8 @@ class mindsmine {
      * @constant
      *
      * @returns {String} Build timestamp of the product.
+     *
+     * @memberof mindsmine
      *
      * @since 1.0.0
      *

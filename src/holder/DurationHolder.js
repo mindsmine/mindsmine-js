@@ -28,7 +28,6 @@ mindsmine.DurationHolder = class {
     #minutes;
     #seconds;
     #milliseconds;
-    #startAfterEnd;
 
     /**
      * Constructor to create the duration holder object.
@@ -56,108 +55,28 @@ mindsmine.DurationHolder = class {
         this.#milliseconds = milliseconds;
     }
     
-    set startAfterEnd(startAfterEnd) {
-        this.#startAfterEnd = startAfterEnd;
-    }
-
     /**
-     * Flag for start date occuring after end date.
+     * Object notation for the Duration Holder instance.
      *
-     * @type {Boolean}
+     * @type {Object}
      *
-     * @since 4.6.0
+     * @since 4.7.0
      *
      */
-    get startAfterEnd() {
-        return this.#startAfterEnd;
+    get jsonNotation() {
+        return {
+            years: this.#years,
+            months: this.#months,
+            days: this.#days,
+            hours: this.#hours,
+            minutes: this.#minutes,
+            seconds: this.#seconds,
+            milliseconds: this.#milliseconds
+        };
     }
 
     /**
-     * Years
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
-    get years() {
-        return this.#years;
-    }
-
-    /**
-     * Months
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
-    get months() {
-        return this.#months;
-    }
-
-    /**
-     * Days
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
-    get days() {
-        return this.#days;
-    }
-
-    /**
-     * Hours
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
-    get hours() {
-        return this.#hours;
-    }
-
-    /**
-     * Minutes
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
-    get minutes() {
-        return this.#minutes;
-    }
-
-    /**
-     * Seconds
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
-    get seconds() {
-        return this.#seconds;
-    }
-
-    /**
-     * Milliseconds
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
-    get milliseconds() {
-        return this.#milliseconds;
-    }
-
-    /**
-     * Display String for the object.
+     * String notation for the Duration Holder instance.
      *
      * @type {Boolean}
      *

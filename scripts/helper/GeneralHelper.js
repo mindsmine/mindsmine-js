@@ -30,7 +30,9 @@ const NOW = new Date(),
         DOCS: path.resolve(__ROOT, "docs"),
         SRC: path.resolve(__ROOT, "src"),
         TEST: path.resolve(__ROOT, "test")
-    };
+    },
+    MDN_DOCS_URI = "https://developer.mozilla.org/en-US/docs",
+    MDN_WEB_URI = `${MDN_DOCS_URI}/Web`;
 
 class folderRouters {
     constructor(rootFolder, concatenatedHelperName, concatenatedHolderName, codeIndexFileName, concatenatedIndexFileName) {
@@ -89,12 +91,20 @@ export default {
             "https://en.wikipedia.org/wiki"
         ],
         [
+            "@MDN_GLOSSARY_URI@",
+            `${MDN_DOCS_URI}/Glossary`
+        ],
+        [
+            "@MDN_WEB_URI@",
+            MDN_WEB_URI
+        ],
+        [
             "@MDN_API_URI@",
-            "https://developer.mozilla.org/en-US/docs/Web/API"
+            `${MDN_WEB_URI}/API`
         ],
         [
             "@MDN_JS_URI@",
-            "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects"
+            `${MDN_WEB_URI}/JavaScript/Reference/Global_Objects`
         ],
         [
             "@ERROR_PERMITTED_ARRAY@",

@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript numbers.
  *
+ * @namespace mindsmine.Number
+ *
  * @since 1.0.0
  *
  */
@@ -26,7 +28,7 @@ mindsmine.Number = class {
      * Returns <code>true</code> if object is a Number
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.Number.isNumber(null)           //  false
      *      mindsmine.Number.isNumber(undefined)      //  false
      *      mindsmine.Number.isNumber(NaN)            //  false
@@ -38,6 +40,7 @@ mindsmine.Number = class {
      *      mindsmine.Number.isNumber([])             //  false
      *      mindsmine.Number.isNumber({})             //  false
      *      mindsmine.Number.isNumber(new Date())     //  false
+     * ```
      *
      * @param {Object} obj The object to test
      *
@@ -56,7 +59,7 @@ mindsmine.Number = class {
      * If the passed-in object is a non-null number, then it is returned as-is.
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.Number.getNullSafe(null)       //  -Infinity
      *      mindsmine.Number.getNullSafe(undefined)  //  -Infinity
      *      mindsmine.Number.getNullSafe(NaN)        //  -Infinity
@@ -64,6 +67,7 @@ mindsmine.Number = class {
      *      mindsmine.Number.getNullSafe("")         //  -Infinity
      *      mindsmine.Number.getNullSafe("hello")    //  -Infinity
      *      mindsmine.Number.getNullSafe(true)       //  -Infinity
+     * ```
      *
      * @param {Number} num The number to safeguard against <code>null</code>.
      *
@@ -84,7 +88,7 @@ mindsmine.Number = class {
      * Returns <code>true</code> if number is a Perfect Square
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.Number.isPerfectSquare(0)    //  true
      *      mindsmine.Number.isPerfectSquare(1)    //  true
      *      mindsmine.Number.isPerfectSquare(81)   //  true
@@ -92,6 +96,7 @@ mindsmine.Number = class {
      *      mindsmine.Number.isPerfectSquare(5)    //  false
      *      mindsmine.Number.isPerfectSquare(101)  //  false
      *      mindsmine.Number.isPerfectSquare(250)  //  false
+     * ```
      *
      * @see {@link @WIKI_URI@/Perfect_square|Perfect Square (Wikipedia)}
      *

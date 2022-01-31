@@ -19,6 +19,8 @@
  *
  * **NOTE**: Unless otherwise specified, all callback functions are under <code>window</code> scope.
  *
+ * @namespace mindsmine.Window
+ *
  * @since 1.0.0
  *
  */

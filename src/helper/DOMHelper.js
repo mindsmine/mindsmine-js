@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript DOM.
  *
+ * @namespace mindsmine.DOM
+ *
  * @since 4.0.0
  *
  */

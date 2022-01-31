@@ -14,14 +14,34 @@
  limitations under the License.
  */
 
-const mindsmine = require("../../../dist/@REQUIRE_FILE@");
+import fetch, {Request, Response, Headers} from "node-fetch";
+
+import mindsmine from "../../../dist/@REQUIRE_FILE@";
+
+beforeAll(() => {
+    if (!globalThis.fetch) {
+        globalThis.fetch = fetch;
+    }
+
+    if (!globalThis.Request) {
+        globalThis.Request = Request;
+    }
+
+    if (!globalThis.Response) {
+        globalThis.Response = Response;
+    }
+
+    if (!globalThis.Headers) {
+        globalThis.Headers = Headers;
+    }
+});
 
 test("mindsmine.productName should return product name", () => {
     expect(mindsmine.productName).toBe("mindsmine-js");
 });
 
 test("mindsmine.productVersion should return product version", () => {
-    expect(mindsmine.productVersion).toBe("4.6.0");
+    expect(mindsmine.productVersion).toBe("4.7.0");
 });
 
 const NOT_OBJECTS = [

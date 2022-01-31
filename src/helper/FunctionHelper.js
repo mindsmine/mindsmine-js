@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript functions.
  *
+ * @namespace mindsmine.Function
+ *
  * @since 3.0.0
  *
  */
@@ -25,7 +27,7 @@ mindsmine.Function = class {
      * Returns <code>true</code> if object is a Function
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.Function.isFunction(null)           //  false
      *      mindsmine.Function.isFunction(undefined)      //  false
      *      mindsmine.Function.isFunction(NaN)            //  false
@@ -37,6 +39,7 @@ mindsmine.Function = class {
      *      mindsmine.Function.isFunction([])             //  false
      *      mindsmine.Function.isFunction({})             //  false
      *      mindsmine.Function.isFunction(new Date())     //  false
+     * ```
      *
      * @param {Object} obj The object to test
      *

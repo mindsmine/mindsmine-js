@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript objects.
  *
+ * @namespace mindsmine.Object
+ *
  * @since 1.0.0
  *
  */
@@ -57,7 +59,7 @@ mindsmine.Object = class {
      * Returns the first matching key corresponding to the given value.
      *
      * Example usage:
-     *
+     * ```javascript
      *      var obj1 = { "key1" : "value1", "key2" : "value2"};
      *
      *      var val1 = "value2";
@@ -65,6 +67,7 @@ mindsmine.Object = class {
      *      var key = mindsmine.Object.getKey(obj1, val1);
      *
      *      // key now contains the object: "key2"
+     * ```
      *
      * @param {Object} obj The object from which to retrieve the key.
      *
@@ -125,7 +128,7 @@ mindsmine.Object = class {
      * Returns <code>true</code> if the passed value is an Empty JavaScript Object.
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.Object.isEmpty(null)           //  false
      *      mindsmine.Object.isEmpty(undefined)      //  false
      *      mindsmine.Object.isEmpty(NaN)            //  false
@@ -136,6 +139,7 @@ mindsmine.Object = class {
      *      mindsmine.Object.isEmpty(function() {})  //  false
      *      mindsmine.Object.isEmpty([])             //  false
      *      mindsmine.Object.isEmpty({})             //  true
+     * ```
      *
      * @param {Object} obj The object to test.
      *
@@ -154,7 +158,7 @@ mindsmine.Object = class {
      * If the passed-in object is a non-null object, then it is returned as-is.
      *
      * Example usage:
-     *
+     * ```javascript
      *      var obj1 = { "key1" : "value1", "key2" : "value2"};
      *      var obj2 = null;
      *
@@ -164,6 +168,7 @@ mindsmine.Object = class {
      *
      *      // obj3 now contains the object: { "key1" : "value1", "key2" : "value2"}
      *      // obj4 now contains the object: {}
+     * ```
      *
      * @param {Object} obj The object to safeguard against <code>null</code>.
      *
