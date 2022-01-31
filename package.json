@@ -38,7 +38,7 @@
     "eslint": "8.8.0",
     "jest": "27.4.7",
     "jsdoc": "3.6.10",
-    "node-fetch": "3.2.0",
+    "node-fetch-commonjs": "3.1.1",
     "terser": "5.10.0"
   }
 }
