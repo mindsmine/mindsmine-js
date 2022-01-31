@@ -316,7 +316,7 @@ if (!String.prototype.padEnd) {
  * @since 1.0
  *
  */
-class mindsmine {
+export default class mindsmine {
     /**
      * Name of the product.
      *
