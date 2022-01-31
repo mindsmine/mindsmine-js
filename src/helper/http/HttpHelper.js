@@ -18,9 +18,9 @@
  * This class enhances the {@link @MDN_API_URI@/Fetch_API|Fetch API} by rejecting on HTTP error status, even for an HTTP <code>404</code>
  * or <code>500</code>.
  *
- * <u>Additional</u>: The {@link @MDN_API_URI@/Fetch_API|Fetch API} provides an interface for fetching resources (<em>including across
- * the network</em>). It will seem familiar to anyone who has used {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest}, but the new API
- * provides a more powerful and flexible feature set.
+ * The {@link @MDN_API_URI@/Fetch_API|Fetch API} provides an interface for fetching resources (<em>including across the network</em>).
+ * It will seem familiar to anyone who has used {@link @MDN_API_URI@/XMLHttpRequest|XMLHttpRequest}, but the new API provides a more
+ * powerful and flexible feature set.
  *
  * <u>Problem with Fetch API</u>: The {@link @MDN_JS_URI@/Promise|Promise} returned from <code>fetch()</code> <strong>will not reject
  * on HTTP error status</strong> even if the response is an HTTP <code>404</code> or <code>500</code>. Instead, it will resolve normally
@@ -53,52 +53,48 @@ mindsmine.Http = class {
     }
 
     /**
-     * Sends an HTTP request to a remote server and returns a Promise object.
-     * 
+     * Sends an HTTP request to a remote server and returns a Promise object. This function enhances the global
+     * <code>{@link @MDN_API_URI@/fetch|fetch}</code> function by rejecting on HTTP error status, even for an HTTP <code>404</code> or
+     * <code>500</code>.
+     *
      * The promise resolves to the {@link @MDN_API_URI@/Response|Response} object representing the response to the request.
-     * 
-     * This function enhances the global <code>{@link @MDN_API_URI@/fetch|fetch}</code> function by rejecting on HTTP error status, even
-     * for an HTTP <code>404</code> or <code>500</code>.
-     * 
+     *
      * <u>Problem with <code>fetch</code> function</u>: A <code>fetch()</code> promise only rejects when a network error is encountered
      * (which is usually when there is a permissions issue or similar). A <code>fetch()</code> promise does <em>not</em> reject on HTTP
      * errors (<code>404</code>, etc.). Instead, a <code>then()</code> handler must check the
      * <code>{@link @MDN_API_URI@/Response/ok|Response.ok}</code> and/or
      * <code>{@link @MDN_API_URI@/Response/status|Response.status}</code> properties.
-     * 
-     * Requests made by this method are by default asynchronous, and will return immediately. No data from the server will be available
-     * to the statement immediately following this call.
      *
-     * Example Usage:
+     * <u>Example Usage</u>:
+     * ```javascript
+     *    mindsmine.Http.request(
+     *       "valid URI",
+     *       {
+     *          headers: {
+     *             "Accept" : "some value",
+     *             "Content-Type" : "some value",
+     *             "Authorization" : "some value"
+     *          }
+     *       }
      *
-     *      mindsmine.Http.request(
-     *           "valid URI",
-     *           {
-     *                headers: {
-     *                     "Accept" : "some value",
-     *                     "Content-Type" : "some value",
-     *                     "Authorization" : "some value"
-     *                }
-     *           }
+     *    ).then((response) => {
      *
-     *      ).then((response) => {
+     *       console.log(`HTTP status code = ${response.status}`);
      *
-     *           console.log(`HTTP status code = ${response.status}`);
+     *       response.json().then(data => {
+     *          console.log(data);
+     *       });
      *
-     *           response.json().then(data => {
-     *                console.log(data);
-     *           });
+     *    }).catch((response) => {
      *
-     *      }).catch((response) => {
+     *       console.log(`HTTP error code = ${response.status}`);
      *
-     *           console.log(`HTTP error code = ${response.status}`);
+     *    }).finally(() => {
      *
-     *      }).finally(() => {
+     *       console.log("This function is called regardless of success or failure.");
      *
-     *           console.log("This function is called regardless of success or failure.");
-     *
-     *      });
-     *
+     *    });
+     * ```
      *
      * @param {String} url The URL to which to send the request.
      * 

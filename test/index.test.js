@@ -18,8 +18,6 @@ import fetch, {Request, Response, Headers} from "node-fetch";
 
 import mindsmine from "../../../dist/@REQUIRE_FILE@";
 
-// const mindsmine = require("../../../dist/@REQUIRE_FILE@");
-
 beforeAll(() => {
     if (!globalThis.fetch) {
         globalThis.fetch = fetch;
