@@ -121,6 +121,8 @@ mindsmine.Duration = class {
     /**
      * Supported units
      *
+     * @private
+     *
      * @since 4.6.0
      *
      */
@@ -158,6 +160,8 @@ mindsmine.Duration = class {
      *
      * @returns {Boolean}
      *
+     * @private
+     *
      * @since 4.6.0
      * 
      */
@@ -173,6 +177,8 @@ mindsmine.Duration = class {
      * Normalises the unit for usage in the class.
      *
      * @param {String} unit To be normalised
+     *
+     * @private
      *
      * @returns {String}
      *
@@ -198,6 +204,8 @@ mindsmine.Duration = class {
      * @param {String} unit
      *
      * @returns {Number}
+     *
+     * @private
      *
      * @since 4.6.0
      *
@@ -515,6 +523,8 @@ mindsmine.Duration = class {
      * @param {Number} change 
      *
      * @returns {Number}
+     *
+     * @private
      *
      * @since 4.6.0
      *

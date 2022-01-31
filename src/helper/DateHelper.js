@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript dates.
  *
+ * @namespace mindsmine.Date
+ *
  * @since 4.5.0
  *
  */

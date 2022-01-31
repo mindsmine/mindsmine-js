@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript booleans.
  *
+ * @namespace mindsmine.Boolean
+ *
  * @since 1.0.0
  *
  */

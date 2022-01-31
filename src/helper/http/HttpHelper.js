@@ -38,6 +38,8 @@ mindsmine.Http = class {
      *
      * @returns {String[]}
      *
+     * @private
+     *
      * @since 4.7.0
      *
      */
