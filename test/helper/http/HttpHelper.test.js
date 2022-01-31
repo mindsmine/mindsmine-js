@@ -16,14 +16,14 @@
 
 const TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
     BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
-    // supportedMethods = [
-    //     "GET",
-    //     "HEAD",
-    //     "POST",
-    //     "PUT",
-    //     "PATCH",
-    //     "DELETE"
-    // ],
+    supportedMethods = [
+        "GET",
+        "HEAD",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ],
     username = "username",
     password = "password",
     stockSymbols = [
@@ -124,12 +124,10 @@ describe("mindsmine.Http.request method", () => {
         }
     });
 
-    /*
     supportedMethods.forEach(method => {
         test(`should throw TypeError for '${method}' HTTP method`, () => {
-            expect.assertions(2);
             return mindsmine.Http.request(
-                "https//httpbin.org/anything",
+                "https://httpbin.org/anything",
                 {
                     method
                 }
@@ -140,6 +138,7 @@ describe("mindsmine.Http.request method", () => {
         });
     });
 
+    /*
     supportedMethods.forEach(method => {
         const test_code = 215;
 
