@@ -27,6 +27,8 @@
  * (with <code>ok</code> status set to <code>false</code>), and it will only reject on network failure or if anything prevented the
  * request from completing.
  *
+ * @namespace mindsmine.Http
+ *
  * @since 4.7.0
  *
  */

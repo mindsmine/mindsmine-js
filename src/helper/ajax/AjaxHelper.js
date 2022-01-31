@@ -18,6 +18,8 @@
  * The Ajax class encapsulates an HTTP connection to the page's originating domain, allowing requests to be made to a
  * URL specified at request time.
  *
+ * @namespace mindsmine.Ajax
+ *
  * @deprecated See {@link @MDN_API_URI@/fetch|fetch} for the in-built Promise based solution.
  *
  * @since 1.0.0
