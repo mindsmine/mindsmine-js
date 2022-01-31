@@ -82,10 +82,10 @@ describe("mindsmine.Http.request method", () => {
     });
 
     test("should work with Basic auth", async () => {
-        expect.assertions(2);
+        expect.assertions(3);
         
         const response = await mindsmine.Http.request(
-            `http://httpbin.org/basic-auth/${username}/${password}`,
+            `https://httpbin.org/basic-auth/${username}/${password}`,
             {
                 headers: {
                     "Authorization": "Basic " + window.btoa(`${username}:${password}`)
@@ -94,15 +94,18 @@ describe("mindsmine.Http.request method", () => {
         );
 
         expect(response).not.toBeNull();
+        expect(response.ok).toBeTruthy();
         expect(response.status).toBe(200);
     });
 
     test("should work for 'GET' HTTP method", async () => {
-        expect.assertions(1);
+        expect.assertions(3);
 
         const response = await mindsmine.Http.request(`${BASE_URI}&types=quote&symbols=${stockSymbols.join(",")}`);
 
         expect(response).not.toBeNull();
+        expect(response.ok).toBeTruthy();
+        expect(response.status).toBe(200);
 
         response.json().then(data => {
             for (let __stock in data) {
@@ -128,7 +131,7 @@ describe("mindsmine.Http.request method", () => {
         const test_code = 215;
 
         test(`should work for '${method}' HTTP method`, async () => {
-            expect.assertions(2);
+            expect.assertions(3);
 
             const response = await mindsmine.Http.request(
                 `https://httpbin.org/status/${test_code}`,
@@ -138,32 +141,33 @@ describe("mindsmine.Http.request method", () => {
             );
 
             expect(response).not.toBeNull();
+            expect(response.ok).toBeTruthy();
             expect(response.status).toBe(test_code);
         });
     });
 
-    /*
     test("should work for 'POST' HTTP method with JSON data", () => {
         const testJSONObject = {
             param1: "something",
             param2: "something else"
         };
 
-        expect.assertions(2);
+        expect.assertions(3);
 
         return mindsmine.Http.request(
-            "http://httpbin.org/anything",
+            "https://httpbin.org/anything",
             {
                 method: "POST",
                 jsonData: testJSONObject
             }
         ).then(response => {
             expect(response).not.toBeNull();
+            expect(response.ok).toBeTruthy();
+            expect(response.status).toBe(200);
 
             response.json().then(data => {
                 expect(data["json"]).toEqual(expect.objectContaining(testJSONObject));
             });
         });
     });
-    //*/
 });

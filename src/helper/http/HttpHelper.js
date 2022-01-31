@@ -166,7 +166,9 @@ mindsmine.Http = class {
                 throw new TypeError("Fatal Error. The request method is 'GET' or 'HEAD' but the body is non-null or not undefined.");
             }
 
-            initObj.body = options.jsonData;
+            const __jsonData = options.jsonData;
+
+            initObj.body = (mindsmine.Object.isPrimitive(__jsonData)) ? __jsonData : JSON.stringify(__jsonData);
         }
 
         if (options.mode) {
