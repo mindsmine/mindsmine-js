@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript strings.
  *
+ * @namespace mindsmine.String
+ *
  * @since 1.0.0
  *
  */

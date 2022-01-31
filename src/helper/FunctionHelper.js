@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript functions.
  *
+ * @namespace mindsmine.Function
+ *
  * @since 3.0.0
  *
  */

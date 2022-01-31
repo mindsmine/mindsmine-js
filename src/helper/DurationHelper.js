@@ -19,6 +19,8 @@
  *
  * Duration is the amount of elapsed time between two events.
  *
+ * @namespace mindsmine.Duration
+ *
  * @since 4.5.0
  *
  */

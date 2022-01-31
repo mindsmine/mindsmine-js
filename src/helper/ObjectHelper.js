@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript objects.
  *
+ * @namespace mindsmine.Object
+ *
  * @since 1.0.0
  *
  */

@@ -22,6 +22,8 @@
  *
  * @see {@link @WIKI_URI@/Numeral_system|Numeral System (Wikipedia)}
  *
+ * @namespace mindsmine.NumeralSystem
+ *
  * @since 3.1.0
  *
  */

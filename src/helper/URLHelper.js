@@ -17,6 +17,8 @@
 /**
  * A collection of useful static methods to deal with JavaScript URLs.
  *
+ * @namespace mindsmine.URL
+ *
  * @since 3.5.0
  *
  */
