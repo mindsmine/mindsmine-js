@@ -60,104 +60,60 @@ mindsmine.DurationHolder = class {
         this.#startAfterEnd = startAfterEnd;
     }
 
-    /**
-     * Flag for start date occuring after end date.
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
     get startAfterEnd() {
         return this.#startAfterEnd;
     }
 
-    /**
-     * Years
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
     get years() {
         return this.#years;
     }
 
-    /**
-     * Months
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
     get months() {
         return this.#months;
     }
 
-    /**
-     * Days
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
     get days() {
         return this.#days;
     }
 
-    /**
-     * Hours
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
     get hours() {
         return this.#hours;
     }
 
-    /**
-     * Minutes
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
     get minutes() {
         return this.#minutes;
     }
 
-    /**
-     * Seconds
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
     get seconds() {
         return this.#seconds;
     }
 
-    /**
-     * Milliseconds
-     *
-     * @type {Boolean}
-     *
-     * @since 4.6.0
-     *
-     */
     get milliseconds() {
         return this.#milliseconds;
     }
 
     /**
-     * Display String for the object.
+     * Object notation for the Duration Holder instance.
+     *
+     * @type {Object}
+     *
+     * @since 4.7.0
+     *
+     */
+    get durationHolderObj() {
+        return {
+            years: this.#years,
+            months: this.#months,
+            days: this.#days,
+            hours: this.#hours,
+            minutes: this.#minutes,
+            seconds: this.#seconds,
+            milliseconds: this.#milliseconds
+        };
+    }
+
+    /**
+     * String notation for the Duration Holder instance.
      *
      * @type {Boolean}
      *

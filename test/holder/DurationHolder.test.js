@@ -14,9 +14,16 @@
  limitations under the License.
  */
 
-const _durationHolderTest = new mindsmine.DurationHolder(8, 8, 23, 23);
-
 describe("mindsmine.DurationHolder", () => {
+    const _durationHolderTest = new mindsmine.DurationHolder(8, 8, 23, 23),
+        expectedString = "8 years 8 months 23 days 23 hours",
+        expectedObj = {
+            years: 8,
+            months: 8,
+            days: 23,
+            hours: 23
+        };
+
     test("should return 8 for years", () => {
         expect(_durationHolderTest.years).toEqual(8);
     });
@@ -43,6 +50,14 @@ describe("mindsmine.DurationHolder", () => {
 
     test("should return 0 for milliseconds", () => {
         expect(_durationHolderTest.milliseconds).toEqual(0);
+    });
+
+    test(`should return '${expectedString}' for displayString`, () => {
+        expect(_durationHolderTest.displayString).toEqual(expectedString);
+    });
+
+    test("should return object for durationHolderObj", () => {
+        expect(_durationHolderTest.durationHolderObj).toEqual(expect.objectContaining(expectedObj));
     });
 
     test("should return false for startAfterEnd by default", () => {
