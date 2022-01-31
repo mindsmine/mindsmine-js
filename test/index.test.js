@@ -16,7 +16,10 @@
 
 import fetch, {Request, Response, Headers} from "node-fetch";
 
-import mindsmine from "../../../dist/@REQUIRE_FILE@";
+import { createRequire } from "module";
+const requireLocal = createRequire(import.meta.url);
+
+const mindsmine = requireLocal("../../../dist/@REQUIRE_FILE@");
 
 beforeAll(() => {
     if (!globalThis.fetch) {

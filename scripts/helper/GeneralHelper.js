@@ -42,6 +42,7 @@ class folderRouters {
                 this.HELPER = path.resolve(this.ROOT, helperName);
                 this.HOLDER = path.resolve(this.ROOT, holderName);
                 this.INDEX_FILE = path.resolve(this.ROOT, indexFileName);
+                this.POLYFILL_FILE = path.resolve(this.ROOT, "polyfill.js");
             }
         }
 
@@ -58,6 +59,7 @@ export default {
         TEST: new folderRouters("test", "helper.test.js", "holder.test.js", "index.test.js", "final.test.js")
     },
     replaceToken: {
+        POLYFILL_CODE: "//_POLYFILL_CODE",
         HOLDER_CODE: "//_CONCATENATED_HOLDER_CODE",
         HELPER_CODE: "//_CONCATENATED_HELPER_CODE"
     },
