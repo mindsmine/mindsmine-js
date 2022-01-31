@@ -125,29 +125,13 @@ describe("mindsmine.Http.request method", () => {
     });
 
     supportedMethods.forEach(method => {
-        test(`should throw TypeError for '${method}' HTTP method`, async () => {
-            try {
-                return await mindsmine.Http.request(
-                    "https//httpbin.org/anything",
-                    {
-                        method
-                    }
-                );
-            } catch (response) {
-                expect(response).not.toBeNull();
-                expect(response.toString()).toMatch("TypeError");
-            }
-        });
-    });
-
-    /*
-    supportedMethods.forEach(method => {
         const test_code = 215;
 
         test(`should work for '${method}' HTTP method`, () => {
             expect.assertions(2);
+
             return mindsmine.Http.request(
-                `http://httpbin.org/status/${test_code}`,
+                `https://httpbin.org/status/${test_code}`,
                 {
                     method
                 }
@@ -158,6 +142,7 @@ describe("mindsmine.Http.request method", () => {
         });
     });
 
+    /*
     test("should work for 'POST' HTTP method with JSON data", () => {
         const testJSONObject = {
             param1: "something",
