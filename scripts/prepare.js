@@ -88,9 +88,9 @@ Console.info("Test: Copied index file to concat folder");
 
 [
     [
-        BuildProperties.replaceToken.POLYFILL_CODE,
-        BuildProperties.folder.SOURCE.CODE.POLYFILL_FILE,
-        "polyfill"
+        BuildProperties.replaceToken.MORE_CODE,
+        BuildProperties.folder.SOURCE.CODE.MORE_FILE,
+        "more"
     ],
     [
         BuildProperties.replaceToken.HELPER_CODE,
@@ -115,6 +115,11 @@ Console.info("Test: Copied index file to concat folder");
 });
 
 [
+    [
+        BuildProperties.replaceToken.MORE_CODE,
+        BuildProperties.folder.TEST.CODE.MORE_FILE,
+        "more"
+    ],
     [
         BuildProperties.replaceToken.HELPER_CODE,
         BuildProperties.folder.TEST.CONCATENATED.HELPER,

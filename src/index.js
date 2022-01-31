@@ -35,7 +35,7 @@
 
 "use strict";
 
-//_POLYFILL_CODE
+//_MORE_CODE
 
 /**
  * The mindsmine namespace (global object) encapsulates classes, singletons, and utility methods provided
