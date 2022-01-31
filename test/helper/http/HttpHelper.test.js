@@ -14,27 +14,17 @@
  limitations under the License.
  */
 
-const TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
-    BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
-    supportedMethods = [
-        "GET",
-        "HEAD",
-        "POST",
-        "PUT",
-        "PATCH",
-        "DELETE"
-    ],
-    username = "username",
-    password = "password",
-    stockSymbols = [
-        "AAPL",
-        "ALBO"
-    ],
-    wrapFunction = function (url, options = {}) {
-        mindsmine.Http.request(url, options);
-    };
-
 describe("mindsmine.Http.request method", () => {
+    const TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
+        BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
+        stockSymbols = [
+            "AAPL",
+            "ALBO"
+        ],
+        wrapFunction = function (url, options = {}) {
+            mindsmine.Http.request(url, options);
+        };
+
     test("should throw TypeError due to null url", () => {
         function callFunction() {
             wrapFunction(null);
@@ -82,6 +72,8 @@ describe("mindsmine.Http.request method", () => {
     });
 
     test("should work with Basic auth", async () => {
+        const username = "username", password = "password";
+
         expect.assertions(3);
         
         const response = await mindsmine.Http.request(
@@ -127,7 +119,14 @@ describe("mindsmine.Http.request method", () => {
         }
     });
 
-    supportedMethods.forEach(method => {
+    [
+        "GET",
+        "HEAD",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ].forEach(method => {
         const test_code = 215;
 
         test(`should work for '${method}' HTTP method`, async () => {
