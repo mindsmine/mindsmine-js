@@ -127,18 +127,18 @@ describe("mindsmine.Http.request method", () => {
     supportedMethods.forEach(method => {
         const test_code = 215;
 
-        test(`should work for '${method}' HTTP method`, () => {
+        test(`should work for '${method}' HTTP method`, async () => {
             expect.assertions(2);
 
-            return mindsmine.Http.request(
+            const response = await mindsmine.Http.request(
                 `https://httpbin.org/status/${test_code}`,
                 {
                     method
                 }
-            ).then(response => {
-                expect(response).not.toBeNull();
-                expect(response.status).toBe(test_code);
-            });
+            );
+
+            expect(response).not.toBeNull();
+            expect(response.status).toBe(test_code);
         });
     });
 
