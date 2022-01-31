@@ -161,7 +161,7 @@ mindsmine.Http = class {
             initObj.headers = options.headers;
         }
 
-        if (options.jsonData !== null || options.jsonData !== undefined) {
+        if (options.jsonData != null) {
             if (["GET", "HEAD"].includes(options.method)) {
                 throw new TypeError("Fatal Error. The request method is 'GET' or 'HEAD' but the body is non-null or not undefined.");
             }
@@ -192,11 +192,11 @@ mindsmine.Http = class {
                 }
 
                 fetch(url, initObj).then(response => {
-                        if (response.ok) {
-                            resolve(response);
-                        } else {
-                            reject(response);
-                        }
+                    if (response.ok) {
+                        resolve(response);
+                    } else {
+                        reject(response);
+                    }
                 }).catch(error => {
                     reject(new Response(
                         error,
