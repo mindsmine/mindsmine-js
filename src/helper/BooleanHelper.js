@@ -27,7 +27,7 @@ mindsmine.Boolean = class {
      * If the passed-in object is a non-null boolean, then it is returned as-is.
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.Boolean.getNullSafe(null)       //  false
      *      mindsmine.Boolean.getNullSafe(undefined)  //  false
      *      mindsmine.Boolean.getNullSafe(NaN)        //  false
@@ -35,6 +35,7 @@ mindsmine.Boolean = class {
      *      mindsmine.Boolean.getNullSafe("")         //  false
      *      mindsmine.Boolean.getNullSafe("hello")    //  false
      *      mindsmine.Boolean.getNullSafe(true)       //  true
+     * ```
      *
      * @param {Boolean} bool The boolean to safeguard against <code>null</code>.
      *

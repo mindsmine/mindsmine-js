@@ -25,7 +25,7 @@ mindsmine.Date = class {
      * Returns <code>true</code> if object is a Date
      *
      * Example usage:
-     *
+     * ```javascript
      *      mindsmine.Date.isDate(null)           //  false
      *      mindsmine.Date.isDate(undefined)      //  false
      *      mindsmine.Date.isDate(NaN)            //  false
@@ -37,6 +37,7 @@ mindsmine.Date = class {
      *      mindsmine.Date.isDate([])             //  false
      *      mindsmine.Date.isDate({})             //  false
      *      mindsmine.Date.isDate(new Date())     //  true
+     * ```
      *
      * @param {Object} obj The object to test
      *

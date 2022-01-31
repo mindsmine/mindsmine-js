@@ -27,7 +27,7 @@ mindsmine.Array = class {
      * If the passed-in object is a non-null array, then it is returned as-is.
      *
      * Example usage:
-     *
+     * ```javascript
      *      var arr1 = [1, 2, 3, 4];
      *      var arr2 = null;
      *
@@ -37,6 +37,7 @@ mindsmine.Array = class {
      *
      *      // arr3 now contains the array: [1, 2, 3, 4]
      *      // arr4 now contains the array: []
+     * ```
      *
      * @param {Array} arr The array to safeguard against <code>null</code>.
      *
