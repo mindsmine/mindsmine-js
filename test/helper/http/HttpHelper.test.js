@@ -125,16 +125,18 @@ describe("mindsmine.Http.request method", () => {
     });
 
     supportedMethods.forEach(method => {
-        test(`should throw TypeError for '${method}' HTTP method`, () => {
-            return mindsmine.Http.request(
-                "https://httpbin.org/anything",
-                {
-                    method
-                }
-            ).catch(response => {
+        test(`should throw TypeError for '${method}' HTTP method`, async () => {
+            try {
+                return await mindsmine.Http.request(
+                    "https//httpbin.org/anything",
+                    {
+                        method
+                    }
+                );
+            } catch (response) {
                 expect(response).not.toBeNull();
                 expect(response.toString()).toMatch("TypeError");
-            });
+            }
         });
     });
 
