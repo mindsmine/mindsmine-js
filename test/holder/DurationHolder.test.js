@@ -24,49 +24,11 @@ describe("mindsmine.DurationHolder", () => {
             hours: 23
         };
 
-    test("should return 8 for years", () => {
-        expect(_durationHolderTest.years).toEqual(8);
-    });
-
-    test("should return 8 for months", () => {
-        expect(_durationHolderTest.months).toEqual(8);
-    });
-
-    test("should return 23 for days", () => {
-        expect(_durationHolderTest.days).toEqual(23);
-    });
-
-    test("should return 23 for hours", () => {
-        expect(_durationHolderTest.hours).toEqual(23);
-    });
-
-    test("should return 0 for minutes", () => {
-        expect(_durationHolderTest.minutes).toEqual(0);
-    });
-
-    test("should return 0 for seconds", () => {
-        expect(_durationHolderTest.seconds).toEqual(0);
-    });
-
-    test("should return 0 for milliseconds", () => {
-        expect(_durationHolderTest.milliseconds).toEqual(0);
-    });
-
     test(`should return '${expectedString}' for displayString`, () => {
         expect(_durationHolderTest.displayString).toEqual(expectedString);
     });
 
-    test("should return object for durationHolderObj", () => {
-        expect(_durationHolderTest.durationHolderObj).toEqual(expect.objectContaining(expectedObj));
-    });
-
-    test("should return false for startAfterEnd by default", () => {
-        expect(_durationHolderTest.startAfterEnd).toBeFalsy();
-    });
-
-    test("should return true for startAfterEnd", () => {
-        _durationHolderTest.startAfterEnd = true;
-
-        expect(_durationHolderTest.startAfterEnd).toBeTruthy();
+    test("should return object for jsonNotation", () => {
+        expect(_durationHolderTest.jsonNotation).toEqual(expect.objectContaining(expectedObj));
     });
 });

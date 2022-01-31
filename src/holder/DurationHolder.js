@@ -28,7 +28,6 @@ mindsmine.DurationHolder = class {
     #minutes;
     #seconds;
     #milliseconds;
-    #startAfterEnd;
 
     /**
      * Constructor to create the duration holder object.
@@ -56,42 +55,6 @@ mindsmine.DurationHolder = class {
         this.#milliseconds = milliseconds;
     }
     
-    set startAfterEnd(startAfterEnd) {
-        this.#startAfterEnd = startAfterEnd;
-    }
-
-    get startAfterEnd() {
-        return this.#startAfterEnd;
-    }
-
-    get years() {
-        return this.#years;
-    }
-
-    get months() {
-        return this.#months;
-    }
-
-    get days() {
-        return this.#days;
-    }
-
-    get hours() {
-        return this.#hours;
-    }
-
-    get minutes() {
-        return this.#minutes;
-    }
-
-    get seconds() {
-        return this.#seconds;
-    }
-
-    get milliseconds() {
-        return this.#milliseconds;
-    }
-
     /**
      * Object notation for the Duration Holder instance.
      *
@@ -100,7 +63,7 @@ mindsmine.DurationHolder = class {
      * @since 4.7.0
      *
      */
-    get durationHolderObj() {
+    get jsonNotation() {
         return {
             years: this.#years,
             months: this.#months,

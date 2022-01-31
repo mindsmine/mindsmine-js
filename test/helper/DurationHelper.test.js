@@ -280,7 +280,7 @@ describe("mindsmine.Duration.humanreadable", () => {
     });
 
     test("should return the object", () => {
-        const _durationHolder = mindsmine.Duration.humanreadable(273452400000, "ms");
+        const _durationHolder = mindsmine.Duration.humanreadable(273452400000, "ms").jsonNotation;
 
         expect(_durationHolder.years).toEqual(8);
         expect(_durationHolder.months).toEqual(8);
