@@ -13,9 +13,7 @@ others.
 ### Releases ###
 
 **4.7.0**
-* `mindsmine` is now compatable with ESM Modules
 * Added HTTP support methods to wrap the `fetch` function
-* Using `node-fetch` library to allow for Unit Testing
 * Cleaned up documentation for better readability
 
 **4.6.0**
