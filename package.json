@@ -27,7 +27,7 @@
     "minify": "node scripts/minify",
 
     "pretest": "npm run minify",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --env=jsdom final.test.js",
+    "test": "jest --coverage --env=jsdom final.test.js",
 
     "predocs": "npm run test && node scripts/predocs",
     "docs": "jsdoc --configure build/jsdoc.conf.json",

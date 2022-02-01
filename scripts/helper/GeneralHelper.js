@@ -35,18 +35,48 @@ const NOW = new Date(),
     MDN_WEB_URI = `${MDN_DOCS_URI}/Web`;
 
 class folderRouters {
-    constructor(rootFolder, concatenatedHelperName, concatenatedHolderName, codeIndexFileName, concatenatedIndexFileName) {
+    #rootFolder;
+    #concatenatedHelperName;
+    #concatenatedHolderName;
+    #codeIndexFileName;
+    #codeMoreFilename;
+
+    constructor(isSource, concatenatedIndexFileName) {
+        const parent = this;
+
+        if (isSource) {
+            this.#rootFolder = "source";
+            this.#concatenatedHelperName = "helper.js";
+            this.#concatenatedHolderName = "holder.js";
+            this.#codeIndexFileName = "index.js";
+            this.#codeMoreFilename = "polyfill.js";
+        } else {
+            this.#rootFolder = "test";
+            this.#concatenatedHelperName = "helper.test.js";
+            this.#concatenatedHolderName = "holder.test.js";
+            this.#codeIndexFileName = "index.test.js";
+            this.#codeMoreFilename = "more.test.js";
+        }
+
         class innerClass {
-            constructor(rootFolder, rootInnerFolder, helperName, holderName, indexFileName) {
-                this.ROOT = path.resolve(ROOT.BUILD, rootFolder, rootInnerFolder);
+            #rootInnerFolder;
+
+            constructor(isCode, helperName, holderName, indexFileName) {
+                if (isCode) {
+                    this.#rootInnerFolder = "code";
+                } else {
+                    this.#rootInnerFolder = "concatenated";
+                }
+                this.ROOT = path.resolve(ROOT.BUILD, parent.#rootFolder, this.#rootInnerFolder);
                 this.HELPER = path.resolve(this.ROOT, helperName);
                 this.HOLDER = path.resolve(this.ROOT, holderName);
                 this.INDEX_FILE = path.resolve(this.ROOT, indexFileName);
+                this.MORE_FILE = path.resolve(this.ROOT, parent.#codeMoreFilename);
             }
         }
 
-        this.CODE = new innerClass(rootFolder, "code", "helper", "holder", codeIndexFileName);
-        this.CONCATENATED = new innerClass(rootFolder, "concatenated", concatenatedHelperName, concatenatedHolderName, concatenatedIndexFileName);
+        this.CODE = new innerClass( true, "helper", "holder", this.#codeIndexFileName);
+        this.CONCATENATED = new innerClass(false, this.#concatenatedHelperName, this.#concatenatedHolderName, concatenatedIndexFileName);
     }
 }
 
@@ -54,10 +84,11 @@ export default {
     minifiedFilename: path.resolve(ROOT.DIST, OUTPUT_FILE),
     folder: {
         ROOT: ROOT,
-        SOURCE: new folderRouters("source", "helper.js", "holder.js", "index.js", "index.js"),
-        TEST: new folderRouters("test", "helper.test.js", "holder.test.js", "index.test.js", "final.test.js")
+        SOURCE: new folderRouters(true, "index.js"),
+        TEST: new folderRouters(false, "final.test.js")
     },
     replaceToken: {
+        MORE_CODE: "//_MORE_CODE",
         HOLDER_CODE: "//_CONCATENATED_HOLDER_CODE",
         HELPER_CODE: "//_CONCATENATED_HELPER_CODE"
     },

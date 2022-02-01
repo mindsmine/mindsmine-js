@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-describe("mindsmine.Http.request method", () => {
+xdescribe("mindsmine.Http.request method", () => {
     const TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
         BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
         stockSymbols = [

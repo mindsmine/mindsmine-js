@@ -86,45 +86,61 @@ FileSystem.copy(
 );
 Console.info("Test: Copied index file to concat folder");
 
-FileSystem.replace(
-    BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE,
-    BuildProperties.replaceToken.HELPER_CODE,
-    fs.readFileSync(
+[
+    [
+        BuildProperties.replaceToken.MORE_CODE,
+        BuildProperties.folder.SOURCE.CODE.MORE_FILE,
+        "more"
+    ],
+    [
+        BuildProperties.replaceToken.HELPER_CODE,
         BuildProperties.folder.SOURCE.CONCATENATED.HELPER,
-        "utf8"
-    )
-);
-Console.info("Source: Replaced helper token with helper code");
-
-FileSystem.replace(
-    BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE,
-    BuildProperties.replaceToken.HOLDER_CODE,
-    fs.readFileSync(
+        "helper"
+    ],
+    [
+        BuildProperties.replaceToken.HOLDER_CODE,
         BuildProperties.folder.SOURCE.CONCATENATED.HOLDER,
-        "utf8"
-    )
-);
-Console.info("Source: Replaced holder token with holder code");
+        "holder"
+    ]
+].forEach(arr => {
+    FileSystem.replace(
+        BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE,
+        arr[0],
+        fs.readFileSync(
+            arr[1],
+            "utf8"
+        )
+    );
+    Console.info(`Source: Replaced '${arr[0]}' token with ${arr[2]} code`);
+});
 
-FileSystem.replace(
-    BuildProperties.folder.TEST.CONCATENATED.INDEX_FILE,
-    BuildProperties.replaceToken.HELPER_CODE,
-    fs.readFileSync(
+[
+    [
+        BuildProperties.replaceToken.MORE_CODE,
+        BuildProperties.folder.TEST.CODE.MORE_FILE,
+        "more"
+    ],
+    [
+        BuildProperties.replaceToken.HELPER_CODE,
         BuildProperties.folder.TEST.CONCATENATED.HELPER,
-        "utf8"
-    )
-);
-Console.info("Test: Replaced helper token with helper code");
-
-FileSystem.replace(
-    BuildProperties.folder.TEST.CONCATENATED.INDEX_FILE,
-    BuildProperties.replaceToken.HOLDER_CODE,
-    fs.readFileSync(
+        "helper"
+    ],
+    [
+        BuildProperties.replaceToken.HOLDER_CODE,
         BuildProperties.folder.TEST.CONCATENATED.HOLDER,
-        "utf8"
-    )
-);
-Console.info("Test: Replaced holder token with holder code");
+        "holder"
+    ]
+].forEach(arr => {
+    FileSystem.replace(
+        BuildProperties.folder.TEST.CONCATENATED.INDEX_FILE,
+        arr[0],
+        fs.readFileSync(
+            arr[1],
+            "utf8"
+        )
+    );
+    Console.info(`Test: Replaced '${arr[0]}' token with ${arr[2]} code`);
+});
 
 BuildProperties.replaceArray.forEach(arr => {
     FileSystem.replace(
