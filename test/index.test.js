@@ -14,27 +14,7 @@
  limitations under the License.
 */
 
-import fetch, {Request, Response, Headers} from "node-fetch";
-
-import mindsmine from "../../../dist/@REQUIRE_FILE@";
-
-beforeAll(() => {
-    if (!globalThis.fetch) {
-        globalThis.fetch = fetch;
-    }
-
-    if (!globalThis.Request) {
-        globalThis.Request = Request;
-    }
-
-    if (!globalThis.Response) {
-        globalThis.Response = Response;
-    }
-
-    if (!globalThis.Headers) {
-        globalThis.Headers = Headers;
-    }
-});
+const mindsmine = require("../../../dist/@REQUIRE_FILE@");
 
 test("mindsmine.productName should return product name", () => {
     expect(mindsmine.productName).toBe("mindsmine-js");
