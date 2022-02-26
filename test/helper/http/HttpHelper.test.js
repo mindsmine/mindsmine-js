@@ -14,6 +14,44 @@
  limitations under the License.
  */
 
+describe("mindsmine.Http.poll method", () => {
+    const
+        wrapFunction = function(fn, validateFn, interval = 10000, maxAttempts = 6) {
+            return mindsmine.Http.poll(fn, validateFn, interval, maxAttempts);
+        },
+        falseFn = function() {
+            return false;
+        },
+        emptyFn = function() {};
+
+    test("should throw TypeError due to null poll function", () => {
+        function callFunction() {
+            wrapFunction(null);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'fn'. @ERROR_PERMITTED_FUNCTION@");
+    });
+
+    test("should throw TypeError due to null validate function", () => {
+        function callFunction() {
+            wrapFunction(emptyFn, null);
+        }
+
+        expect(callFunction).toThrow(TypeError);
+        expect(callFunction).toThrow("Fatal Error. 'validateFn'. @ERROR_PERMITTED_FUNCTION@");
+    });
+
+    test("should throw Error due to max number of attempts due to a function always returning false", () => {
+        wrapFunction(emptyFn, falseFn)
+            .then(() => {})
+            .catch((response) => {
+                expect(response.body.message).toBe("Polling reached the 6 (maximum) attempts without a success.");
+                expect(response.status).toBe(500);
+            });
+    });
+});
+
 xdescribe("mindsmine.Http.request method", () => {
     const TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
         BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,

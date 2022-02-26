@@ -12,6 +12,9 @@ others.
 
 ### Releases ###
 
+**4.8.0**
+* Added `poll` function
+
 **4.7.0**
 * Added HTTP support methods to wrap the `fetch` function
 * Cleaned up documentation for better readability

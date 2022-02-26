@@ -212,4 +212,87 @@ mindsmine.Http = class {
             });
         }
     }
+
+    /**
+     * Polling function inspired from
+     * {@link https://levelup.gitconnected.com/polling-in-javascript-ab2d6378705a|Polling in JavaScript} blog post.
+     *
+     * The function is a higher-order function that returns a function, <code>executePoll</code>. The <code>executePoll</code>
+     * function returns a promise and will run recursively until a stopping condition is met.
+     *
+     * <u>Example Usage</u>:
+     * ```javascript
+     *    mindsmine.Http.poll(
+     *       () => {
+     *          // Function to be polled
+     *       },
+     *
+     *       (result) => {
+     *          // Function that validates the result of the above function
+     *       }
+     *    ).then((result) => {
+     *
+     *       // Do something with the result
+     *
+     *    }).catch((response) => {
+     *
+     *       console.error(`HTTP error code = ${response.status}`);
+     *       console.error(`HTTP error code = ${response.body.message}`);
+     *
+     *    });
+     * ```
+     *
+     * @param {Function} fn The function to be polled.
+     * @param {Function} validateFn The function that validates the result.
+     * @param {Number} [interval=10000] The interval (in milliseconds) in between polling the function.
+     * @param {Number} [maxAttempts=6] The maximum times the function should be polled.
+     *
+     * @returns {Promise} The promise that rejects to the {@link @MDN_API_URI@/Response|Response} object with a body of
+     * {@link @MDN_JS_URI@/Error/Error|Error} object.
+     *
+     * @throws {TypeError} If invalid arguments.
+     *
+     * @since 4.8.0
+     *
+     */
+    static poll(fn, validateFn, interval = 10000, maxAttempts = 6) {
+        if (!mindsmine.Function.isFunction(fn)) {
+            throw new TypeError("Fatal Error. 'fn'. @ERROR_PERMITTED_FUNCTION@");
+        }
+
+        if (!mindsmine.Function.isFunction(validateFn)) {
+            throw new TypeError("Fatal Error. 'validateFn'. @ERROR_PERMITTED_FUNCTION@");
+        }
+
+        if (!mindsmine.Number.isNumber(interval)) {
+            interval = 10000;
+        }
+
+        if (!mindsmine.Number.isNumber(maxAttempts)) {
+            maxAttempts = 6;
+        }
+
+        let attempts = 0;
+
+        const actualPoll = async function(resolve, reject) {
+            const result = await fn();
+            attempts++;
+
+            if (validateFn(result)) {
+                return resolve(result);
+            } else if (maxAttempts && attempts === maxAttempts) {
+                return reject(new Response(
+                    new Error(`Polling reached the ${maxAttempts} (maximum) attempts without a success.`),
+                    {
+                        status: 500,
+                        statusText: "Internal Server Error"
+                    }
+                ));
+            }
+
+            setTimeout(actualPoll, interval, resolve, reject);
+        };
+
+        return new Promise(actualPoll);
+    }
 };
