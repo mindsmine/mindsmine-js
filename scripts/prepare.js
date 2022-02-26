@@ -88,58 +88,59 @@ Console.info("Test: Copied index file to concat folder");
 
 [
     [
-        BuildProperties.replaceToken.MORE_CODE,
-        BuildProperties.folder.SOURCE.CODE.MORE_FILE,
-        "more"
-    ],
-    [
-        BuildProperties.replaceToken.HELPER_CODE,
-        BuildProperties.folder.SOURCE.CONCATENATED.HELPER,
-        "helper"
-    ],
-    [
-        BuildProperties.replaceToken.HOLDER_CODE,
-        BuildProperties.folder.SOURCE.CONCATENATED.HOLDER,
-        "holder"
-    ]
-].forEach(arr => {
-    FileSystem.replace(
+        "Source",
         BuildProperties.folder.SOURCE.CONCATENATED.INDEX_FILE,
-        arr[0],
-        fs.readFileSync(
-            arr[1],
-            "utf8"
-        )
-    );
-    Console.info(`Source: Replaced '${arr[0]}' token with ${arr[2]} code`);
-});
-
-[
-    [
-        BuildProperties.replaceToken.MORE_CODE,
-        BuildProperties.folder.TEST.CODE.MORE_FILE,
-        "more"
+        [
+            [
+                BuildProperties.replaceToken.MORE_CODE,
+                BuildProperties.folder.SOURCE.CODE.MORE_FILE,
+                "more"
+            ],
+            [
+                BuildProperties.replaceToken.HELPER_CODE,
+                BuildProperties.folder.SOURCE.CONCATENATED.HELPER,
+                "helper"
+            ],
+            [
+                BuildProperties.replaceToken.HOLDER_CODE,
+                BuildProperties.folder.SOURCE.CONCATENATED.HOLDER,
+                "holder"
+            ]
+        ]
     ],
     [
-        BuildProperties.replaceToken.HELPER_CODE,
-        BuildProperties.folder.TEST.CONCATENATED.HELPER,
-        "helper"
-    ],
-    [
-        BuildProperties.replaceToken.HOLDER_CODE,
-        BuildProperties.folder.TEST.CONCATENATED.HOLDER,
-        "holder"
+        "Test",
+        BuildProperties.folder.TEST.CONCATENATED.INDEX_FILE,
+        [
+            [
+                BuildProperties.replaceToken.MORE_CODE,
+                BuildProperties.folder.TEST.CODE.MORE_FILE,
+                "more"
+            ],
+            [
+                BuildProperties.replaceToken.HELPER_CODE,
+                BuildProperties.folder.TEST.CONCATENATED.HELPER,
+                "helper"
+            ],
+            [
+                BuildProperties.replaceToken.HOLDER_CODE,
+                BuildProperties.folder.TEST.CONCATENATED.HOLDER,
+                "holder"
+            ]
+        ]
     ]
 ].forEach(arr => {
-    FileSystem.replace(
-        BuildProperties.folder.TEST.CONCATENATED.INDEX_FILE,
-        arr[0],
-        fs.readFileSync(
+    arr[2].forEach(innerArr => {
+        FileSystem.replace(
             arr[1],
-            "utf8"
-        )
-    );
-    Console.info(`Test: Replaced '${arr[0]}' token with ${arr[2]} code`);
+            innerArr[0],
+            fs.readFileSync(
+                innerArr[1],
+                "utf8"
+            )
+        );
+        Console.info(`${arr[0]}: Replaced '${innerArr[0]}' token with ${innerArr[2]} code`);
+    });
 });
 
 BuildProperties.replaceArray.forEach(arr => {
