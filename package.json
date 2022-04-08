@@ -35,10 +35,10 @@
     "package": "npm run docs && npm run preclean"
   },
   "devDependencies": {
-    "eslint": "8.10.0",
+    "eslint": "8.13.0",
     "jest": "27.5.1",
     "jsdoc": "3.6.10",
-    "node-fetch": "3.2.0",
-    "terser": "5.11.0"
+    "node-fetch": "3.2.3",
+    "terser": "5.12.1"
   }
 }
