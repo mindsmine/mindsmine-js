@@ -12,6 +12,12 @@ others.
 
 ### Releases ###
 
+**4.8.2**
+* Node 19+ supported
+
+**4.8.1**
+* Node 18+ supported
+
 **4.8.0**
 * Added `poll` function
 
