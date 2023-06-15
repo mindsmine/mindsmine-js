@@ -14,23 +14,25 @@
  limitations under the License.
  */
 
-test("mindsmine.String.format should format the string", () => {
-    let str1 = "Hello";
-    let str2 = "World";
-
-    expect(mindsmine.String.format("Let us combine {0} and {1} together.", str1, str2))
-        .toBe("Let us combine Hello and World together.");
-});
-
-const decodedStr = "<a target='_blank' href='http://www.google.com'><span>Hello World</span></a>";
-const encodedStr = "&lt;a target=&#39;_blank&#39; href=&#39;http://www.google.com&#39;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/a&gt;";
-
-test("mindsmine.String.htmlEncode should encode the HTML content", () => {
-    expect(mindsmine.String.htmlEncode(decodedStr)).toBe(encodedStr);
-});
-
-test("mindsmine.String.htmlDecode should decode the HTML content", () => {
-    expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
+describe("mindsmine.String functions", () => {
+    test("mindsmine.String.format should format the string", () => {
+        let str1 = "Hello";
+        let str2 = "World";
+    
+        expect(mindsmine.String.format("Let us combine {0} and {1} together.", str1, str2))
+            .toBe("Let us combine Hello and World together.");
+    });
+    
+    const decodedStr = "<a target='_blank' href='http://www.google.com'><span>Hello World</span></a>";
+    const encodedStr = "&lt;a target=&#39;_blank&#39; href=&#39;http://www.google.com&#39;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/a&gt;";
+    
+    test("mindsmine.String.htmlEncode should encode the HTML content", () => {
+        expect(mindsmine.String.htmlEncode(decodedStr)).toBe(encodedStr);
+    });
+    
+    test("mindsmine.String.htmlDecode should decode the HTML content", () => {
+        expect(mindsmine.String.htmlDecode(encodedStr)).toBe(decodedStr);
+    });
 });
 
 describe("mindsmine.String.isEmpty", () => {

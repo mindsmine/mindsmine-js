@@ -14,76 +14,78 @@
  limitations under the License.
  */
 
-test("mindsmine.Duration.MILLISECONDS_IN_SECOND should be 1,000", () => {
-    expect(mindsmine.Duration.MILLISECONDS_IN_SECOND).toEqual(1000);
-});
-
-test("mindsmine.Duration.MILLISECONDS_IN_MINUTE should be 60,000", () => {
-    expect(mindsmine.Duration.MILLISECONDS_IN_MINUTE).toEqual(60000);
-});
-
-test("mindsmine.Duration.MILLISECONDS_IN_HOUR should be 3,600,000", () => {
-    expect(mindsmine.Duration.MILLISECONDS_IN_HOUR).toEqual(3600000);
-});
-
-test("mindsmine.Duration.MILLISECONDS_IN_DAY should be 86,400,000", () => {
-    expect(mindsmine.Duration.MILLISECONDS_IN_DAY).toEqual(86400000);
-});
-
-test("mindsmine.Duration.MILLISECONDS_IN_WEEK should be 604,800,000", () => {
-    expect(mindsmine.Duration.MILLISECONDS_IN_WEEK).toEqual(604800000);
-});
-
-test("mindsmine.Duration.MILLISECONDS_IN_MONTH should be 2,592,000,000", () => {
-    expect(mindsmine.Duration.MILLISECONDS_IN_MONTH).toEqual(2592000000);
-});
-
-test("mindsmine.Duration.MILLISECONDS_IN_YEAR should be 31,536,000,000", () => {
-    expect(mindsmine.Duration.MILLISECONDS_IN_YEAR).toEqual(31536000000);
-});
-
-test("mindsmine.Duration.SECONDS_IN_MINUTE should be 60", () => {
-    expect(mindsmine.Duration.SECONDS_IN_MINUTE).toEqual(60);
-});
-
-test("mindsmine.Duration.SECONDS_IN_HOUR should be 3,600", () => {
-    expect(mindsmine.Duration.SECONDS_IN_HOUR).toEqual(3600);
-});
-
-test("mindsmine.Duration.SECONDS_IN_DAY should be 86,400", () => {
-    expect(mindsmine.Duration.SECONDS_IN_DAY).toEqual(86400);
-});
-
-test("mindsmine.Duration.SECONDS_IN_WEEK should be 604,800", () => {
-    expect(mindsmine.Duration.SECONDS_IN_WEEK).toEqual(604800);
-});
-
-test("mindsmine.Duration.MINUTES_IN_HOUR should be 60", () => {
-    expect(mindsmine.Duration.MINUTES_IN_HOUR).toEqual(60);
-});
-
-test("mindsmine.Duration.MINUTES_IN_DAY should be 1,440", () => {
-    expect(mindsmine.Duration.MINUTES_IN_DAY).toEqual(1440);
-});
-
-test("mindsmine.Duration.MINUTES_IN_WEEK should be 10,080", () => {
-    expect(mindsmine.Duration.MINUTES_IN_WEEK).toEqual(10080);
-});
-
-test("mindsmine.Duration.HOURS_IN_DAY should be 24", () => {
-    expect(mindsmine.Duration.HOURS_IN_DAY).toEqual(24);
-});
-
-test("mindsmine.Duration.HOURS_IN_WEEK should be 168", () => {
-    expect(mindsmine.Duration.HOURS_IN_WEEK).toEqual(168);
-});
-
-test("mindsmine.Duration.DAYS_IN_WEEK should be 7", () => {
-    expect(mindsmine.Duration.DAYS_IN_WEEK).toEqual(7);
-});
-
-test("mindsmine.Duration.MONTHS_IN_YEAR should be 12", () => {
-    expect(mindsmine.Duration.MONTHS_IN_YEAR).toEqual(12);
+describe("mindsmine.Duration constants", () => {
+    test("mindsmine.Duration.MILLISECONDS_IN_SECOND should be 1,000", () => {
+        expect(mindsmine.Duration.MILLISECONDS_IN_SECOND).toEqual(1000);
+    });
+    
+    test("mindsmine.Duration.MILLISECONDS_IN_MINUTE should be 60,000", () => {
+        expect(mindsmine.Duration.MILLISECONDS_IN_MINUTE).toEqual(60000);
+    });
+    
+    test("mindsmine.Duration.MILLISECONDS_IN_HOUR should be 3,600,000", () => {
+        expect(mindsmine.Duration.MILLISECONDS_IN_HOUR).toEqual(3600000);
+    });
+    
+    test("mindsmine.Duration.MILLISECONDS_IN_DAY should be 86,400,000", () => {
+        expect(mindsmine.Duration.MILLISECONDS_IN_DAY).toEqual(86400000);
+    });
+    
+    test("mindsmine.Duration.MILLISECONDS_IN_WEEK should be 604,800,000", () => {
+        expect(mindsmine.Duration.MILLISECONDS_IN_WEEK).toEqual(604800000);
+    });
+    
+    test("mindsmine.Duration.MILLISECONDS_IN_MONTH should be 2,592,000,000", () => {
+        expect(mindsmine.Duration.MILLISECONDS_IN_MONTH).toEqual(2592000000);
+    });
+    
+    test("mindsmine.Duration.MILLISECONDS_IN_YEAR should be 31,536,000,000", () => {
+        expect(mindsmine.Duration.MILLISECONDS_IN_YEAR).toEqual(31536000000);
+    });
+    
+    test("mindsmine.Duration.SECONDS_IN_MINUTE should be 60", () => {
+        expect(mindsmine.Duration.SECONDS_IN_MINUTE).toEqual(60);
+    });
+    
+    test("mindsmine.Duration.SECONDS_IN_HOUR should be 3,600", () => {
+        expect(mindsmine.Duration.SECONDS_IN_HOUR).toEqual(3600);
+    });
+    
+    test("mindsmine.Duration.SECONDS_IN_DAY should be 86,400", () => {
+        expect(mindsmine.Duration.SECONDS_IN_DAY).toEqual(86400);
+    });
+    
+    test("mindsmine.Duration.SECONDS_IN_WEEK should be 604,800", () => {
+        expect(mindsmine.Duration.SECONDS_IN_WEEK).toEqual(604800);
+    });
+    
+    test("mindsmine.Duration.MINUTES_IN_HOUR should be 60", () => {
+        expect(mindsmine.Duration.MINUTES_IN_HOUR).toEqual(60);
+    });
+    
+    test("mindsmine.Duration.MINUTES_IN_DAY should be 1,440", () => {
+        expect(mindsmine.Duration.MINUTES_IN_DAY).toEqual(1440);
+    });
+    
+    test("mindsmine.Duration.MINUTES_IN_WEEK should be 10,080", () => {
+        expect(mindsmine.Duration.MINUTES_IN_WEEK).toEqual(10080);
+    });
+    
+    test("mindsmine.Duration.HOURS_IN_DAY should be 24", () => {
+        expect(mindsmine.Duration.HOURS_IN_DAY).toEqual(24);
+    });
+    
+    test("mindsmine.Duration.HOURS_IN_WEEK should be 168", () => {
+        expect(mindsmine.Duration.HOURS_IN_WEEK).toEqual(168);
+    });
+    
+    test("mindsmine.Duration.DAYS_IN_WEEK should be 7", () => {
+        expect(mindsmine.Duration.DAYS_IN_WEEK).toEqual(7);
+    });
+    
+    test("mindsmine.Duration.MONTHS_IN_YEAR should be 12", () => {
+        expect(mindsmine.Duration.MONTHS_IN_YEAR).toEqual(12);
+    });
 });
 
 describe("mindsmine.Duration.humanreadable", () => {

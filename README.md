@@ -10,6 +10,11 @@ others.
 
 ### Releases ###
 
+**4.9.0**
+* Updated accuracy of URL support methods
+* Removed test files for deprecated `mindsmine.Ajax` class
+* Node 20+ supported
+
 **4.8.2**
 * Node 19+ supported
 

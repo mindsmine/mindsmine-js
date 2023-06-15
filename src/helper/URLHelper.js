@@ -84,7 +84,7 @@ mindsmine.URL = class {
 
         const _url = new URL(url);
 
-        _url.searchParams.append(name, encodeURIComponent(value));
+        _url.searchParams.append(name, value);
 
         return _url.href;
     }
@@ -118,7 +118,7 @@ mindsmine.URL = class {
             const __queryParams = {};
 
             _url.searchParams.forEach((value, key) => {
-                __queryParams[key] = decodeURIComponent(value);
+                __queryParams[key] = value;
             });
 
             return __queryParams;
@@ -191,7 +191,7 @@ mindsmine.URL = class {
                 if (pairs.length === 1) {
                     __hashParams[pairs[0]] = true;
                 } else {
-                    __hashParams[pairs[0]] = decodeURIComponent(pairs[1]);
+                    __hashParams[pairs[0]] = pairs[1];
                 }
             });
 
