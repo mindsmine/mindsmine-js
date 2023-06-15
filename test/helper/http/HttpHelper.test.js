@@ -52,16 +52,19 @@ describe("mindsmine.Http.poll method", () => {
     });
 });
 
-xdescribe("mindsmine.Http.request method", () => {
+describe("mindsmine.Http.request method", () => {
+    /*
     const TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
         BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
         stockSymbols = [
             "AAPL",
             "ALBO"
-        ],
-        wrapFunction = function (url, options = {}) {
-            mindsmine.Http.request(url, options);
-        };
+        ];
+    //*/
+
+    const wrapFunction = function (url, options = {}) {
+        mindsmine.Http.request(url, options);
+    };
 
     test("should throw TypeError due to null url", () => {
         function callFunction() {
@@ -109,6 +112,7 @@ xdescribe("mindsmine.Http.request method", () => {
         expect(callFunction).toThrow("Fatal Error. The request method is 'GET' or 'HEAD' but the body is non-null or not undefined.");
     });
 
+    /*
     test("should work with Basic auth", async () => {
         const username = "username", password = "password";
 
@@ -207,4 +211,5 @@ xdescribe("mindsmine.Http.request method", () => {
             expect(data["json"]).toEqual(expect.objectContaining(testJSONObject));
         });
     });
+    //*/
 });
