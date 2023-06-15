@@ -10,6 +10,10 @@ others.
 
 ### Releases ###
 
+**4.9.0**
+* Updated accuracy of URL support methods
+* Node 20+ supported
+
 **4.8.2**
 * Node 19+ supported
 
