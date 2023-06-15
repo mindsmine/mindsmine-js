@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-describe("mindsmine.Http.poll method", () => {
+describe("mindsmine.Http.poll function", () => {
     const
         wrapFunction = function(fn, validateFn, interval = 10000, maxAttempts = 6) {
             return mindsmine.Http.poll(fn, validateFn, interval, maxAttempts);
@@ -52,7 +52,7 @@ describe("mindsmine.Http.poll method", () => {
     });
 });
 
-describe("mindsmine.Http.request method", () => {
+describe("mindsmine.Http.request function", () => {
     /*
     const TOKEN = "pk_5f5651f4e7f046e6b6ecf8afeb72d0c2",
         BASE_URI = `https://cloud.iexapis.com/v1/stock/market/batch?token=${TOKEN}`,
