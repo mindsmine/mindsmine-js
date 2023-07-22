@@ -10,6 +10,9 @@ others.
 
 ### Releases ###
 
+**4.9.1**
+* Library version updates
+
 **4.9.0**
 * Updated accuracy of URL support methods
 * Removed test files for deprecated `mindsmine.Ajax` class
