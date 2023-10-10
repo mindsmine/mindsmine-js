@@ -2,6 +2,8 @@
 
 [![Build Status](https://circleci.com/gh/mindsmine/mindsmine-js.svg?style=shield)](https://circleci.com/gh/mindsmine/mindsmine-js)
 
+![example workflow](https://github.com/github/docs/actions/workflows/node.js.yml/badge.svg)
+
 JavaScript already provides a lot of functions, yet every so often there's a need for some additional functions.
 **mindsmine JS** makes an attempt at providing utility functions such as String manipulation, Object wrappers, amongst
 others.
@@ -12,6 +14,7 @@ others.
 
 **4.9.2**
 * Library version updates
+* Using Github actions in lieu of Circle CI
 
 **4.9.1**
 * Library version updates
