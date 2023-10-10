@@ -1,8 +1,8 @@
 # mindsmine-js #
 
-[![NodeJS](https://github.com/github/docs/actions/workflows/node.js.yml/badge.svg)](https://github.com/mindsmine/mindsmine-js/actions/workflows/node.js.yml)
+[![Build](https://github.com/mindsmine/mindsmine-js/actions/workflows/node.js.yml/badge.svg)](https://github.com/mindsmine/mindsmine-js/actions/workflows/node.js.yml)
 
-[![CodeQL](https://github.com/github/docs/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/mindsmine/mindsmine-js/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/mindsmine/mindsmine-js/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/mindsmine/mindsmine-js/actions/workflows/codeql-analysis.yml)
 
 JavaScript already provides a lot of functions, yet every so often there's a need for some additional functions.
 **mindsmine JS** makes an attempt at providing utility functions such as String manipulation, Object wrappers, amongst
