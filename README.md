@@ -1,8 +1,6 @@
 # mindsmine-js #
 
-[![Build Status](https://circleci.com/gh/mindsmine/mindsmine-js.svg?style=shield)](https://circleci.com/gh/mindsmine/mindsmine-js)
-
-![example workflow](https://github.com/github/docs/actions/workflows/node.js.yml/badge.svg)
+[![Build Status](https://github.com/github/docs/actions/workflows/node.js.yml/badge.svg)](https://github.com/mindsmine/mindsmine-js/actions/workflows/node.js.yml)
 
 JavaScript already provides a lot of functions, yet every so often there's a need for some additional functions.
 **mindsmine JS** makes an attempt at providing utility functions such as String manipulation, Object wrappers, amongst
