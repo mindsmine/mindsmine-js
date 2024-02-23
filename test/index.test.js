@@ -21,7 +21,7 @@ test("mindsmine.productName should return product name", () => {
 });
 
 test("mindsmine.productVersion should return product version", () => {
-    expect(mindsmine.productVersion).toBe("4.9.2");
+    expect(mindsmine.productVersion).toBe("4.9.3");
 });
 
 //_MORE_CODE

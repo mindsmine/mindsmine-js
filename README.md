@@ -12,6 +12,10 @@ others.
 
 ### Releases ###
 
+**4.9.3**
+* Library version updates
+* Node 21+ supported
+
 **4.9.2**
 * Library version updates
 * Using Github actions in lieu of Circle CI
