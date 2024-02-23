@@ -1,5 +1,8 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# More information here: https://github.com/actions/checkout/
+# More information here: https://github.com/actions/setup-node/
+
 
 name: "Build"
 
@@ -15,7 +18,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '21.x'
         cache: npm
