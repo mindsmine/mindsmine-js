@@ -132,7 +132,12 @@ export default class {
 
     static replace(filepath, fromString, toString) {
         const parent = this;
-        const fromPattern = new RegExp(fromString, "g");
+
+        const reRegExpChar = /[\\^$.*+?()[\]{}|]/g, reHasRegExpChar = RegExp(reRegExpChar.source);
+
+        const cleanedFromString = reHasRegExpChar.test(fromString) ? fromString.replace(reRegExpChar, "\\$&") : fromString;
+
+        const fromPattern = new RegExp(cleanedFromString, "g");
 
         const filepathStats = fs.lstatSync(filepath);
 
