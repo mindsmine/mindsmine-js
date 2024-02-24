@@ -142,7 +142,8 @@ export default class {
             }
         };
 
-        const fromPattern = new RegExp(_.escapeRegExp(fromString), "g");
+        // const fromPattern = new RegExp(_.escapeRegExp(fromString), "g");
+        const fromPattern = new RegExp(fromString, "g");
 
         const filepathStats = fs.lstatSync(filepath);
 
