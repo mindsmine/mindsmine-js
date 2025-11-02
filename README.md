@@ -12,6 +12,10 @@ others.
 
 ### Releases ###
 
+**4.9.4**
+* Library version updates
+* Node 24+ supported
+
 **4.9.3**
 * Library version updates
 * Node 21+ supported
