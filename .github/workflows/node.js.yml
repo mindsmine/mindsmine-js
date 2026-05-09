@@ -1,7 +1,5 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-# More information here: https://github.com/actions/checkout/
-# More information here: https://github.com/actions/setup-node/
 
 
 name: "Build"
@@ -15,12 +13,18 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      # Check for latest version
+      # URL = https://github.com/actions/checkout
+      uses: actions/checkout@v6
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      # Check for latest version
+      # URL = https://github.com/actions/setup-node/
+      uses: actions/setup-node@v6
       with:
-        node-version: '24.x'
+        # Check for latest version
+        # URL = https://nodejs.org/en/download/current
+        node-version: '26.x'
         cache: npm
 
     - name: Install Dependencies
