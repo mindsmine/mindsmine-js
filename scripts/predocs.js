@@ -29,7 +29,7 @@ const jsdocConfJSON = {
     ],
     source: {
         include: [
-            "README.md",
+            "RELEASE_NOTES.md",
             "build/source/concatenated/index.js"
         ]
     },
