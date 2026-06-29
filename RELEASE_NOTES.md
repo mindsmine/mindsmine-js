@@ -1,12 +1,7 @@
-## mindsmine-js
+# Releases
 
-JavaScript already provides a lot of functions, yet every so often there's a need for some additional functions.
-**mindsmine JS** makes an attempt at providing utility functions such as String manipulation, Object wrappers, amongst
-others.
-
----
-
-### Releases
+**4.9.6**
+* Library version updates
 
 **4.9.5**
 * Library version updates

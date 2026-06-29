@@ -1,6 +1,6 @@
 {
   "name": "mindsmine-js",
-  "version": "4.9.5",
+  "version": "4.9.6",
   "main": "src/index.js",
   "description": "mindsmine-js",
   "authors": [
@@ -35,10 +35,10 @@
     "package": "npm run docs && npm run preclean"
   },
   "devDependencies": {
-    "eslint": "10.3.0",
+    "eslint": "10.6.0",
     "jest": "30.4.2",
     "jest-environment-jsdom": "30.4.1",
     "jsdoc": "4.0.5",
-    "terser": "5.47.1"
+    "terser": "5.48.0"
   }
 }
