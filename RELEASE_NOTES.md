@@ -1,18 +1,6 @@
 # Releases
 
-**4.9.10**
-* Library version updates
-
-**4.9.9**
-* Library version updates
-
-**4.9.8**
-* Library version updates
-
-**4.9.7**
-* Library version updates
-
-**4.9.6**
+**4.9.11, 4.9.10, 4.9.9, 4.9.8, 4.9.7, 4.9.6**
 * Library version updates
 
 **4.9.5**
